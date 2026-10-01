@@ -11,7 +11,11 @@ usage_line(...)
 }
 \arguments{
 \item{extra}{Additional, slightly more expensive fields: \code{"host"} adds
-\code{mem_host_available} and \code{"working_set"} adds \code{mem_working_set}.}
+\code{mem_host_available}, \code{"working_set"} adds \code{mem_working_set}, and
+\code{"pressure"} adds \code{mem_pressure} and \code{cpu_pressure} (percentage of the
+last 10 seconds in which tasks stalled waiting for memory or CPU) and
+\code{oom_kills} (processes killed in the container for running out of
+memory).}
 
 \item{max_age}{Return the previous result if it is at most this many seconds
 old, for very hot loops.}

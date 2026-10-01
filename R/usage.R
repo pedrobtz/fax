@@ -15,7 +15,11 @@
 #' container fields are always `NA`.
 #'
 #' @param extra Additional, slightly more expensive fields: `"host"` adds
-#'   `mem_host_available` and `"working_set"` adds `mem_working_set`.
+#'   `mem_host_available`, `"working_set"` adds `mem_working_set`, and
+#'   `"pressure"` adds `mem_pressure` and `cpu_pressure` (percentage of the
+#'   last 10 seconds in which tasks stalled waiting for memory or CPU) and
+#'   `oom_kills` (processes killed in the container for running out of
+#'   memory).
 #' @param max_age Return the previous result if it is at most this many seconds
 #'   old, for very hot loops.
 #' @param ... Passed on to `usage()`.
@@ -118,6 +122,19 @@ usage <- function(extra = NULL, max_age = 0) {
   }
   if ("working_set" %in% extra) {
     out["mem_working_set"] <- if (setup$linux) fact("memory.cgroup.working_set") else NA
+  }
+  if ("pressure" %in% extra) {
+    pressure <- function(name) {
+      value <- if (setup$linux) fact(name) else NA
+      if (length(value) && !is.na(value[1]) && "some" %in% names(value)) {
+        value[["some"]]
+      } else {
+        NA_real_
+      }
+    }
+    out["mem_pressure"] <- pressure("memory.cgroup.pressure")
+    out["cpu_pressure"] <- pressure("cpu.cgroup.pressure")
+    out["oom_kills"] <- if (setup$linux) as.numeric(fact("memory.cgroup.oom_kills")) else NA
   }
   out <- structure(out, class = "fax_usage")
   .usage$prev <- sample

@@ -37,5 +37,11 @@
 * `facts()` stays quiet: warnings raised while resolving facts are muffled,
   and `os.timezone` avoids the slow `Sys.timezone()` lookup when the time zone
   can be read from `TZ` or `/etc/localtime`.
+* cgroup v2 pressure stall information (`memory.cgroup.pressure`,
+  `cpu.cgroup.pressure`) and OOM kill counts (`memory.cgroup.oom_kills`);
+  `usage(extra = "pressure")` adds them to a usage sample, and `print()` notes
+  OOM kills and a `tempdir()` on tmpfs in containers.
+* `runtime.r.connections` reports free R connection slots (each parallel
+  worker needs one) and `runtime.rlimit.nofile` the open-files limit.
 * `usage()` and `usage_line()` report current process and container CPU and
   memory use cheaply enough to call on every log line.

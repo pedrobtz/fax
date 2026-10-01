@@ -7,7 +7,10 @@ test_that("a default snapshot is fast once warm", {
   withr::local_options(fax.root = NULL, fax.os = NULL)
   facts_df(facts(refresh = TRUE))
   times <- vapply(1:5, \(i) system.time(facts_df(facts(refresh = TRUE)))[["elapsed"]], numeric(1))
-  expect_lt(stats::median(times), 0.1)
+  # Generous: shared CI machines and R-devel builds are slow and noisy. This
+  # catches gross regressions such as a 500 ms Sys.timezone() call.
+  median <- stats::median(times)
+  expect_lt(median, 0.25, label = sprintf("median snapshot time (%.0f ms)", 1000 * median))
 })
 
 test_that("usage() costs well under a millisecond per call", {

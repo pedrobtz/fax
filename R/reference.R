@@ -1,6 +1,7 @@
 # Type and one-line description of every fact. The ?fax_facts help page is
 # generated from this table plus the registry (platforms, opt-in, network), and
 # a test checks that every registered fact is described here.
+# nolint start: line_length_linter. One fact per line reads better than wrapped.
 fact_docs <- read.table(
   sep = "|",
   strip.white = TRUE,
@@ -39,6 +40,7 @@ cpu.load | named dbl | Load averages over 1, 5 and 15 minutes.
 cpu.cgroup.quota | cores | cgroup CPU quota in cores, the smallest over parent cgroups (`Inf` if unlimited).
 cpu.cgroup.cpuset | int | CPUs in the cgroup's cpuset.
 cpu.cgroup.weight | dbl | cgroup CPU weight on the v2 scale (v1 shares converted).
+cpu.cgroup.pressure | named dbl | cgroup v2 CPU pressure: percentage of the last 10 seconds in which some or all tasks waited for CPU.
 cpu.effective | int | CPU cores to size thread pools with: the smallest limit, a fractional quota rounded up.
 cpu.effective_exact | cores | The smallest CPU limit, keeping a fractional quota.
 memory.host.total | bytes | Host memory.
@@ -50,6 +52,8 @@ memory.cgroup.high | bytes | cgroup v2 `memory.high` throttling threshold.
 memory.cgroup.usage | bytes | Memory used by the cgroup, including page cache.
 memory.cgroup.swap_limit | bytes | cgroup swap limit.
 memory.cgroup.working_set | bytes | cgroup memory in use, not counting inactive page cache.
+memory.cgroup.pressure | named dbl | cgroup v2 memory pressure: percentage of the last 10 seconds in which some or all tasks stalled on memory.
+memory.cgroup.oom_kills | dbl | Processes killed in this cgroup for running out of memory.
 memory.rlimit.as | bytes | Address-space limit of the process (`ulimit -v`).
 memory.rlimit.data | bytes | Data-segment limit of the process (`ulimit -d`).
 memory.effective.limit | bytes | Memory the process may use: the smaller of host memory and the cgroup limit.
@@ -102,6 +106,8 @@ runtime.r.renv | named chr | Active renv project and lockfile.
 runtime.threads.env | named chr | Thread-count environment variables that are set (`OMP_NUM_THREADS`, ...).
 runtime.threads.options | named dbl | `mc.cores` and `Ncpus` options.
 runtime.parallelly_cores | int | `parallelly::availableCores()`, when parallelly is installed.
+runtime.r.connections | named int | R connection slots: max, used and free. Each parallel worker needs one.
+runtime.rlimit.nofile | dbl | Open-files limit of the process (`ulimit -n`).
 runtime.pid | int | Process id.
 runtime.user | chr | User name.
 runtime.uid | int | Effective user id.
@@ -127,6 +133,7 @@ packages.r | df | Installed R packages: name, version, libpath, priority, built,
 packages.python | df | Installed Python packages: name, version, location, installer, source.
 "
 )
+# nolint end
 
 # Operating systems a fact has a resolver for.
 fact_platforms <- function(name) {

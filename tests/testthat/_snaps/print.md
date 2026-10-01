@@ -22,6 +22,7 @@
       runs on  vm (hyperv), cloud azure (aks)
       cpu      host 4 | effective 1.5 (2 threads)
       memory   host 16G | limit 4G | available 3.1G
+      note     2 process(es) in this container were killed for running out of memory
       Use facts_df() for every fact with its status and source.
 
 ---

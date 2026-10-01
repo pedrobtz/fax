@@ -96,6 +96,7 @@ local({
     "sys/fs/cgroup/memory/memory.soft_limit_in_bytes" = unlimited_v1,
     "sys/fs/cgroup/memory/memory.memsw.limit_in_bytes" = "1073741824",
     "sys/fs/cgroup/memory/memory.usage_in_bytes" = "209715200",
+    "sys/fs/cgroup/memory/memory.oom_control" = c("oom_kill_disable 0", "under_oom 0", "oom_kill 0"),
     "sys/fs/cgroup/memory/memory.stat" = c(
       "cache 52428800",
       "rss 150994944",
@@ -212,6 +213,15 @@ local({
     "throttled_usec 500000"
   )
   files[[cg(ctr, "cpuset.cpus.effective")]] <- "0-7"
+  files[[cg(ctr, "memory.events")]] <- c("low 0", "high 0", "max 0", "oom 0", "oom_kill 0")
+  files[[cg(ctr, "memory.pressure")]] <- c(
+    "some avg10=0.00 avg60=0.00 avg300=0.00 total=1200",
+    "full avg10=0.00 avg60=0.00 avg300=0.00 total=800"
+  )
+  files[[cg(ctr, "cpu.pressure")]] <- c(
+    "some avg10=12.50 avg60=8.00 avg300=3.10 total=905000",
+    "full avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+  )
   files[[cg(ctr, "pids.max")]] <- "max"
   files[["proc/sys/kernel/hostname"]] <- "web-6b8f9-2xkqz"
   files[["var/run/secrets/kubernetes.io/serviceaccount/namespace"]] <- "default"
@@ -384,7 +394,16 @@ local({
     "sys/fs/cgroup/cpu.max" = "150000 100000",
     "sys/fs/cgroup/cpu.stat" = c("usage_usec 9000000", "nr_periods 3000", "nr_throttled 30"),
     "sys/fs/cgroup/cpuset.cpus.effective" = "0-3",
-    "sys/fs/cgroup/pids.max" = "max"
+    "sys/fs/cgroup/pids.max" = "max",
+    "sys/fs/cgroup/memory.events" = c("low 0", "high 0", "max 41", "oom 2", "oom_kill 2"),
+    "sys/fs/cgroup/memory.pressure" = c(
+      "some avg10=23.40 avg60=10.20 avg300=4.00 total=8800000",
+      "full avg10=11.10 avg60=5.00 avg300=2.00 total=4100000"
+    ),
+    "sys/fs/cgroup/cpu.pressure" = c(
+      "some avg10=1.00 avg60=0.50 avg300=0.20 total=120000",
+      "full avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+    )
   ))
   write_tree("aks-pod-downward-api", files)
 })

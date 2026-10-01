@@ -80,3 +80,25 @@ test_that("parallelly is used when installed", {
   skip_if_not_installed("parallelly")
   expect_equal(fact("runtime.parallelly_cores"), as.integer(parallelly::availableCores()))
 })
+
+test_that("R connection slots are counted", {
+  conns <- fact("runtime.r.connections")
+  expect_named(conns, c("max", "used", "free"))
+  expect_equal(conns[["free"]], conns[["max"]] - conns[["used"]])
+  con <- file(tempfile(), "w")
+  on.exit(close(con))
+  expect_equal(fact("runtime.r.connections")[["used"]], conns[["used"]] + 1L)
+})
+
+test_that("the open-files limit comes from /proc/self/limits or ulimit", {
+  local_root(list(
+    "proc/self/limits" = c(
+      "Limit                     Soft Limit           Hard Limit           Units     ",
+      "Max open files            1024                 1048576              files     "
+    )
+  ))
+  withr::local_options(fax.os = "linux")
+  expect_equal(fact("runtime.rlimit.nofile"), 1024)
+  withr::local_options(fax.os = "darwin", fax.cmd_mock = function(cmd, args) if (cmd == "sh") "256")
+  expect_equal(fact("runtime.rlimit.nofile"), 256)
+})

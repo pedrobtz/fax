@@ -104,6 +104,18 @@ format.fax <- function(x, ...) {
   r <- value("runtime.r.version")
   add("runtime", paste(c(if (!is.null(r)) paste("R", r), python), collapse = " | "))
 
+  # Files in a tmpfs tempdir() live in memory and count against the limit.
+  if (isTRUE(value("container.detected")) && identical(value("disk.tmpdir.fstype"), "tmpfs")) {
+    add("note", "tempdir() is on tmpfs: its files count against the memory limit")
+  }
+  oom <- value("memory.cgroup.oom_kills")
+  if (!is.null(oom) && oom > 0) {
+    add(
+      "note",
+      sprintf("%d process(es) in this container were killed for running out of memory", oom)
+    )
+  }
+
   c(lines, "Use facts_df() for every fact with its status and source.")
 }
 

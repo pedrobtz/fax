@@ -127,3 +127,12 @@ test_that("fmt_bytes() picks a readable unit", {
   expect_equal(fmt_bytes(2.14 * 1024^3), "2.1G")
   expect_equal(fmt_bytes(0), "0B")
 })
+
+test_that("usage() can add pressure and OOM kills", {
+  local_usage_reset()
+  local_fixture("aks-pod-downward-api")
+  u <- usage(extra = "pressure")
+  expect_equal(u[["mem_pressure"]], 23.4)
+  expect_equal(u[["cpu_pressure"]], 1)
+  expect_equal(u[["oom_kills"]], 2)
+})

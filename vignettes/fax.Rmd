@@ -54,7 +54,8 @@ A fact that cannot be determined is `NA`; fax never stops with an error.
 
 ```{r}
 df <- facts_df(facts("cpu"))
-head(df[df$fact %in% c("cpu.model", "cpu.affinity", "cpu.cgroup.quota", "cpu.effective"), c("fact", "status", "source")])
+rows <- df$fact %in% c("cpu.model", "cpu.affinity", "cpu.cgroup.quota", "cpu.effective")
+df[rows, c("fact", "status", "source")]
 ```
 
 `status` is `"ok"`, `"not_applicable"` (e.g. cgroup facts on macOS),
