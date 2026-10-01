@@ -30,6 +30,10 @@
 - `env.vars` reports environment variables with secrets redacted by
   default (`fax.redact`, `fax.redact_allowlist`); `env.proxies` and
   `disk.tmpdir.*` describe proxies and the temporary directory.
+- macOS and Windows are supported for host facts: OS, CPU model and
+  topology, memory, boot time, virtualization (and Azure on Windows),
+  the temporary directory and Python discovery (py launcher, per-user
+  installs).
 - Azure: `cloud.azure.platform` tells a VM, AKS, App Service, Functions,
   Container Apps, Batch, Azure ML and Databricks apart without network
   access. With `facts(cloud = TRUE)` the instance metadata service adds

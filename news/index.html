@@ -45,6 +45,7 @@
 <li>Runtime facts describe R (version, BLAS/LAPACK, library paths, repositories with credentials removed, renv, thread settings), the process (pid, user, uid, privileges) and Python (interpreter, version, venv/uv/conda/system, site-packages) without starting Python inside R.</li>
 <li>
 <code>env.vars</code> reports environment variables with secrets redacted by default (<code>fax.redact</code>, <code>fax.redact_allowlist</code>); <code>env.proxies</code> and <code>disk.tmpdir.*</code> describe proxies and the temporary directory.</li>
+<li>macOS and Windows are supported for host facts: OS, CPU model and topology, memory, boot time, virtualization (and Azure on Windows), the temporary directory and Python discovery (py launcher, per-user installs).</li>
 <li>Azure: <code>cloud.azure.platform</code> tells a VM, AKS, App Service, Functions, Container Apps, Batch, Azure ML and Databricks apart without network access. With <code>facts(cloud = TRUE)</code> the instance metadata service adds region, zone, VM size and id, resource group, subscription, spot settings, image, tags (redacted) and IP addresses. Requests go only to the instance metadata endpoint, time out after 1 second and are made at most once per session.</li>
 <li>The opt-in <code>packages</code> namespace lists installed system packages (dpkg, rpm, apk, pacman, Homebrew, Windows), R packages and Python packages, read from package databases rather than by running <code>pip</code> or package managers where possible.</li>
 <li>
