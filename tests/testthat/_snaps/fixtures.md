@@ -16,7 +16,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
       os.uptime = 260630.9 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -106,7 +106,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
       os.uptime = 260607.9 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -196,7 +196,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
       os.uptime = 260608.8 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -286,7 +286,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
       os.uptime = 260609.6 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -376,7 +376,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
       os.uptime = 260610.6 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -466,7 +466,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
       os.uptime = 260629.7 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -556,7 +556,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 3600.25 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -646,7 +646,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 3600.25 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -736,7 +736,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 3600.25 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -826,7 +826,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 3600.25 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -916,7 +916,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 86400.5 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -1006,7 +1006,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 86400.5 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -1096,7 +1096,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 86400.5 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -1186,7 +1186,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 86400.5 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -1276,7 +1276,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 86400.5 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
@@ -1366,7 +1366,7 @@
       os.arch = <live> [ok] Sys.info()
       os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
       os.uptime = 3600.25 [ok] /proc/uptime
-      os.timezone = <live> [ok] Sys.timezone()
+      os.timezone = UTC [ok] /etc/localtime (missing)
       os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo

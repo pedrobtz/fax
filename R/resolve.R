@@ -164,8 +164,9 @@ run_resolver <- function(r, state) {
   start <- proc.time()[["elapsed"]]
   status <- "ok"
   message <- NA_character_
+  # Resolvers must not be noisy: warnings from the code they call are muffled.
   value <- tryCatch(
-    r$resolve(ctx),
+    withCallingHandlers(r$resolve(ctx), warning = \(w) invokeRestart("muffleWarning")),
     fax_unavailable = function(cnd) {
       status <<- "unavailable"
       message <<- conditionMessage(cnd)

@@ -153,3 +153,22 @@ test_that("KUBERNETES_SERVICE_HOST alone means Kubernetes", {
   expect_true(fact("k8s.detected"))
   expect_true(fact("container.detected"))
 })
+
+test_that("the timezone comes from TZ, /etc/localtime or /etc/timezone", {
+  skip_on_os("windows")
+  root <- local_root(list("usr/share/zoneinfo/America/Chicago" = "x"))
+  withr::local_options(fax.os = "linux")
+  withr::local_envvar(TZ = NA)
+  expect_equal(fact("os.timezone"), "UTC")
+  dir.create(file.path(root, "etc"))
+  writeLines("Europe/Zurich", file.path(root, "etc/timezone"))
+  withr::local_envvar(TZ = ":America/New_York")
+  expect_equal(fact("os.timezone"), "America/New_York")
+  withr::local_envvar(TZ = NA)
+  expect_equal(fact("os.timezone"), "Europe/Zurich")
+  file.symlink(
+    file.path(root, "usr/share/zoneinfo/America/Chicago"),
+    file.path(root, "etc/localtime")
+  )
+  expect_equal(fact("os.timezone"), "America/Chicago")
+})

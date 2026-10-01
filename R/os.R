@@ -100,9 +100,31 @@ register_os_facts <- function() {
     if (!length(up) || is.na(up)) NULL else up
   }))
 
-  register(resolver("os.timezone", function(ctx) {
+  # Sys.timezone() can take half a second and warn (e.g. on Alpine, where
+  # /etc/localtime is a copy, not a link), so cheaper sources come first.
+  register(resolver("os.timezone", cache = FALSE, function(ctx) {
+    tz <- ctx$env("TZ")
+    if (!is.null(tz) && nzchar(tz)) {
+      return(sub("^:", "", tz))
+    }
+    if (ctx$os != "windows") {
+      link <- Sys.readlink(root_path("/etc/localtime", ctx$root))
+      if (!is.na(link) && grepl("zoneinfo/", link, fixed = TRUE)) {
+        ctx$note("/etc/localtime")
+        return(sub("^.*zoneinfo/", "", link))
+      }
+      line <- ctx$read("/etc/timezone", n = 1L)
+      if (length(line) && nzchar(trimws(line))) {
+        return(trimws(line))
+      }
+      # Without /etc/localtime the C library uses UTC.
+      if (ctx$os == "linux" && !ctx$exists("/etc/localtime")) {
+        ctx$note("/etc/localtime (missing)")
+        return("UTC")
+      }
+    }
     ctx$note("Sys.timezone()")
-    tz <- Sys.timezone()
+    tz <- suppressWarnings(Sys.timezone())
     if (is.na(tz) || !nzchar(tz)) NULL else tz
   }))
 

@@ -1,3 +1,7 @@
+# Resolvers are closures created in .onLoad(), before covr instruments the
+# package. Registering them again makes their code count towards coverage.
+register_builtins()
+
 # Replace the registry with the given resolvers for the rest of the test.
 local_registry <- function(..., opt_in = "packages", env = parent.frame()) {
   old_resolvers <- .fax$resolvers
@@ -79,7 +83,7 @@ local_fixture_copy <- function(name, env = parent.frame()) {
 fixture_report <- function(name) {
   local_fixture(name)
   local_azure_env()
-  withr::local_envvar(container = NA)
+  withr::local_envvar(container = NA, TZ = NA)
   df <- facts_df(facts(refresh = TRUE))
   # runtime, env and disk describe the R session, not the fixture.
   df <- df[!fact_namespace(df$fact) %in% c("runtime", "env", "disk"), ]

@@ -176,6 +176,8 @@ cgroup_stat <- function(ctx, dir, file) {
   values
 }
 
+first <- function(x) if (length(x)) x[[1]] else NULL
+
 # cgroup v1 reports "no limit" as a huge page-rounded number.
 v1_limit <- function(x) {
   x <- parse_limit(x)
@@ -194,7 +196,7 @@ register_cgroup_facts <- function() {
 
   register(resolver("cgroup.path", confine = linux, function(ctx) {
     layout <- cgroup_layout(ctx)
-    loc <- layout$v2 %||% layout$v1$memory %||% layout$v1[[1]]
+    loc <- layout$v2 %||% layout$v1$memory %||% first(layout$v1)
     loc$path
   }))
 
@@ -206,7 +208,8 @@ register_cgroup_facts <- function() {
     if (identical(layout$version, "2")) {
       return(layout$v2$mount)
     }
-    dirname((layout$v1$memory %||% layout$v1[[1]])$mount)
+    loc <- layout$v1$memory %||% first(layout$v1)
+    if (is.null(loc)) NULL else dirname(loc$mount)
   }))
 
   register(resolver("cgroup.namespaced", confine = linux, function(ctx) {
