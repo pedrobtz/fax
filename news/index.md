@@ -45,6 +45,11 @@
   rpm, apk, pacman, Homebrew, Windows), R packages and Python packages,
   read from package databases rather than by running `pip` or package
   managers where possible.
+- [`facts()`](https://pedrobtz.github.io/fax/reference/facts.md) stays
+  quiet: warnings raised while resolving facts are muffled, and
+  `os.timezone` avoids the slow
+  [`Sys.timezone()`](https://rdrr.io/r/base/timezones.html) lookup when
+  the time zone can be read from `TZ` or `/etc/localtime`.
 - [`usage()`](https://pedrobtz.github.io/fax/reference/usage.md) and
   [`usage_line()`](https://pedrobtz.github.io/fax/reference/usage.md)
   report current process and container CPU and memory use cheaply enough
