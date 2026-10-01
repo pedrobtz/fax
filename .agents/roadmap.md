@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–1 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–2 done
 
 ---
 
@@ -69,28 +69,30 @@ Tests: toy resolvers covering weight selection, confinement, opt-in namespaces, 
 
 **Goal:** host vs effective CPU and memory, correct under cgroup v1, v2 and hybrid (§5.2–5.4, §6).
 
-- [ ] `cgroup.*` from `/proc/self/cgroup` and `/proc/self/mountinfo`, v1/v2/hybrid.
-- [ ] v2 readers: `cpu.max`, `cpuset.cpus.effective`, `memory.max`, `memory.high`, `memory.current`, `memory.swap.max`, `memory.stat`; walk up the visible hierarchy taking the minimum.
-- [ ] v1 readers: CFS quota/period, `cpuset.cpus`, `hierarchical_memory_limit` (fallback `memory.limit_in_bytes`, ≈2^63 → `Inf`), `memory.usage_in_bytes`, `total_inactive_file`, soft limit.
-- [ ] `cpu.host.*`, `cpu.model`, `cpu.vendor`, `cpu.flags`, `cpu.isa_level` (x86-64 v1–v4; arm64 features), `cpu.affinity`, `cpu.load`.
-- [ ] `cpu.cgroup.quota/cpuset/weight`; `cpu.effective` and `cpu.effective_exact` (§6).
-- [ ] `memory.host.*`, `memory.swap.*`, `memory.cgroup.*` incl. `working_set`; `memory.rlimit.as/data` from `/proc/self/limits`; `memory.lxcfs`.
-- [ ] `memory.effective.limit` and `memory.effective.available` (working-set based, §6).
-- [ ] `effective_cores()` (integer ≥ 1; falls back to `parallel::detectCores()`, then 1) and `effective_memory(what = c("limit", "available"))` (`Inf` → host total).
+- [x] `cgroup.*` from `/proc/self/cgroup` and `/proc/self/mountinfo`, v1/v2/hybrid.
+- [x] v2 readers: `cpu.max`, `cpuset.cpus.effective`, `memory.max`, `memory.high`, `memory.current`, `memory.swap.max`, `memory.stat`; walk up the visible hierarchy taking the minimum.
+- [x] v1 readers: CFS quota/period, `cpuset.cpus`, `hierarchical_memory_limit` (fallback `memory.limit_in_bytes`, ≈2^63 → `Inf`), `memory.usage_in_bytes`, `total_inactive_file`, soft limit.
+- [x] `cpu.host.*`, `cpu.model`, `cpu.vendor`, `cpu.flags`, `cpu.isa_level` (x86-64 v1–v4; arm64 features), `cpu.affinity`, `cpu.load`.
+- [x] `cpu.cgroup.quota/cpuset/weight`; `cpu.effective` and `cpu.effective_exact` (§6).
+- [x] `memory.host.*`, `memory.swap.*`, `memory.cgroup.*` incl. `working_set`; `memory.rlimit.as/data` from `/proc/self/limits`; `memory.lxcfs`.
+- [x] `memory.effective.limit` and `memory.effective.available` (working-set based, §6).
+- [x] `effective_cores()` (integer ≥ 1; falls back to `parallel::detectCores()`, then 1) and `effective_memory(what = c("limit", "available"))` (`Inf` → host total).
 
 Fast usage probe (§4.6), built on the same parsers but outside the engine:
-- [ ] Static setup cached in a package environment: cgroup dir and available usage files, page size (`/proc/self/auxv` `AT_PAGESZ` via `readBin`, fallback `getconf PAGESIZE` once, fallback 4096), `cpu.effective_exact`, `memory.effective.limit`. Recomputed when the pid or `fax.root` changes.
-- [ ] Per-call reads: `proc.time()`, `/proc/self/statm`, cgroup `memory.current` / `memory.usage_in_bytes`, cgroup `cpu.stat` / `cpuacct.usage`. Optional `extra = c("host", "working_set")`.
-- [ ] Rates from the previous sample (process CPU, cgroup CPU, throttling); reset after fork; `max_age` reuse.
-- [ ] `usage()` returns a named double vector of class `fax_usage`; `format()` / `print()` / `usage_line()`.
-- [ ] Micro-optimize the readers used here: benchmark `readLines(n = 1)`, `readChar()` and `readBin()` on `/proc` files and use the fastest; `strsplit(fixed = TRUE)`, no regex; never `gc()`.
-- [ ] Never errors: every field falls back to `NA`.
+- [x] Static setup cached in a package environment: cgroup dir and available usage files, page size (`/proc/self/auxv` `AT_PAGESZ` via `readBin`, fallback `getconf PAGESIZE` once, fallback 4096), `cpu.effective_exact`, `memory.effective.limit`. Recomputed when the pid or `fax.root` changes.
+- [x] Per-call reads: `proc.time()`, `/proc/self/statm`, cgroup `memory.current` / `memory.usage_in_bytes`, cgroup `cpu.stat` / `cpuacct.usage`. Optional `extra = c("host", "working_set")`.
+- [x] Rates from the previous sample (process CPU, cgroup CPU, throttling); reset after fork; `max_age` reuse.
+- [x] `usage()` returns a named double vector of class `fax_usage`; `format()` / `print()` / `usage_line()`.
+- [x] Micro-optimize the readers used here: benchmark `readLines(n = 1)`, `readChar()` and `readBin()` on `/proc` files and use the fastest; `strsplit(fixed = TRUE)`, no regex; never `gc()`.
+- [x] Never errors: every field falls back to `NA`.
 
-Fixtures (`tests/testthat/fixtures/<scenario>/`, minimal files only): `linux-baremetal`, `docker-v1-cpus1.5-mem512m`, `docker-v2-unlimited`, `docker-v2-cpus2-mem1g`, `k8s-v2-limits` (limit on a parent cgroup), `cpuset-pinned`, `lxcfs`, `hybrid`. Include a `memory.stat` with a large `inactive_file` to test the working set. Build them with an internal capture helper (or `data-raw/capture_fixture.sh`) that copies only the files resolvers read.
+Fixtures (trees in `data-raw/fixtures/`, shipped as tarballs in `tests/testthat/fixtures/`). Captured with `data-raw/capture-fixture.sh` on a podman cgroup v2 VM: `linux-vm-host`, `docker-v2-unlimited`, `docker-v2-cpus2-mem1g`, `docker-v2-cpus1.5-mem512m`, `docker-v2-cgroupns-host` (nested non-namespaced path), `cpuset-pinned`. Synthetic (`data-raw/synthetic-fixtures.R`): `docker-v1-cpus1.5-mem512m`, `hybrid`, `k8s-v2-limits` (limit only on the pod cgroup), `lxcfs`. A true bare-metal fixture comes with Stage 3 (DMI).
 
 Tests: per-fixture expectations on effective values; `expect_snapshot()` of `facts_df()` per scenario; malformed/empty/missing files → `unavailable`, never `error`. For `usage()`: rates computed from two fixture states (swap fixture files between calls), first-call behaviour, pid-change reset, `max_age`, `NA` on missing files, `usage_line()` snapshot.
 
 **Done when:** every fixture gives the right `effective_cores()` / `effective_memory()`; on the CI Ubuntu runner both return sane values (≥ 1, ≤ host); and `usage()` has a median ≤ 200 µs there.
+
+**Result:** in a `--cpus=1.5 --memory=512m` container, `effective_cores()` = 2 (`detectCores()` = 4), `effective_memory()` = 512 MiB, full snapshot 10.6 ms, `usage()` ~170 µs.
 
 ---
 

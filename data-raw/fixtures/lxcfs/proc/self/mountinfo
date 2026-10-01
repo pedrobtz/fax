@@ -1,0 +1,4 @@
+500 450 0:60 / / rw,relatime - overlay overlay rw,lowerdir=/var/lib/lxc/a,upperdir=/var/lib/lxc/b,workdir=/var/lib/lxc/c
+510 500 0:26 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime - cgroup2 cgroup2 rw,nsdelegate
+520 505 0:70 /proc/meminfo /proc/meminfo rw,nosuid,nodev,relatime - fuse.lxcfs lxcfs rw,user_id=0,group_id=0,allow_other
+521 505 0:70 /proc/cpuinfo /proc/cpuinfo rw,nosuid,nodev,relatime - fuse.lxcfs lxcfs rw,user_id=0,group_id=0,allow_other

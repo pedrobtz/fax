@@ -1,0 +1,390 @@
+# report: linux-vm-host
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 0.15 0.06 0.02 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/cpu.max; /sys/fs/cgroup/user.slice/cpu.max
+      cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/cpuset.cpus.effective
+      cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/cpu.weight
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5580582912 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.max; /sys/fs/cgroup/user.slice/user-501.slice/memory.max; /sys/fs/cgroup/user.slice/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.high; /sys/fs/cgroup/user.slice/user-501.slice/memory.high; /sys/fs/cgroup/user.slice/memory.high
+      memory.cgroup.usage = 3022848 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.current
+      memory.cgroup.swap_limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/memory.swap.max; /sys/fs/cgroup/user.slice/memory.swap.max
+      memory.cgroup.working_set = 2985984 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5580582912 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-501.slice/session-24.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = 15295 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/pids.max; /sys/fs/cgroup/user.slice/pids.max
+
+# report: docker-v2-unlimited
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 0.21 0.07 0.02 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5591961600 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.high
+      memory.cgroup.usage = 1290240 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
+      memory.cgroup.swap_limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
+      memory.cgroup.working_set = 1138688 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5591961600 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = / [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+
+# report: docker-v2-cpus2-mem1g
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 0.21 0.07 0.02 [ok] /proc/loadavg
+      cpu.cgroup.quota = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.effective = 2 [ok] NA
+      cpu.effective_exact = 2 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5588910080 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.high
+      memory.cgroup.usage = 1314816 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
+      memory.cgroup.swap_limit = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
+      memory.cgroup.working_set = 1163264 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 1073741824 [ok] NA
+      memory.effective.available = 1072578560 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = / [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+
+# report: docker-v2-cpus1.5-mem512m
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 0.21 0.07 0.02 [ok] /proc/loadavg
+      cpu.cgroup.quota = 1.5 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.effective = 2 [ok] NA
+      cpu.effective_exact = 1.5 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.high
+      memory.cgroup.usage = 1449984 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
+      memory.cgroup.swap_limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
+      memory.cgroup.working_set = 1298432 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 536870912 [ok] NA
+      memory.effective.available = 535572480 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = / [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+
+# report: docker-v2-cgroupns-host
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 0.21 0.07 0.02 [ok] /proc/loadavg
+      cpu.cgroup.quota = 1 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/cpu.max; /sys/fs/cgroup/user.slice/cpu.max
+      cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/cpuset.cpus.effective
+      cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/cpu.weight
+      cpu.effective = 1 [ok] NA
+      cpu.effective_exact = 1 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5595054080 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 268435456 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/memory.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/memory.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/memory.max; /sys/fs/cgroup/user.slice/user-501.slice/memory.max; /sys/fs/cgroup/user.slice/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.high; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/memory.high; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/memory.high; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/memory.high; /sys/fs/cgroup/user.slice/user-501.slice/memory.high; /sys/fs/cgroup/user.slice/memory.high
+      memory.cgroup.usage = 1564672 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.current
+      memory.cgroup.swap_limit = 268435456 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/memory.swap.max; /sys/fs/cgroup/user.slice/memory.swap.max
+      memory.cgroup.working_set = 1413120 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 268435456 [ok] NA
+      memory.effective.available = 267022336 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-501.slice/user@501.service/user.slice/li... [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = 6952 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/pids.max; /sys/fs/cgroup/user.slice/pids.max
+
+# report: cpuset-pinned
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 1 [ok] /proc/self/status
+      cpu.load = 0.15 0.06 0.02 [ok] /proc/loadavg
+      cpu.cgroup.quota = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
+      cpu.cgroup.cpuset = 1 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset.cpus.effective
+      cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.effective = 1 [ok] NA
+      cpu.effective_exact = 1 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5585301504 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.high
+      memory.cgroup.usage = 1019904 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
+      memory.cgroup.swap_limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
+      memory.cgroup.working_set = 864256 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5585301504 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = / [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+
+# report: docker-v1-cpus1.5-mem512m
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = 1.5 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/cpu.cfs_quota_us; /sys/fs/cgroup/cpu,cpuacct/cpu.cfs_period_us
+      cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset/cpuset.effective_cpus
+      cpu.cgroup.weight = 40 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/cpu.shares
+      cpu.effective = 2 [ok] NA
+      cpu.effective_exact = 1.5 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.stat
+      memory.cgroup.high = NA [not_applicable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 209715200 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.usage_in_bytes
+      memory.cgroup.swap_limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.memsw.limit_in_bytes
+      memory.cgroup.working_set = 167772160 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 536870912 [ok] NA
+      memory.effective.available = 369098752 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 1 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /docker/3f1b2c4d5e6f [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids/pids.max
+
+# report: hybrid
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/user.slice/user-1000.slice/session-2.scope/cpu.cfs_quota_us; /sys/fs/cgroup/cpu,cpuacct/user.slice/user-1000.slice/session-2.scope/cpu.cfs_period_us
+      cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset/cpuset.cpus
+      cpu.cgroup.weight = 40 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/user.slice/user-1000.slice/session-2.scope/cpu.shares
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/user.slice/user-1000.slice/session-2.scope/memory.stat
+      memory.cgroup.high = NA [not_applicable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/user.slice/user-1000.slice/session-2.scope/memory.usage_in_bytes
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = 805306368 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/user.slice/user-1000.slice/session-2.scope/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5604143104 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = hybrid [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-1000.slice/session-2.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids/user.slice/user-1000.slice/session-2.scope/pids.max
+
+# report: k8s-v2-limits
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 8 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 4 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 8 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpu.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cpu.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/cpu.max; /sys/fs/cgroup/kubepods.slice/cpu.max
+      cpu.cgroup.cpuset = 8 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpuset.cpus.effective
+      cpu.cgroup.weight = 79 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpu.weight
+      cpu.effective = 2 [ok] NA
+      cpu.effective_exact = 2 [ok] NA
+      memory.host.total = 34359738368 [ok] /proc/meminfo
+      memory.host.available = 21474836480 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/memory.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/memory.max; /sys/fs/cgroup/kubepods.slice/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.high; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/memory.high
+      memory.cgroup.usage = 314572800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.current
+      memory.cgroup.swap_limit = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.swap.max
+      memory.cgroup.working_set = 209715200 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 1073741824 [ok] NA
+      memory.effective.available = 864026624 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /kubepods.slice/kubepods-burstable.slice/kubepods-burstab... [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = 1024 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/pids.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/pids.max
+
+# report: lxcfs
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 536870912 [ok] /proc/meminfo
+      memory.host.available = 409600000 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.high
+      memory.cgroup.usage = 134217728 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = 117440512 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 536870912 [ok] NA
+      memory.effective.available = 409600000 [ok] NA
+      memory.lxcfs = TRUE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = / [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+

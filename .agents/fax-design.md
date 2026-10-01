@@ -155,7 +155,7 @@ Optional per call, `extra = c("host", "working_set")`: `/proc/meminfo` (host ava
 
 **macOS / Windows:** process CPU from `proc.time()`; `mem_rss` from `ps::ps_memory_info()` when `ps` is installed (compiled, microseconds), else `NA`; container fields `NA`.
 
-**Target:** median ≤ 200 µs per call on Linux with default fields; ≤ 20 µs when served from `max_age`. Verified by a benchmark in CI.
+**Target:** median ≤ 200 µs per call on Linux with default fields; ≤ 20 µs when served from `max_age`. Measured 2026-10-01 in a `rocker/r-ver:4.5` container: ~170 µs full path, ~17 µs from `max_age` (per-file `readChar()` ≈ 22 µs is the floor; one `tryCatch()` for the whole sample).
 
 ## 5. Fact schema
 
@@ -177,14 +177,14 @@ Types: `chr`, `int`, `dbl`, `lgl`, `bytes` (double, since R integers are 32-bit)
 |---|---|
 | `cpu.model`, `cpu.vendor` | `/proc/cpuinfo`; macOS `sysctl machdep.cpu.brand_string`; Windows `PROCESSOR_IDENTIFIER` |
 | `cpu.flags` | `/proc/cpuinfo` flags (avx2, avx512f, …) |
-| `cpu.isa_level` | derived from flags: x86-64 `v1`–`v4` (psABI feature lists); arm64 notable features (`neon`, `sve`, `sve2`) |
-| `cpu.host.logical`, `cpu.host.physical`, `cpu.host.sockets` | `/sys/devices/system/cpu`, `/proc/cpuinfo`; `sysctl hw.*`; `NUMBER_OF_PROCESSORS` |
-| `cpu.affinity` | `/proc/self/status` `Cpus_allowed_list` |
+| `cpu.isa_level` | derived from flags: `x86-64`, `x86-64-v2` … `x86-64-v4` (psABI feature lists); `arm64` with `+sve`, `+sve2` appended when present; `arm` for 32-bit |
+| `cpu.host.logical`, `cpu.host.physical`, `cpu.host.sockets` | `/sys/devices/system/cpu/online`, `/proc/cpuinfo` (physical/core ids), else sysfs topology; `sysctl hw.*`; `NUMBER_OF_PROCESSORS`; any OS falls back to `parallel::detectCores()` (weight 10) |
+| `cpu.affinity` | number of CPUs in `/proc/self/status` `Cpus_allowed_list` |
 | `cpu.cgroup.quota` | cores from cgroup quota/period (§6) |
 | `cpu.cgroup.cpuset` | cpuset CPU count |
 | `cpu.cgroup.weight` | v2 `cpu.weight` / v1 `cpu.shares` (informational only) |
 | **`cpu.effective`** | `int`, see §6; `cpu.effective_exact` keeps the fractional quota |
-| `cpu.load` | `/proc/loadavg`; `sysctl vm.loadavg` |
+| `cpu.load` | named `c(1min, 5min, 15min)` from `/proc/loadavg`; `sysctl vm.loadavg` |
 
 ### 5.3 `memory`
 | fact | notes / sources |
@@ -378,7 +378,7 @@ fax::main()                               # CLI: fax [namespace...] --json
 
 ## 8. Testing strategy
 
-- **Fixture trees** in `tests/testthat/fixtures/<scenario>/` mirroring `/proc`, `/sys`, `/etc`, `/var/lib`; tests set `fax.root` to the fixture and snapshot `facts_df()`.
+- **Fixture trees** in `data-raw/fixtures/<scenario>/` mirroring `/proc`, `/sys`, `/etc`, `/var/lib`, packed by `data-raw/pack-fixtures.R` into `tests/testthat/fixtures/<scenario>.tar.gz` (R CMD build rejects paths over 100 bytes and flags hidden files like `run/.containerenv`). Tests extract them, set `fax.root` and `fax.os`, and snapshot a per-fact report; a source-only test checks tarballs and trees are in sync. Real captures come from `data-raw/capture-fixture.sh` (cgroup v2 via podman); v1, hybrid, a parent-limited k8s pod and LXCFS are written by `data-raw/synthetic-fixtures.R`.
   - Resources: bare-metal Linux · Docker v1 `--cpus=1.5 --memory=512m` · Docker v2 unlimited · Docker v2 `--cpus=2 --memory=1g` · k8s pod v2 with parent limit · cpuset-pinned · LXCFS · hybrid.
   - Substrate: Azure VM · AWS EC2 · GCP VM · WSL2 · rootless Podman · AKS pod with Downward API.
   - Runtime/packages: venv, conda prefix, site-packages with dist-info/egg-info; dpkg status, apk db, pacman local, Homebrew Cellar.

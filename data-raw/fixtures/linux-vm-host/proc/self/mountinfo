@@ -1,0 +1,36 @@
+64 67 252:4 / /sysroot ro,relatime shared:4 - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota
+67 1 252:4 /ostree/deploy/fedora-coreos/deploy/51a6fb7b870a29208b083f9d34bf4416ebc2c9110ff5d1041f8bea850a0471fd.0 / rw,relatime shared:1 - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota
+68 67 252:4 /ostree/deploy/fedora-coreos/deploy/51a6fb7b870a29208b083f9d34bf4416ebc2c9110ff5d1041f8bea850a0471fd.0/etc /etc rw,relatime shared:2 - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota
+69 67 252:4 /ostree/deploy/fedora-coreos/deploy/51a6fb7b870a29208b083f9d34bf4416ebc2c9110ff5d1041f8bea850a0471fd.0/usr /usr ro,relatime shared:3 - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota
+70 64 252:4 /ostree/deploy/fedora-coreos/var /sysroot/ostree/deploy/fedora-coreos/var rw,relatime shared:5 - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota
+33 67 0:6 / /dev rw,nosuid shared:6 - devtmpfs devtmpfs rw,seclabel,size=4096k,nr_inodes=744820,mode=755,inode64
+34 33 0:23 / /dev/shm rw,nosuid,nodev shared:7 - tmpfs tmpfs rw,seclabel,inode64
+35 33 0:24 / /dev/pts rw,nosuid,noexec,relatime shared:8 - devpts devpts rw,seclabel,gid=5,mode=620,ptmxmode=000
+36 67 0:22 / /sys rw,nosuid,nodev,noexec,relatime shared:9 - sysfs sysfs rw,seclabel
+37 36 0:7 / /sys/kernel/security rw,nosuid,nodev,noexec,relatime shared:10 - securityfs securityfs rw
+38 36 0:26 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime shared:11 - cgroup2 cgroup2 rw,seclabel,nsdelegate,memory_recursiveprot
+39 36 0:27 / /sys/fs/pstore rw,nosuid,nodev,noexec,relatime shared:12 - pstore pstore rw,seclabel
+40 36 0:28 / /sys/firmware/efi/efivars rw,nosuid,nodev,noexec,relatime shared:13 - efivarfs efivarfs rw
+41 36 0:29 / /sys/fs/bpf rw,nosuid,nodev,noexec,relatime shared:14 - bpf bpf rw,mode=700
+42 36 0:30 / /sys/kernel/config rw,nosuid,nodev,noexec,relatime shared:15 - configfs configfs rw
+43 67 0:21 / /proc rw,nosuid,nodev,noexec,relatime shared:17 - proc proc rw
+44 67 0:25 / /run rw,nosuid,nodev shared:18 - tmpfs tmpfs rw,seclabel,size=1211448k,nr_inodes=819200,mode=755,inode64
+23 36 0:20 / /sys/fs/selinux rw,nosuid,noexec,relatime shared:16 - selinuxfs selinuxfs rw
+22 43 0:31 / /proc/sys/fs/binfmt_misc rw,relatime shared:19 - autofs systemd-1 rw,fd=37,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=6063
+24 33 0:32 / /dev/hugepages rw,nosuid,nodev,relatime shared:20 - hugetlbfs hugetlbfs rw,seclabel,pagesize=2M
+25 33 0:19 / /dev/mqueue rw,nosuid,nodev,noexec,relatime shared:21 - mqueue mqueue rw,seclabel
+26 36 0:8 / /sys/kernel/debug rw,nosuid,nodev,noexec,relatime shared:22 - debugfs debugfs rw,seclabel
+27 36 0:13 / /sys/kernel/tracing rw,nosuid,nodev,noexec,relatime shared:23 - tracefs tracefs rw,seclabel
+29 67 0:33 / /tmp rw,nosuid,nodev shared:24 - tmpfs tmpfs rw,seclabel,size=3028620k,nr_inodes=1048576,inode64
+30 36 0:34 / /sys/fs/fuse/connections rw,nosuid,nodev,noexec,relatime shared:25 - fusectl fusectl rw
+32 67 0:37 / /Users rw,relatime shared:46 - virtiofs a2a0ee2c717462feb1de2f5afd59de5fd2d8 rw,context=system_u:object_r:nfs_t:s0
+46 67 0:38 / /private rw,relatime shared:60 - virtiofs 71708eb255bc230cd7c91dd26f7667a7b938 rw,context=system_u:object_r:nfs_t:s0
+48 67 252:4 /ostree/deploy/fedora-coreos/var /var rw,relatime shared:63 master:5 - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota
+51 48 0:39 / /var/folders rw,relatime shared:91 - virtiofs a0bb3a2c8b0b02ba5958b0576f0d6530e104 rw,context=system_u:object_r:nfs_t:s0
+53 67 252:3 / /boot ro,nosuid,nodev,relatime shared:97 - ext4 /dev/vda3 ro,seclabel
+56 22 0:40 / /proc/sys/fs/binfmt_misc rw,nosuid,nodev,noexec,relatime shared:100 - binfmt_misc binfmt_misc rw
+60 48 0:41 / /var/lib/nfs/rpc_pipefs rw,relatime shared:130 - rpc_pipefs sunrpc rw
+336 44 0:47 / /run/user/501 rw,nosuid,nodev,relatime shared:369 - tmpfs tmpfs rw,seclabel,size=605720k,nr_inodes=151430,mode=700,uid=501,gid=1000,inode64
+348 44 0:48 / /run/user/0 rw,nosuid,nodev,relatime shared:424 - tmpfs tmpfs rw,seclabel,size=605720k,nr_inodes=151430,mode=700,inode64
+380 44 0:25 /netns /run/netns rw,nosuid,nodev shared:18 - tmpfs tmpfs rw,seclabel,size=1211448k,nr_inodes=819200,mode=755,inode64
+153 48 252:4 /ostree/deploy/fedora-coreos/var/lib/containers/storage/overlay /var/lib/containers/storage/overlay rw,relatime - xfs /dev/vda4 rw,seclabel,attr2,inode64,logbufs=8,logbsize=32k,prjquota

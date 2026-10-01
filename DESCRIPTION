@@ -16,6 +16,8 @@ URL: https://pedrobtz.github.io/fax/, https://github.com/pedrobtz/fax
 BugReports: https://github.com/pedrobtz/fax/issues
 Depends:
     R (>= 4.1.0)
+Imports:
+    parallel
 Suggests:
     jsonlite,
     parallelly,

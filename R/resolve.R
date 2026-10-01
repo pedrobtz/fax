@@ -9,12 +9,13 @@ new_state <- function(cloud = FALSE, refresh = FALSE, strict = FALSE) {
   state$refresh <- isTRUE(refresh)
   state$strict <- isTRUE(strict)
   state$memo <- new.env(parent = emptyenv())
+  state$shared <- new.env(parent = emptyenv())
   state$stack <- character()
   state
 }
 
 fax_os <- function() {
-  getOption("fax.os") %||% tolower(Sys.info()[["sysname"]])
+  getOption("fax.os") %||% .fax$sysname %||% tolower(Sys.info()[["sysname"]])
 }
 
 fact_record <- function(
@@ -195,18 +196,23 @@ new_ctx <- function(state) {
     os = state$os,
     note = note,
     read = function(path, n = -1L) {
-      note(path)
-      read_lines(path, state$root, n)
+      lines <- read_lines(path, state$root, n)
+      if (!is.null(lines)) note(path)
+      lines
     },
     read_kv = function(path, sep = ":") {
-      note(path)
       lines <- read_lines(path, state$root)
-      if (is.null(lines)) NULL else parse_kv(lines, sep)
+      if (is.null(lines)) {
+        return(NULL)
+      }
+      note(path)
+      parse_kv(lines, sep)
     },
     exists = function(path) file_exists(path, state$root),
     list_dir = function(path) {
-      note(path)
-      list_dir(path, state$root)
+      files <- list_dir(path, state$root)
+      if (!is.null(files)) note(path)
+      files
     },
     env = function(name) {
       value <- Sys.getenv(name, unset = NA)
@@ -224,8 +230,23 @@ new_ctx <- function(state) {
       note(url)
       http_get(url, headers, timeout)
     },
+    # Compute a value once per facts() call and share it between resolvers,
+    # replaying its sources into every fact that uses it.
+    shared = function(key, compute) {
+      hit <- state$shared[[key]]
+      if (is.null(hit)) {
+        sub <- new_ctx(state)
+        hit <- list(value = compute(sub), used = sub$used())
+        state$shared[[key]] <- hit
+      }
+      for (source in hit$used) {
+        note(source)
+      }
+      hit$value
+    },
     fact = function(name) resolve_fact(name, state)$value,
     fact_record = function(name) resolve_fact(name, state),
+    used = function() unique(used),
     sources = function() {
       if (length(used)) paste(unique(used), collapse = "; ") else NA_character_
     }
