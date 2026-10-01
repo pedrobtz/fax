@@ -305,9 +305,9 @@ Not resolved by `print(facts())` or `as.list(facts())`; ask for it by name. Each
 
 | fact | sources | columns |
 |---|---|---|
-| `packages.system.installed` (+ `packages.system.manager`, `packages.system.count`) | dpkg `/var/lib/dpkg/status` (installed only) · apk `/lib/apk/db/installed` · pacman `/var/lib/pacman/local/*/desc` · rpm `rpm -qa --qf …` · Homebrew `Cellar/` and `Caskroom/` listing (no `brew` call) · Windows `readRegistry()` on the `Uninstall` keys | name, version, arch / kind / publisher |
-| `packages.r` | `installed.packages(fields = c("Repository", "RemoteType", "RemoteSha"))` over `.libPaths()` | name, version, libpath, priority, built, repository/remote |
-| `packages.python` | `*.dist-info` / `*.egg-info` directory names in each `runtime.python.site_packages`; `INSTALLER` file; conda `conda-meta/*.json` (marked `source = "conda"`); no `pip` call | name (PEP 503-normalized), version, location, installer |
+| `packages.system.installed` (+ `packages.system.manager`, `packages.system.count`) | dpkg `/var/lib/dpkg/status` (installed only; distroless `status.d/`) · apk `/lib/apk/db/installed` · pacman `/var/lib/pacman/local/*/desc` · rpm `rpm -qa --qf …` · Homebrew `Cellar/` and `Caskroom/` listing (no `brew` call) · Windows `readRegistry()` on the `Uninstall` keys | name, version, arch / kind / publisher |
+| `packages.r` | `installed.packages(fields = c("Repository", "RemoteType", "RemoteSha"))` over `.libPaths()` | name, version, libpath, priority, built, source (RemoteType, else Repository), remote_sha |
+| `packages.python` | `*.dist-info` / `*.egg-info` directory names in each `runtime.python.site_packages`; `INSTALLER` file; conda `conda-meta/*.json` (marked `source = "conda"`); no `pip` call | name (PEP 503-normalized), version, location, installer, source (`site-packages` / `conda`) |
 
 ### 5.13 Later
 - `dmi.*` *(0.2.0)*: BIOS, board, chassis, product; serials and UUIDs redacted by default.

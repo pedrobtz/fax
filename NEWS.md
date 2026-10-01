@@ -21,5 +21,9 @@
 * `env.vars` reports environment variables with secrets redacted by default
   (`fax.redact`, `fax.redact_allowlist`); `env.proxies` and `disk.tmpdir.*`
   describe proxies and the temporary directory.
+* The opt-in `packages` namespace lists installed system packages (dpkg,
+  rpm, apk, pacman, Homebrew, Windows), R packages and Python packages, read
+  from package databases rather than by running `pip` or package managers
+  where possible.
 * `usage()` and `usage_line()` report current process and container CPU and
   memory use cheaply enough to call on every log line.

@@ -18,5 +18,6 @@ register_builtins <- function() {
   register_python_facts()
   register_env_facts()
   register_disk_facts()
+  register_packages_facts()
   invisible()
 }

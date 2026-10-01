@@ -17,7 +17,8 @@ BugReports: https://github.com/pedrobtz/fax/issues
 Depends:
     R (>= 4.1.0)
 Imports:
-    parallel
+    parallel,
+    utils
 Suggests:
     jsonlite,
     parallelly,

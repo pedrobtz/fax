@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–4 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–5 done
 
 ---
 
@@ -153,15 +153,17 @@ Tests: `print()` snapshots per fixture; JSON round-trip (`Inf`, `NA`, named vect
 
 **Goal:** answer *"what is installed?"* (§5.12). Opt-in namespace; one `df` fact per source.
 
-- [ ] `packages.system.installed`, one resolver per manager, highest applicable weight wins: dpkg (installed entries only), apk, pacman, rpm (`rpm -qa --qf '%{NAME}\t%{VERSION}-%{RELEASE}\t%{ARCH}\n'`), Homebrew (`HOMEBREW_PREFIX` or standard prefixes; `Cellar/` and `Caskroom/` listing), Windows (`readRegistry()` on HKLM, HKLM WOW6432Node and HKCU `Uninstall` keys, behind a mockable wrapper). Plus `packages.system.manager` and `packages.system.count`.
-- [ ] `packages.r` from `installed.packages(fields = c("Repository", "RemoteType", "RemoteSha"))`.
-- [ ] `packages.python` from dist-info/egg-info directory names (read `METADATA` only when the name can't be parsed), `INSTALLER`, conda `conda-meta/*.json`.
+- [x] `packages.system.installed`, one resolver per manager, highest applicable weight wins: dpkg (installed entries only), apk, pacman, rpm (`rpm -qa --qf '%{NAME}\t%{VERSION}-%{RELEASE}\t%{ARCH}\n'`), Homebrew (`HOMEBREW_PREFIX` or standard prefixes; `Cellar/` and `Caskroom/` listing), Windows (`readRegistry()` on HKLM, HKLM WOW6432Node and HKCU `Uninstall` keys, behind a mockable wrapper). Plus `packages.system.manager` and `packages.system.count`.
+- [x] `packages.r` from `installed.packages(fields = c("Repository", "RemoteType", "RemoteSha"))`.
+- [x] `packages.python` from dist-info/egg-info directory names (read `METADATA` only when the name can't be parsed), `INSTALLER`, conda `conda-meta/*.json`.
 
 Fixtures (add): `dpkg-status`, `apk-installed`, `pacman-local`, recorded `rpm -qa`, Homebrew Cellar tree, mocked registry listing, site-packages tree.
 
 Tests: parser per manager; malformed entries skipped; `packages` never resolved by `print(facts())` / `as.list(facts())`.
 
 **Done when:** on each CI OS `facts("packages")` returns non-empty system and R inventories, and the Python inventory matches `pip list` in a CI venv.
+
+**Result:** non-empty system and R inventories are asserted on every GitHub Actions OS (`test-packages.R`); the `pip list` comparison moves to the Stage 8 Python job. In an Ubuntu container fax lists 273 dpkg packages in 43 ms, exactly the `ii` entries of `dpkg-query` (the other 29 are removed `rc` packages). Fixtures are inline test roots rather than tarballs. Distroless `status.d/` is supported.
 
 ---
 
