@@ -56,9 +56,12 @@ jobs:
           mv fax_*.tar.gz fax.tar.gz
 
       - name: Build image
+        env:
+          IMAGE: ${{ matrix.image }}
+          SETUP: ${{ matrix.setup }}
         run: |
           printf 'FROM %s\nRUN %s\nCOPY fax.tar.gz /tmp/\nRUN R CMD INSTALL /tmp/fax.tar.gz\nCOPY tools /tools\n' \
-            "${{ matrix.image }}" "${{ matrix.setup }}" | docker build -t fax-live -f - .
+            "$IMAGE" "$SETUP" | docker build -t fax-live -f - .
 
       - name: Check inside the container
         run: docker run --rm ${{ matrix.args }} ${{ matrix.env }} fax-live Rscript /tools/live/check.R
