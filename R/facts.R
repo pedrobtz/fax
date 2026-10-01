@@ -134,24 +134,6 @@ as.list.fax <- function(x, ...) {
   out
 }
 
-#' @export
-format.fax <- function(x, ...) {
-  state <- fax_state(x)
-  resolved <- unique(fact_namespace(names(state$memo)))
-  c(
-    "<fax facts>",
-    sprintf("root: %s | os: %s | cloud: %s", state$root, state$os, state$cloud),
-    sprintf("namespaces: %s", paste(known_namespaces(), collapse = ", ")),
-    sprintf("resolved: %s", if (length(resolved)) paste(resolved, collapse = ", ") else "none")
-  )
-}
-
-#' @export
-print.fax <- function(x, ...) {
-  cat(format(x, ...), sep = "\n")
-  invisible(x)
-}
-
 # Helpers ----------------------------------------------------------------
 
 fax_state <- function(x) .subset2(x, "state")

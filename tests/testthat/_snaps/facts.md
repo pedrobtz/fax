@@ -28,9 +28,10 @@
       f
     Output
       <fax facts>
-      root: / | os: linux | cloud: FALSE
-      namespaces: cpu
-      resolved: cpu
+      os       linux
+      runs in  no container
+      runs on  unknown
+      Use facts_df() for every fact with its status and source.
 
 # user errors are informative
 

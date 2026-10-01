@@ -98,9 +98,15 @@ test_that("usage() works on the live system", {
 test_that("format() gives a compact log line", {
   u <- structure(
     c(
-      time = 0, cpu_process = 0.3, cpu_cgroup = 1.84, cpu_throttled = 0.031,
-      cpu_limit = 4, mem_rss = 1.2 * 1024^3, mem_cgroup = 2.1 * 1024^3,
-      mem_limit = 8 * 1024^3, mem_pct = 2.1 / 8
+      time = 0,
+      cpu_process = 0.3,
+      cpu_cgroup = 1.84,
+      cpu_throttled = 0.031,
+      cpu_limit = 4,
+      mem_rss = 1.2 * 1024^3,
+      mem_cgroup = 2.1 * 1024^3,
+      mem_limit = 8 * 1024^3,
+      mem_pct = 2.1 / 8
     ),
     class = "fax_usage"
   )

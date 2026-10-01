@@ -1,21 +1,25 @@
 test_that("rlimits are read from /proc/self/limits", {
-  local_root(list("proc/self/limits" = c(
-    "Limit                     Soft Limit           Hard Limit           Units     ",
-    "Max data size             1073741824           unlimited            bytes     ",
-    "Max address space         unlimited            unlimited            bytes     "
-  )))
+  local_root(list(
+    "proc/self/limits" = c(
+      "Limit                     Soft Limit           Hard Limit           Units     ",
+      "Max data size             1073741824           unlimited            bytes     ",
+      "Max address space         unlimited            unlimited            bytes     "
+    )
+  ))
   withr::local_options(fax.os = "linux")
   expect_equal(fact("memory.rlimit.data"), 1024^3)
   expect_equal(fact("memory.rlimit.as"), Inf)
 })
 
 test_that("memory.host.available is approximated on old kernels", {
-  local_root(list("proc/meminfo" = c(
-    "MemTotal:       1000 kB",
-    "MemFree:         100 kB",
-    "Buffers:          10 kB",
-    "Cached:          200 kB"
-  )))
+  local_root(list(
+    "proc/meminfo" = c(
+      "MemTotal:       1000 kB",
+      "MemFree:         100 kB",
+      "Buffers:          10 kB",
+      "Cached:          200 kB"
+    )
+  ))
   withr::local_options(fax.os = "linux")
   expect_equal(fact("memory.host.available"), 310 * 1024)
 })

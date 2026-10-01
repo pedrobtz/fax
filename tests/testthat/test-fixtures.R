@@ -1,21 +1,60 @@
 expected <- data.frame(
   fixture = c(
-    "linux-vm-host", "docker-v2-unlimited", "docker-v2-cpus2-mem1g",
-    "docker-v2-cpus1.5-mem512m", "docker-v2-cgroupns-host", "cpuset-pinned",
-    "docker-v1-cpus1.5-mem512m", "hybrid", "k8s-v2-limits", "lxcfs",
-    "linux-baremetal", "azure-vm", "aws-ec2", "gcp-vm", "wsl2", "aks-pod-downward-api"
+    "linux-vm-host",
+    "docker-v2-unlimited",
+    "docker-v2-cpus2-mem1g",
+    "docker-v2-cpus1.5-mem512m",
+    "docker-v2-cgroupns-host",
+    "cpuset-pinned",
+    "docker-v1-cpus1.5-mem512m",
+    "hybrid",
+    "k8s-v2-limits",
+    "lxcfs",
+    "linux-baremetal",
+    "azure-vm",
+    "aws-ec2",
+    "gcp-vm",
+    "wsl2",
+    "aks-pod-downward-api"
   ),
   cpu = c(4L, 4L, 2L, 2L, 1L, 1L, 2L, 4L, 2L, 4L, 4L, 4L, 4L, 4L, 4L, 2L),
   exact = c(4, 4, 2, 1.5, 1, 1, 1.5, 4, 2, 4, 4, 4, 4, 4, 4, 1.5),
   memory = c(
-    6202609664, 6202609664, 1073741824, 536870912, 268435456, 6202609664,
-    536870912, 6202609664, 1073741824, 536870912,
-    6202609664, 6202609664, 6202609664, 6202609664, 6202609664, 4294967296
+    6202609664,
+    6202609664,
+    1073741824,
+    536870912,
+    268435456,
+    6202609664,
+    536870912,
+    6202609664,
+    1073741824,
+    536870912,
+    6202609664,
+    6202609664,
+    6202609664,
+    6202609664,
+    6202609664,
+    4294967296
   ),
   version = c("2", "2", "2", "2", "2", "2", "1", "hybrid", "2", "2", rep("2", 6)),
   namespaced = c(
-    FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE,
-    FALSE, FALSE, FALSE, FALSE, FALSE, TRUE
+    FALSE,
+    TRUE,
+    TRUE,
+    TRUE,
+    FALSE,
+    TRUE,
+    FALSE,
+    FALSE,
+    FALSE,
+    TRUE,
+    FALSE,
+    FALSE,
+    FALSE,
+    FALSE,
+    FALSE,
+    TRUE
   )
 )
 

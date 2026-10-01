@@ -1,10 +1,14 @@
 dmi <- function(ctx) {
   ctx$shared("dmi", function(ctx) {
     fields <- c("sys_vendor", "product_name", "board_vendor", "bios_vendor", "chassis_asset_tag")
-    values <- vapply(fields, function(field) {
-      line <- ctx$read(paste0("/sys/class/dmi/id/", field), n = 1L)
-      if (length(line)) trimws(line[1]) else NA_character_
-    }, character(1))
+    values <- vapply(
+      fields,
+      function(field) {
+        line <- ctx$read(paste0("/sys/class/dmi/id/", field), n = 1L)
+        if (length(line)) trimws(line[1]) else NA_character_
+      },
+      character(1)
+    )
     if (all(is.na(values))) NULL else values
   })
 }
@@ -54,9 +58,14 @@ register_virtualization_facts <- function() {
   linux <- list(os = "linux")
 
   register(resolver("virtualization.hypervisor", confine = linux, function(ctx) {
-    detect_hypervisor(ctx) %||% {
-      flags <- ctx$fact("cpu.flags")
-      if ("hypervisor" %in% flags) "unknown" else not_applicable("No hypervisor detected.")
+    hypervisor <- detect_hypervisor(ctx)
+    if (!is.null(hypervisor)) {
+      return(hypervisor)
+    }
+    if ("hypervisor" %in% ctx$fact("cpu.flags")) {
+      "unknown"
+    } else {
+      not_applicable("No hypervisor detected.")
     }
   }))
 

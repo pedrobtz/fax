@@ -8,6 +8,7 @@ reference:
   - facts
   - fact
   - facts_df
+  - facts_json
 - title: Resources
   contents:
   - effective_cores

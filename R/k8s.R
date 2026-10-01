@@ -58,11 +58,13 @@ register_k8s_facts <- function() {
   }))
 
   register(resolver("k8s.pod.name", confine = in_k8s, cache = FALSE, function(ctx) {
-    k8s_env(ctx, "pod.name") %||% {
-      # Kubernetes sets the hostname to the pod name unless the spec overrides it.
-      host <- ctx$fact("os.hostname")
-      if (is.na(host)) NULL else host
+    name <- k8s_env(ctx, "pod.name")
+    if (!is.null(name)) {
+      return(name)
     }
+    # Kubernetes sets the hostname to the pod name unless the spec overrides it.
+    host <- ctx$fact("os.hostname")
+    if (is.na(host)) NULL else host
   }))
 
   register(resolver("k8s.node.name", confine = in_k8s, cache = FALSE, function(ctx) {

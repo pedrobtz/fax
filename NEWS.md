@@ -11,5 +11,15 @@
   process runs: bare metal or VM (`virtualization.*`, including WSL),
   container (`container.*`), Kubernetes pod (`k8s.*`, including the Downward
   API) and cloud provider (`cloud.provider`).
+* `facts_json()` writes facts as JSON, optionally with their status and
+  source; `print()` on a `facts()` snapshot shows a short summary of where the
+  process runs and what it can use.
+* Runtime facts describe R (version, BLAS/LAPACK, library paths, repositories
+  with credentials removed, renv, thread settings), the process (pid, user,
+  uid, privileges) and Python (interpreter, version, venv/uv/conda/system,
+  site-packages) without starting Python inside R.
+* `env.vars` reports environment variables with secrets redacted by default
+  (`fax.redact`, `fax.redact_allowlist`); `env.proxies` and `disk.tmpdir.*`
+  describe proxies and the temporary directory.
 * `usage()` and `usage_line()` report current process and container CPU and
   memory use cheaply enough to call on every log line.

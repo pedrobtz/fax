@@ -1,0 +1,95 @@
+test_that("secret-looking variables are redacted", {
+  vars <- c(
+    AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountKey=abc",
+    AZURE_CLIENT_SECRET = "x",
+    IDENTITY_HEADER = "x",
+    MSI_SECRET = "x",
+    GITHUB_PAT = "ghp_x",
+    AWS_SECRET_ACCESS_KEY = "x",
+    BLOB_SAS = "sv=2022",
+    API_TOKEN = "x",
+    DB_PASSWORD = "x",
+    PATH = "/usr/bin",
+    R_HOME = "/usr/lib/R",
+    PWD = "/home/u",
+    PATTERN = "ok",
+    HOME = "/home/u",
+    DATABASE_URL = "postgres://admin:hunter2@db:5432/app"
+  )
+  out <- redact_env(vars)
+  secret <- c(
+    "AZURE_STORAGE_CONNECTION_STRING",
+    "AZURE_CLIENT_SECRET",
+    "IDENTITY_HEADER",
+    "MSI_SECRET",
+    "GITHUB_PAT",
+    "AWS_SECRET_ACCESS_KEY",
+    "BLOB_SAS",
+    "API_TOKEN",
+    "DB_PASSWORD"
+  )
+  expect_equal(unname(out[secret]), rep("<redacted>", length(secret)))
+  expect_equal(
+    out[c("PATH", "R_HOME", "PWD", "PATTERN", "HOME")],
+    vars[c("PATH", "R_HOME", "PWD", "PATTERN", "HOME")]
+  )
+  expect_equal(out[["DATABASE_URL"]], "postgres://<redacted>@db:5432/app")
+})
+
+test_that("redaction modes are honoured", {
+  vars <- c(API_TOKEN = "x", HOME = "/home/u", URL = "https://u:p@h")
+  expect_equal(redact_env(vars, "allowlist", "HOME"), c(HOME = "/home/u"))
+  expect_equal(
+    redact_env(vars, "none"),
+    c(API_TOKEN = "x", HOME = "/home/u", URL = "https://<redacted>@h")
+  )
+  expect_equal(redact_env(vars, "default", "API_TOKEN")[["API_TOKEN"]], "x")
+})
+
+test_that("env.vars uses the redaction options", {
+  withr::local_envvar(FAX_TEST_TOKEN = "s3cret", FAX_TEST_PLAIN = "visible")
+  vars <- fact("env.vars")
+  expect_equal(vars[["FAX_TEST_TOKEN"]], "<redacted>")
+  expect_equal(vars[["FAX_TEST_PLAIN"]], "visible")
+  withr::local_options(fax.redact = "allowlist", fax.redact_allowlist = "FAX_TEST_PLAIN")
+  expect_equal(fact("env.vars"), c(FAX_TEST_PLAIN = "visible"))
+  withr::local_options(fax.redact = "bogus")
+  df <- facts_df(facts("env"))
+  expect_equal(df$status[df$fact == "env.vars"], "error")
+})
+
+test_that("proxies lose their credentials", {
+  withr::local_envvar(
+    http_proxy = "http://user:pw@proxy:3128",
+    https_proxy = NA,
+    no_proxy = "localhost",
+    HTTP_PROXY = NA,
+    HTTPS_PROXY = NA,
+    NO_PROXY = NA
+  )
+  expect_equal(
+    fact("env.proxies"),
+    c(http_proxy = "http://<redacted>@proxy:3128", no_proxy = "localhost")
+  )
+  withr::local_envvar(http_proxy = NA, no_proxy = NA)
+  df <- facts_df(facts("env"))
+  expect_equal(df$status[df$fact == "env.proxies"], "not_applicable")
+})
+
+test_that("tmpdir facts describe tempdir()", {
+  expect_equal(fact("disk.tmpdir.path"), tempdir())
+  skip_on_os("windows")
+  expect_gt(fact("disk.tmpdir.free"), 0)
+})
+
+test_that("mount_for() picks the longest matching mount point", {
+  mounts <- data.frame(
+    root = "/",
+    mountpoint = c("/", "/tmp", "/tmpfoo"),
+    fstype = c("overlay", "tmpfs", "ext4"),
+    superopts = ""
+  )
+  expect_equal(mount_for(mounts, "/tmp/RtmpX")$fstype, "tmpfs")
+  expect_equal(mount_for(mounts, "/tmpbar")$fstype, "overlay")
+  expect_equal(mount_for(mounts, "/tmpfoo/x")$fstype, "ext4")
+})
