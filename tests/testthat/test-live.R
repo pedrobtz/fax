@@ -49,3 +49,22 @@ test_that("IMDS on GitHub-hosted Linux runners answers quickly or is reported bl
   expect_type(region$value[[1]], "character")
   expect_match(f[["cloud.instance.type"]], "^Standard_")
 })
+
+test_that("host facts resolve natively on every CI OS", {
+  skip_on_cran()
+  skip_if_not(identical(Sys.getenv("GITHUB_ACTIONS"), "true"), "not on GitHub Actions")
+  withr::local_options(fax.root = NULL, fax.os = NULL)
+  df <- facts_df(facts(refresh = TRUE))
+  row <- \(fact) df[df$fact == fact, ]
+  for (fact in c(
+    "os.name",
+    "cpu.host.logical",
+    "cpu.model",
+    "memory.host.total",
+    "virtualization.type"
+  )) {
+    expect_equal(row(fact)$status, "ok", label = fact)
+  }
+  expect_false(grepl("detectCores", row("cpu.host.logical")$resolver))
+  expect_gt(row("memory.host.total")$value[[1]], 0)
+})

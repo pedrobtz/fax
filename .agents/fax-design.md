@@ -212,7 +212,7 @@ Types: `chr`, `int`, `dbl`, `lgl`, `bytes` (double, since R integers are 32-bit)
 ### 5.5 `virtualization`
 | fact | notes |
 |---|---|
-| `virtualization.type` | `physical` · `vm` · `unknown` |
+| `virtualization.type` | `physical` · `vm` · `unknown` (Linux DMI, Windows BIOS registry key, macOS `kern.hv_vmm_present`) |
 | `virtualization.hypervisor` | `hyperv` · `kvm` · `qemu` · `vmware` · `xen` · `virtualbox` · `aws-nitro` · `apple` · … |
 | `virtualization.wsl` | `1` / `2` (`/proc/sys/kernel/osrelease` contains `microsoft`; `WSL2` / `microsoft-standard` → 2); `not_applicable` outside WSL |
 | sources | Linux: DMI `/sys/class/dmi/id/{sys_vendor,product_name,board_vendor}`, cpuinfo `hypervisor` flag, `/sys/hypervisor/type` (no `systemd-detect-virt`). macOS: `sysctl kern.hv_vmm_present` |

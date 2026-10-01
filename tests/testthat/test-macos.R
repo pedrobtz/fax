@@ -1,0 +1,51 @@
+test_that("Intel macOS facts come from sysctl, sw_vers and vm_stat", {
+  withr::local_options(fax.os = "darwin")
+  local_cmd_outputs(
+    sysctl = "macos-intel-sysctl.txt",
+    sw_vers = "macos-sw_vers.txt",
+    vm_stat = "macos-vm_stat.txt"
+  )
+  f <- facts(refresh = TRUE)
+  expect_equal(f[["os.name"]], "macOS")
+  expect_equal(f[["os.id"]], "macos")
+  expect_equal(f[["os.release.full"]], "15.7.9")
+  expect_equal(f[["os.release.major"]], "15")
+  expect_equal(f[["os.boot_time"]], as.POSIXct(1788394074, tz = "UTC"))
+  expect_equal(f[["cpu.model"]], "Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz")
+  expect_equal(f[["cpu.vendor"]], "Intel")
+  expect_equal(f[["cpu.isa_level"]], "x86-64-v3")
+  expect_true(all(c("avx", "avx2", "sse4_2", "abm", "lahf_lm") %in% f[["cpu.flags"]]))
+  expect_equal(f[["cpu.host.logical"]], 6)
+  expect_equal(f[["cpu.host.physical"]], 6)
+  expect_equal(f[["cpu.host.sockets"]], 1)
+  expect_equal(f[["cpu.load"]], c(`1min` = 1.38, `5min` = 1.24, `15min` = 1.25))
+  expect_equal(f[["cpu.effective"]], 6L)
+  expect_equal(f[["memory.host.total"]], 8 * 1024^3)
+  expect_equal(f[["memory.host.available"]], (4784 + 605355 + 218) * 4096)
+  expect_equal(f[["memory.effective.limit"]], 8 * 1024^3)
+  expect_equal(f[["virtualization.type"]], "physical")
+  df <- facts_df(f)
+  expect_equal(df$status[df$fact == "virtualization.hypervisor"], "not_applicable")
+  expect_equal(unique(df$status[startsWith(df$fact, "cgroup.")]), "not_applicable")
+})
+
+test_that("Apple silicon macOS VMs are recognised", {
+  withr::local_options(fax.os = "darwin")
+  local_cmd_outputs(sysctl = "macos-arm-sysctl.txt", sw_vers = "macos-sw_vers.txt")
+  f <- facts(refresh = TRUE)
+  expect_equal(f[["cpu.model"]], "Apple M2 Pro")
+  expect_equal(f[["cpu.vendor"]], "Apple")
+  expect_equal(f[["cpu.isa_level"]], "arm64")
+  expect_equal(f[["cpu.host.logical"]], 12)
+  expect_equal(f[["memory.host.total"]], 32 * 1024^3)
+  expect_equal(f[["virtualization.type"]], "vm")
+  expect_equal(f[["virtualization.hypervisor"]], "apple")
+})
+
+test_that("macOS without sysctl falls back to detectCores()", {
+  withr::local_options(fax.os = "darwin", fax.cmd_mock = function(cmd, args) NULL)
+  df <- facts_df(facts(refresh = TRUE))
+  expect_equal(df$resolver[df$fact == "cpu.host.logical"], "cpu.host.logical/detectCores")
+  expect_equal(df$status[df$fact == "memory.host.total"], "unavailable")
+  expect_equal(df$fact[df$status == "error"], character())
+})

@@ -8,6 +8,16 @@ mount_for <- function(mounts, path) {
   mounts[hit, , drop = FALSE][which.max(nchar(points[hit])), ]
 }
 
+# Mount points from ps (macOS, Windows), shaped like parse_mountinfo().
+ps_mounts <- function(ctx) {
+  parts <- ps_call("ps_disk_partitions", all = TRUE)
+  if (is.null(parts)) {
+    return(NULL)
+  }
+  ctx$note("ps::ps_disk_partitions()")
+  data.frame(root = "/", mountpoint = parts$mountpoint, fstype = parts$fstype, superopts = "")
+}
+
 register_disk_facts <- function() {
   register(resolver("disk.tmpdir.path", cache = FALSE, function(ctx) {
     r_note(ctx, "tempdir()")
@@ -22,6 +32,37 @@ register_disk_facts <- function() {
       path <- normalizePath(tempdir(), winslash = "/", mustWork = FALSE)
       mount <- mount_for(mountinfo(ctx), path)
       if (is.null(mount)) NULL else mount$fstype
+    }
+  ))
+
+  register(resolver(
+    "disk.tmpdir.fstype",
+    confine = list(os = \(os) os != "linux"),
+    cache = FALSE,
+    id = "disk.tmpdir.fstype/ps",
+    function(ctx) {
+      mounts <- ps_mounts(ctx)
+      path <- normalizePath(tempdir(), winslash = "/", mustWork = FALSE)
+      if (!is.null(mounts)) {
+        mounts$mountpoint <- sub("\\\\$", "/", gsub("\\\\", "/", mounts$mountpoint))
+      }
+      mount <- if (!is.null(mounts)) mount_for(mounts, path)
+      if (is.null(mount)) NULL else mount$fstype
+    }
+  ))
+
+  register(resolver(
+    "disk.tmpdir.free",
+    confine = list(os = "windows"),
+    cache = FALSE,
+    id = "disk.tmpdir.free/ps",
+    function(ctx) {
+      usage <- ps_call("ps_disk_usage", tempdir())
+      if (is.null(usage)) {
+        return(NULL)
+      }
+      ctx$note("ps::ps_disk_usage()")
+      as.numeric(usage$available[1])
     }
   ))
 

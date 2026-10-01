@@ -11,6 +11,36 @@ python_bin <- function(prefix, windows) {
 
 sys_which <- function(name) Sys.which(name)
 
+# Windows interpreters not on PATH: the py launcher's default, else the newest
+# per-user install under %LOCALAPPDATA%\\Programs\\Python.
+windows_python <- function(ctx) {
+  py <- sys_which("py")
+  if (nzchar(py)) {
+    out <- ctx$cmd(unname(py), "-0p", timeout = 5)
+    lines <- if (!is.null(out) && out$status == 0L) out$stdout else character()
+    pick <- c(grep("\\*", lines, value = TRUE), lines)
+    path <- regmatches(pick, regexpr("[A-Za-z]:\\\\.*\\.exe", pick))
+    if (length(path)) {
+      return(list(path = trimws(path[1]), prefix = NA_character_, how = "py launcher"))
+    }
+  }
+  local <- ctx$env("LOCALAPPDATA")
+  if (is.null(local)) {
+    return(NULL)
+  }
+  dirs <- grep(
+    "^Python3[0-9]+$",
+    ctx$list_dir(file.path(local, "Programs", "Python")),
+    value = TRUE
+  )
+  if (!length(dirs)) {
+    return(NULL)
+  }
+  newest <- dirs[order(as.integer(sub("^Python3", "", dirs)), decreasing = TRUE)][1]
+  prefix <- file.path(local, "Programs", "Python", newest)
+  list(path = file.path(prefix, "python.exe"), prefix = NA_character_, how = "LOCALAPPDATA")
+}
+
 # The interpreter to describe and how it was found.
 python_interpreter <- function(ctx) {
   ctx$shared("python_interpreter", function(ctx) {
@@ -41,10 +71,14 @@ python_interpreter <- function(ctx) {
     }
     for (name in c("python3", "python")) {
       path <- sys_which(name)
-      if (nzchar(path)) {
+      # The Windows Store "python" alias opens the Store instead of running.
+      if (nzchar(path) && !grepl("WindowsApps", path, fixed = TRUE)) {
         ctx$note(paste0("Sys.which(\"", name, "\")"))
         return(list(path = unname(path), prefix = NA_character_, how = "PATH"))
       }
+    }
+    if (windows) {
+      return(windows_python(ctx))
     }
     NULL
   })

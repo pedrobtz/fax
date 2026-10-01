@@ -1,4 +1,7 @@
 dmi <- function(ctx) {
+  if (ctx$os == "windows") {
+    return(windows_dmi(ctx))
+  }
   ctx$shared("dmi", function(ctx) {
     fields <- c("sys_vendor", "product_name", "board_vendor", "bios_vendor", "chassis_asset_tag")
     values <- vapply(
@@ -56,8 +59,10 @@ detect_hypervisor <- function(ctx) {
 
 register_virtualization_facts <- function() {
   linux <- list(os = "linux")
+  # Windows reads the same vendor fields from the BIOS registry key.
+  dmi_os <- list(os = c("linux", "windows"))
 
-  register(resolver("virtualization.hypervisor", confine = linux, function(ctx) {
+  register(resolver("virtualization.hypervisor", confine = dmi_os, function(ctx) {
     hypervisor <- detect_hypervisor(ctx)
     if (!is.null(hypervisor)) {
       return(hypervisor)
@@ -69,7 +74,7 @@ register_virtualization_facts <- function() {
     }
   }))
 
-  register(resolver("virtualization.type", confine = linux, function(ctx) {
+  register(resolver("virtualization.type", confine = dmi_os, function(ctx) {
     hypervisor <- ctx$fact_record("virtualization.hypervisor")
     if (hypervisor$status == "ok") {
       return("vm")

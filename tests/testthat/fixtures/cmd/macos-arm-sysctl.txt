@@ -1,0 +1,9 @@
+machdep.cpu.brand_string: Apple M2 Pro
+hw.logicalcpu: 12
+hw.physicalcpu: 12
+hw.packages: 1
+hw.memsize: 34359738368
+kern.boottime: { sec = 1790000000, usec = 0 } Mon Sep 21 14:13:20 2026
+vm.loadavg: { 2.50 2.10 1.90 }
+kern.hv_vmm_present: 1
+hw.optional.arm64: 1
