@@ -1,0 +1,27 @@
+
+# fax
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/pedrobtz/fax/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pedrobtz/fax/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
+The goal of fax is to ...
+
+## Installation
+
+You can install the development version of fax from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("pedrobtz/fax")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(fax)
+## basic example code
+```
+
