@@ -33,3 +33,16 @@ test_that("known_namespaces() follows the canonical order", {
   expect_equal(known_namespaces(), c("os", "memory", "packages", "zeta"))
   expect_equal(default_namespaces(), c("os", "memory", "zeta"))
 })
+
+test_that("every fact is documented in fact_docs", {
+  expect_setequal(fact_docs$fact, known_facts())
+  expect_false(anyNA(fact_docs$type))
+  expect_true(all(nzchar(fact_docs$description)))
+})
+
+test_that("fact_platforms() summarises resolver confinement", {
+  expect_equal(fact_platforms("os.family"), "all")
+  expect_equal(fact_platforms("cgroup.version"), "Linux")
+  expect_equal(fact_platforms("cpu.load"), "Linux, macOS")
+  expect_equal(fact_platforms("virtualization.type"), "all")
+})

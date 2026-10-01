@@ -30,7 +30,8 @@ The fact's value, or \code{NA} if it could not be determined.
 Get the value of a single fact
 }
 \examples{
-try(fact("cpu.effective"))
+fact("cpu.effective")
+fact("os.family")
 }
 \seealso{
 \code{\link[=facts]{facts()}} for a lazy snapshot of many facts.

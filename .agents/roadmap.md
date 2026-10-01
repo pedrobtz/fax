@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–8 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–9 done
 
 ---
 
@@ -242,16 +242,18 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 
 **Goal:** a reader understands what fax reports and why it differs from `detectCores()`.
 
-- [ ] roxygen docs and fast, network-free examples for every export (IMDS examples in `\dontrun{}`, noting they need Azure).
-- [ ] Fact reference page generated from the registry: name, type, platforms, sources, default/opt-in, `Inf` / `NA` meaning.
-- [ ] Vignette `fax`: motivation, host vs effective, containers/k8s walkthrough (output pre-rendered from fixtures), options reference.
-- [ ] Vignette `azure`: offline detection per service, what IMDS adds, the AKS "node, not pod" caveat, what is never read.
-- [ ] Article `logging`: `usage_line()` with logger, lgr and `message()`; what each field means; `cpu_throttled` as the signal that a container is CPU-starved; cost per call.
-- [ ] Article `inventory`: system / R / Python packages, e.g. attaching an environment report to a bug report or job log.
-- [ ] `README.Rmd`: pitch, install, `print(facts())`, `effective_cores()` with `future` / `data.table`.
-- [ ] pkgdown reference grouped by topic; `NEWS.md` for 0.1.0; lifecycle note (fact names frozen per §3; changes need NEWS + deprecation).
+- [x] roxygen docs and fast, network-free examples for every export (IMDS examples in `\dontrun{}`, noting they need Azure).
+- [x] Fact reference page generated from the registry: name, type, platforms, sources, default/opt-in, `Inf` / `NA` meaning.
+- [x] Vignette `fax`: motivation, host vs effective, containers/k8s walkthrough (output pre-rendered from fixtures), options reference.
+- [x] Vignette `azure`: offline detection per service, what IMDS adds, the AKS "node, not pod" caveat, what is never read.
+- [x] Article `logging`: `usage_line()` with logger, lgr and `message()`; what each field means; `cpu_throttled` as the signal that a container is CPU-starved; cost per call.
+- [x] Article `inventory`: system / R / Python packages, e.g. attaching an environment report to a bug report or job log.
+- [x] `README.Rmd`: pitch, install, `print(facts())`, `effective_cores()` with `future` / `data.table`.
+- [x] pkgdown reference grouped by topic; `NEWS.md` for 0.1.0; lifecycle note (fact names frozen per §3; changes need NEWS + deprecation).
 
 **Done when:** pkgdown builds cleanly and every export has an example.
+
+**Result:** `?fax_facts` is generated from `fact_docs` (type and description of all 118 facts) and the registry (platforms, opt-in, network); a test fails if a fact is undocumented. One CRAN vignette (`fax`: snapshot, status and source, effective cores and memory, a Kubernetes walkthrough pre-rendered from the `k8s-v2-limits` fixture, outputs, options) and three pkgdown-only articles (`azure`, `logging`, `inventory`) under `vignettes/articles/`. README rewritten with a live example and the pod example; knitr and rmarkdown added to Suggests. pkgdown builds cleanly; `R CMD check` clean apart from the NEWS heading note.
 
 ---
 

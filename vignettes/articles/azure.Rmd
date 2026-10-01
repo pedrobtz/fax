@@ -1,0 +1,77 @@
+---
+title: "Azure"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
+```
+
+fax recognises Azure without network access, and with `cloud = TRUE` reads the
+instance metadata service (IMDS) for details such as region and VM size.
+
+## Offline: which service am I on?
+
+`cloud.provider` is `"azure"` when the VM's DMI data says so (Azure sets a
+fixed chassis asset tag), when Hyper-V is combined with the Azure guest agent
+(`/var/lib/waagent` on Linux, `C:/WindowsAzure` on Windows), or when one of the
+Azure services below sets its environment variables.
+
+`cloud.azure.platform` then names the service:
+
+| Platform | Recognised by |
+|:--|:--|
+| `functions` | `FUNCTIONS_WORKER_RUNTIME` |
+| `app-service` | `WEBSITE_SITE_NAME` |
+| `container-apps` | `CONTAINER_APP_NAME` |
+| `batch` | `AZ_BATCH_NODE_ID` |
+| `azureml` | `AZUREML_RUN_ID` |
+| `databricks` | `DATABRICKS_RUNTIME_VERSION` (on Azure only) |
+| `aks` | a Kubernetes pod on an Azure node |
+| `vm` | anything else on Azure |
+
+`cloud.azure.service` holds the service's non-secret identifiers, e.g. the App
+Service site and instance or the Batch pool, node, job and task.
+
+## Online: instance metadata
+
+```{r}
+f <- facts(cloud = TRUE)
+f
+#> <fax facts>
+#> os       Ubuntu 24.04
+#> runs in  Kubernetes pod analytics/spark-driver-7d9f-xk2lp, containerd container
+#> runs on  vm (hyperv), cloud azure (aks), node westeurope Standard_D4s_v5
+#> cpu      host 4 | effective 1.5 (2 threads)
+#> memory   host 16G | limit 4G | available 3.1G
+#> Use facts_df() for every fact with its status and source.
+
+str(f$cloud[c("region", "zone", "instance")])
+#> List of 3
+#>  $ region  : chr "westeurope"
+#>  $ zone    : chr "2"
+#>  $ instance:List of 2
+#>   ..$ type: chr "Standard_D4s_v5"
+#>   ..$ id  : chr "11111111-2222-3333-4444-555555555555"
+```
+
+`f$cloud$azure` adds the VM name, resource group, subscription, scale set,
+spot priority and eviction policy, image, tags and IP addresses. Tags whose name
+looks like a secret are redacted, like environment variables.
+
+In a pod, the metadata describes the **node VM**, not the pod: the summary says
+`node` to make that clear.
+
+## What fax does and does not do
+
+* No request is made without `cloud = TRUE` (or `options(fax.cloud = TRUE)`),
+  and none off Azure: the offline check comes first.
+* Exactly one URL can be requested:
+  `http://169.254.169.254/metadata/instance?api-version=2021-02-01`. The
+  managed identity endpoints (`/metadata/identity/...`) that hand out access
+  tokens are refused before any connection is made.
+* The request bypasses any configured proxy, times out after 1 second and is
+  made at most once per session, failures included. `refresh = TRUE` tries
+  again.
+* Where IMDS is blocked (some network policies, App Service, Container Apps),
+  the facts are `unavailable` with the reason in `facts_df()`.
+* Parsing the response needs the jsonlite package.
