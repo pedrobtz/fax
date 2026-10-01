@@ -19,7 +19,7 @@
       <fax facts>
       os       Ubuntu 24.04
       runs in  Kubernetes pod analytics/spark-driver-7d9f-xk2lp, containerd container
-      runs on  vm (hyperv), cloud azure
+      runs on  vm (hyperv), cloud azure (aks)
       cpu      host 4 | effective 1.5 (2 threads)
       memory   host 16G | limit 4G | available 3.1G
       Use facts_df() for every fact with its status and source.

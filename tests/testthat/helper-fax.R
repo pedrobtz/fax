@@ -78,6 +78,8 @@ local_fixture_copy <- function(name, env = parent.frame()) {
 # One line per fact, for snapshots: name = value [status] source
 fixture_report <- function(name) {
   local_fixture(name)
+  local_azure_env()
+  withr::local_envvar(container = NA)
   df <- facts_df(facts(refresh = TRUE))
   # runtime, env and disk describe the R session, not the fixture.
   df <- df[!fact_namespace(df$fact) %in% c("runtime", "env", "disk"), ]
@@ -119,4 +121,50 @@ write_files <- function(dir, files) {
     writeLines(files[[path]], full)
   }
   dir
+}
+
+# Answer IMDS requests with `body` (or fail with `error`), counting requests.
+local_imds <- function(body = NULL, error = NULL, env = parent.frame()) {
+  calls <- 0
+  withr::local_options(
+    fax.http_mock = function(url, headers) {
+      calls <<- calls + 1
+      if (!is.null(error)) {
+        unavailable(error)
+      }
+      list(status = 200L, body = body)
+    },
+    .local_envir = env
+  )
+  .fax$imds <- list()
+  withr::defer(.fax$imds <- list(), envir = env)
+  function() calls
+}
+
+imds_body <- function() paste(readLines(test_path("fixtures", "azure-imds.json")), collapse = "\n")
+
+azure_env_vars <- c(
+  "FUNCTIONS_WORKER_RUNTIME",
+  "WEBSITE_SITE_NAME",
+  "WEBSITE_INSTANCE_ID",
+  "WEBSITE_SKU",
+  "CONTAINER_APP_NAME",
+  "CONTAINER_APP_REVISION",
+  "CONTAINER_APP_REPLICA_NAME",
+  "AZ_BATCH_NODE_ID",
+  "AZ_BATCH_POOL_ID",
+  "AZ_BATCH_JOB_ID",
+  "AZ_BATCH_TASK_ID",
+  "AZUREML_RUN_ID",
+  "AZUREML_EXPERIMENT_NAME",
+  "DATABRICKS_RUNTIME_VERSION",
+  "KUBERNETES_SERVICE_HOST"
+)
+
+# Clear every Azure platform variable, then set the given ones.
+local_azure_env <- function(..., env = parent.frame()) {
+  vars <- as.list(stats::setNames(rep(NA, length(azure_env_vars)), azure_env_vars))
+  set <- list(...)
+  vars[names(set)] <- set
+  withr::local_envvar(.new = vars, .local_envir = env)
 }

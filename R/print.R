@@ -42,7 +42,22 @@ format.fax <- function(x, ...) {
     "unknown"
   )
   cloud <- value("cloud.provider")
-  add("runs on", paste(c(on, if (!is.null(cloud)) paste("cloud", cloud)), collapse = ", "))
+  if (!is.null(cloud)) {
+    platform <- value("cloud.azure.platform")
+    if (!is.null(platform) && platform != "vm") {
+      cloud <- sprintf("%s (%s)", cloud, platform)
+    }
+    if (state$cloud) {
+      details <- c(value("cloud.region"), value("cloud.instance.type"))
+      if (length(details)) {
+        # In a pod, instance metadata describes the node VM.
+        node <- if (isTRUE(value("k8s.detected"))) "node " else ""
+        cloud <- sprintf("%s, %s%s", cloud, node, paste(details, collapse = " "))
+      }
+    }
+    cloud <- paste("cloud", cloud)
+  }
+  add("runs on", paste(c(on, cloud), collapse = ", "))
 
   host_cpu <- value("cpu.host.logical")
   exact <- value("cpu.effective_exact")

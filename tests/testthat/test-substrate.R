@@ -38,7 +38,8 @@ for (i in seq_len(nrow(substrate))) {
   want <- substrate[i, ]
   test_that(paste("substrate:", want$fixture), {
     local_fixture(want$fixture)
-    withr::local_envvar(KUBERNETES_SERVICE_HOST = NA, container = NA)
+    withr::local_envvar(container = NA)
+    local_azure_env()
     f <- facts(refresh = TRUE)
     expect_equal(f[["virtualization.type"]], want$type)
     expect_equal(as.character(f[["virtualization.hypervisor"]]), want$hypervisor)

@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–5 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–6 done
 
 ---
 
@@ -171,17 +171,19 @@ Tests: parser per manager; malformed entries skipped; `packages` never resolved 
 
 **Goal:** know which Azure service the process runs on, and fetch instance metadata when allowed (§5.8).
 
-- [ ] **Spike first:** confirm base R `url(method = "libcurl", headers = c(Metadata = "true"))` can reach IMDS with a reliable 1 s timeout and proxy bypass (temporarily set `no_proxy` for `169.254.169.254`). If not, use `curl` from Suggests and report `unavailable` without it. Record the outcome in §12.
-- [ ] Offline: `cloud.azure.platform` and `cloud.azure.service.*` from platform env vars; verify each variable name against current Azure docs.
-- [ ] `http_get()` transport: allowlist, 1 s timeout, no retries, no redirects.
-- [ ] IMDS resolver: one `GET /metadata/instance?api-version=<pinned>`; map fields per §5.8; tags redacted; pinned API version recorded in `source`.
-- [ ] Blocked IMDS (network policy, App Service, Container Apps) → `unavailable` with the reason. `print()` notes "node VM" when `k8s.detected`.
+- [x] **Spike first:** confirm base R `url(method = "libcurl", headers = c(Metadata = "true"))` can reach IMDS with a reliable 1 s timeout and proxy bypass (temporarily set `no_proxy` for `169.254.169.254`). If not, use `curl` from Suggests and report `unavailable` without it. Record the outcome in §12.
+- [x] Offline: `cloud.azure.platform` and `cloud.azure.service.*` from platform env vars; verify each variable name against current Azure docs.
+- [x] `http_get()` transport: allowlist, 1 s timeout, no retries, no redirects.
+- [x] IMDS resolver: one `GET /metadata/instance?api-version=<pinned>`; map fields per §5.8; tags redacted; pinned API version recorded in `source`.
+- [x] Blocked IMDS (network policy, App Service, Container Apps) → `unavailable` with the reason. `print()` notes "node VM" when `k8s.detected`.
 
 Fixtures (add): env-var sets per PaaS platform; recorded IMDS JSON with IDs and IPs replaced.
 
 Tests: platform detection per env set; IMDS parsing; timeout and connection-refused give `unavailable` within ~1 s; HTTP mock never called without `cloud = TRUE`; requests outside the allowlist (e.g. `/metadata/identity/oauth2/token`) refused.
 
 **Done when:** on a real Azure VM and an AKS pod, `facts(cloud = TRUE)` returns region, size, resource group and platform in under 1.5 s; off Azure, `cloud = TRUE` makes no request because the offline guess rules Azure out.
+
+**Result:** spike done (base R, no `curl`). IMDS parsing, the once-per-session request, failure handling and "no request off Azure or without `cloud = TRUE`" are covered by mocked tests; `test-live.R` probes IMDS on GitHub-hosted runners (Azure VMs) and skips with the reason if it is blocked. A check on a real Azure VM and an AKS pod moves to Stage 8, together with confirming the PaaS env var names. `cloud.azure.service` became one named fact instead of `cloud.azure.service.*`; `vmss` is not a platform (use `cloud.azure.vmss_name`).
 
 ---
 

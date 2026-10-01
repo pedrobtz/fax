@@ -2,7 +2,15 @@
 azure_asset_tag <- "7783-7084-3265-9085-8269-3286-77"
 
 register_cloud_facts <- function() {
-  register(resolver("cloud.provider", confine = list(os = "linux"), function(ctx) {
+  # Read on every call: Azure services that hide DMI are recognised from their
+  # environment variables.
+  register(resolver("cloud.provider", cache = FALSE, function(ctx) {
+    if (!is.null(azure_platform_from_env(ctx))) {
+      return("azure")
+    }
+    if (ctx$os != "linux") {
+      not_applicable("Cloud detection from DMI needs Linux.")
+    }
     values <- dmi(ctx)
     if (!is.null(values)) {
       text <- values[!is.na(values)]
