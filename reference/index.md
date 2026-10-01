@@ -10,6 +10,8 @@
   Facts with their status and source
 - [`facts_json()`](https://pedrobtz.github.io/fax/reference/facts_json.md)
   : Facts as JSON
+- [`fax_facts`](https://pedrobtz.github.io/fax/reference/fax_facts.md) :
+  Every fact fax reports
 
 ## Resources
 

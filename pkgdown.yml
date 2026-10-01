@@ -1,8 +1,12 @@
 pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2026-10-01T07:05Z
+articles:
+  articles/azure: azure.html
+  fax: fax.html
+  articles/inventory: inventory.html
+  articles/logging: logging.html
+last_built: 2026-10-01T07:12Z
 urls:
   reference: https://pedrobtz.github.io/fax/reference
   article: https://pedrobtz.github.io/fax/articles

@@ -31,7 +31,16 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/fax.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/azure.html">Azure</a></li>
+    <li><a class="dropdown-item" href="articles/logging.html">CPU and memory in log lines</a></li>
+    <li><a class="dropdown-item" href="articles/inventory.html">Installed packages</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -51,24 +60,64 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>fax reports facts about where R is running and what it can actually use.</p>
-<p>Inside a container, <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code> returns the node’s 64 cores while the pod is limited to 4, and <code>/proc/meminfo</code> shows the node’s RAM while the cgroup memory limit is 8 GiB. That leads to oversubscribed thread pools, OOM kills and misleading diagnostics. fax answers three questions on bare metal, VMs, containers, Kubernetes pods and Azure:</p>
+<p>fax reports facts about where R is running and what it may actually use.</p>
+<p>Inside a container, <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code> returns the node’s 64 cores while the pod may use 4, and <code>/proc/meminfo</code> shows the node’s memory while the container is limited to 8 GiB. Thread pools sized on those numbers oversubscribe the CPU, and memory budgets end in OOM kills. fax answers three questions on bare metal, VMs, containers, Kubernetes pods and Azure, on Linux, macOS and Windows:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Where am I running?</strong> OS, hardware, virtualization, container, Kubernetes, cloud, R and Python runtimes.</li>
+<strong>Where am I running?</strong> OS, hardware, virtualization, container, Kubernetes, cloud, R and Python.</li>
 <li>
-<strong>What can I actually use?</strong> Effective CPU and memory, side by side with host values.</li>
+<strong>What can I actually use?</strong> Effective CPU cores and memory, next to the host’s.</li>
 <li>
 <strong>What is installed?</strong> System, R and Python packages.</li>
 </ol>
-<p>fax is under development and not yet usable.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of fax from <a href="https://github.com/pedrobtz/fax" class="external-link">GitHub</a> with:</p>
+<p>Install the development version from <a href="https://github.com/pedrobtz/fax" class="external-link">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"pedrobtz/fax"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pedrobtz.github.io/fax/">fax</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/facts.html">facts</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;fax facts&gt;</span></span>
+<span><span class="co">#&gt; os       macOS 15.7.9</span></span>
+<span><span class="co">#&gt; runs in  no container</span></span>
+<span><span class="co">#&gt; runs on  bare metal</span></span>
+<span><span class="co">#&gt; cpu      host 6 | effective 6</span></span>
+<span><span class="co">#&gt; memory   host 8G | available 2.5G</span></span>
+<span><span class="co">#&gt; runtime  R 4.5.2 | Python 3.13.2 (system)</span></span>
+<span><span class="co">#&gt; Use facts_df() for every fact with its status and source.</span></span></code></pre></div>
+<p>In a Kubernetes pod limited to 2 CPUs and 1 GiB on an 8-CPU, 32 GiB node:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; &lt;fax facts&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; os       Ubuntu 22.04</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; runs in  Kubernetes pod default/web-6b8f9-2xkqz, containerd container</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; runs on  vm (unknown)</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; cpu      host 8 | effective 2</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; memory   host 32G | limit 1G | available 824M</span></span></code></pre></div>
+<p>Size worker pools with what the process may use:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">future</span><span class="fu">::</span><span class="fu">plan</span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fu"><a href="reference/effective_cores.html">effective_cores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu">setDTthreads</span><span class="op">(</span><span class="fu"><a href="reference/effective_cores.html">effective_cores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Add CPU and memory use to log lines, cheaply (about 170 µs on Linux):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"batch done "</span>, <span class="fu"><a href="reference/usage.html">usage_line</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; batch done cpu=1.8/4 thr=3% mem=2.1G/8G(26%) rss=1.2G</span></span></code></pre></div>
+<p>Every fact records its status and source, and fax never fails: what it cannot determine is <code>NA</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/facts_df.html">facts_df</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fact"</span>, <span class="st">"status"</span>, <span class="st">"source"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;               fact         status  source</span></span>
+<span><span class="co">#&gt; 1        os.family             ok    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2          os.name             ok sw_vers</span></span>
+<span><span class="co">#&gt; 3            os.id             ok    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4       os.id_like not_applicable    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 5  os.release.full             ok sw_vers</span></span>
+<span><span class="co">#&gt; 6 os.release.major             ok sw_vers</span></span></code></pre></div>
+<p>fax makes no network requests unless you ask for cloud metadata with <code>facts(cloud = TRUE)</code>, never reads credentials, and redacts secrets in environment variables.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -106,6 +155,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/pedrobtz/fax/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/pedrobtz/fax/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/pedrobtz/fax/actions/workflows/live.yaml" class="external-link"><img src="https://github.com/pedrobtz/fax/actions/workflows/live.yaml/badge.svg" alt="live"></a></li>
 </ul>
 </div>
 

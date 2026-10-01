@@ -45,6 +45,8 @@ lazy snapshot of many facts.
 ## Examples
 
 ``` r
-try(fact("cpu.effective"))
+fact("cpu.effective")
 #> [1] 4
+fact("os.family")
+#> [1] "linux"
 ```

@@ -64,9 +64,9 @@ facts_json(namespaces = "cpu", pretty = TRUE)
 #>     },
 #>     "affinity": 4,
 #>     "load": {
-#>       "1min": 0.88,
-#>       "5min": 0.46,
-#>       "15min": 0.18
+#>       "1min": 0.78,
+#>       "5min": 0.36,
+#>       "15min": 0.14
 #>     },
 #>     "cgroup": {
 #>       "quota": "Inf",
