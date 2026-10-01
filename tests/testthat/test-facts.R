@@ -243,3 +243,22 @@ test_that("user errors are informative", {
   expect_snapshot(facts("nope"), error = TRUE)
   expect_snapshot(facts_df(list()), error = TRUE)
 })
+
+test_that("facts that depend on uncached facts are not cached", {
+  flag <- TRUE
+  local_registry(
+    resolver("toy.flag", \(ctx) flag, cache = FALSE),
+    resolver("toy.derived", \(ctx) ctx$fact("toy.flag")),
+    resolver("toy.confined", \(ctx) "yes", confine = list(toy.flag = TRUE)),
+    resolver("toy.stable", \(ctx) "stable")
+  )
+  expect_equal(fact("toy.derived"), TRUE)
+  expect_equal(fact("toy.confined"), "yes")
+  flag <- FALSE
+  expect_equal(fact("toy.derived"), FALSE)
+  expect_equal(fact("toy.confined"), NA)
+  flag <- TRUE
+  expect_equal(fact("toy.confined"), "yes")
+  fact("toy.stable")
+  expect_named(as.list(.fax$cache), paste("/", fax_os(), FALSE, "toy.stable", sep = "\r"))
+})
