@@ -76,5 +76,6 @@ values with their status and source.
 ``` r
 f <- facts()
 names(f)
-#> [1] "cpu"    "memory" "cgroup"
+#> [1] "os"             "cpu"            "memory"         "cgroup"        
+#> [5] "virtualization" "container"      "k8s"            "cloud"         
 ```

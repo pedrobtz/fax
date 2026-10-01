@@ -38,7 +38,8 @@
 <li>
 <code><a href="../reference/effective_cores.html">effective_cores()</a></code> and <code><a href="../reference/effective_cores.html">effective_memory()</a></code> return the CPU cores and memory the process can actually use, taking cgroup v1/v2 limits, cpusets and CPU affinity into account.</li>
 <li>
-<code><a href="../reference/facts.html">facts()</a></code>, <code><a href="../reference/fact.html">fact()</a></code> and <code><a href="../reference/facts_df.html">facts_df()</a></code> provide a lazy, cached snapshot of facts with per-fact status and source. Resolver errors never escape unless <code>strict = TRUE</code>. Linux <code>cgroup</code>, <code>cpu</code> and <code>memory</code> facts are available.</li>
+<code><a href="../reference/facts.html">facts()</a></code>, <code><a href="../reference/fact.html">fact()</a></code> and <code><a href="../reference/facts_df.html">facts_df()</a></code> provide a lazy, cached snapshot of facts with per-fact status and source. Resolver errors never escape unless <code>strict = TRUE</code>.</li>
+<li>Facts describe the OS (<code>os.*</code>), CPU, memory and cgroups, and where the process runs: bare metal or VM (<code>virtualization.*</code>, including WSL), container (<code>container.*</code>), Kubernetes pod (<code>k8s.*</code>, including the Downward API) and cloud provider (<code>cloud.provider</code>).</li>
 <li>
 <code><a href="../reference/usage.html">usage()</a></code> and <code><a href="../reference/usage.html">usage_line()</a></code> report current process and container CPU and memory use cheaply enough to call on every log line.</li>
 </ul></div>

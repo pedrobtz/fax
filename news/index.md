@@ -12,8 +12,11 @@
   [`fact()`](https://pedrobtz.github.io/fax/reference/fact.md) and
   [`facts_df()`](https://pedrobtz.github.io/fax/reference/facts_df.md)
   provide a lazy, cached snapshot of facts with per-fact status and
-  source. Resolver errors never escape unless `strict = TRUE`. Linux
-  `cgroup`, `cpu` and `memory` facts are available.
+  source. Resolver errors never escape unless `strict = TRUE`.
+- Facts describe the OS (`os.*`), CPU, memory and cgroups, and where the
+  process runs: bare metal or VM (`virtualization.*`, including WSL),
+  container (`container.*`), Kubernetes pod (`k8s.*`, including the
+  Downward API) and cloud provider (`cloud.provider`).
 - [`usage()`](https://pedrobtz.github.io/fax/reference/usage.md) and
   [`usage_line()`](https://pedrobtz.github.io/fax/reference/usage.md)
   report current process and container CPU and memory use cheaply enough
