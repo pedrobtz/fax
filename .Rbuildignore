@@ -8,3 +8,4 @@
 ^\.lintr$
 ^data-raw$
 ^cran-comments\.md$
+^air\.toml$

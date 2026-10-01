@@ -48,7 +48,10 @@ register_container_facts <- function() {
 
   register(resolver("container.detected", confine = linux, cache = FALSE, function(ctx) {
     s <- container_signals(ctx)
-    strong <- s$dockerenv || s$containerenv || !is.null(s$container_env) || s$kubernetes ||
+    strong <- s$dockerenv ||
+      s$containerenv ||
+      !is.null(s$container_env) ||
+      s$kubernetes ||
       !is.null(cgroup_runtime(s$cgroup))
     init <- !is.na(s$pid1) && s$pid1 %in% c("systemd", "init")
     strong || (s$overlay_root && !init)
@@ -87,10 +90,13 @@ register_container_facts <- function() {
       # A 64-hex id in the cgroup path (docker, containerd, cri-o, libpod) or
       # in a runtime directory that is bind-mounted into the container.
       for (text in list(s$cgroup, s$mount_text)) {
-        hit <- regmatches(text, regexpr(
-          "(docker|containerd|crio|libpod|containers|overlay-containers)[-/]([0-9a-f]{64})",
-          text
-        ))
+        hit <- regmatches(
+          text,
+          regexpr(
+            "(docker|containerd|crio|libpod|containers|overlay-containers)[-/]([0-9a-f]{64})",
+            text
+          )
+        )
         if (length(hit)) {
           return(sub("^.*[-/]", "", hit[1]))
         }

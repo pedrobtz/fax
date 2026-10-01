@@ -55,7 +55,9 @@ isa_level <- function(flags, x86) {
   if (x86) {
     level <- "x86-64"
     for (name in names(x86_levels)) {
-      if (!all(x86_levels[[name]] %in% flags)) break
+      if (!all(x86_levels[[name]] %in% flags)) {
+        break
+      }
       level <- name
     }
     return(level)

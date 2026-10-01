@@ -258,6 +258,8 @@ IMDS facts (`network = TRUE`; need `cloud = TRUE` and `cloud.provider == "azure"
 | `cloud.azure.tags` | `compute.tagsList`, redacted like env vars |
 | `cloud.azure.network.private_ip`, `.public_ip` | `network.interface[*].ipv4` |
 
+JSON (`facts_json()`): `Inf` → `"Inf"`, `NA` → `null`, POSIXct → ISO 8601 UTC, named vectors → objects, data frames → arrays of objects, length-one vectors → scalars.
+
 Rules: one request `GET http://169.254.169.254/metadata/instance?api-version=<pinned>` with header `Metadata: true`; URL allowlist enforced in `http_get()`; **never** `/metadata/identity/*` or `/metadata/attested/*`; in a pod the answer describes the **node VM**; blocked IMDS → `unavailable` with the reason.
 
 *(0.2.0)* AWS IMDSv2 (token PUT first) and GCP (`metadata.google.internal`, header `Metadata-Flavor: Google`); Azure `/metadata/scheduledevents`.
@@ -269,7 +271,7 @@ R and process:
 | fact | notes |
 |---|---|
 | `runtime.r.version`, `runtime.r.platform`, `runtime.r.home` | `R.version`, `R.home()` |
-| `runtime.r.blas`, `runtime.r.lapack` | `extSoftVersion()`, `La_library()`, `La_version()` |
+| `runtime.r.blas`, `runtime.r.lapack` | BLAS library path from `extSoftVersion()`; LAPACK as `c(version = La_version(), library = La_library())` |
 | `runtime.r.libpaths` | `.libPaths()` |
 | `runtime.r.repos` | `getOption("repos")`, userinfo/tokens stripped |
 | `runtime.r.renv` | active renv project and lockfile path (`RENV_PROJECT`, `renv/activate.R`); no call into renv |
@@ -294,7 +296,7 @@ Python:
 | `env.proxies` | `http_proxy`, `https_proxy`, `no_proxy` (userinfo stripped) |
 
 ### 5.11 `disk`, `network`
-- `disk.tmpdir`: `tempdir()` path, fs type (mountinfo on Linux), free space (`df -P` if available, else `NA`). Important in pods: emptyDir vs overlay. Free inodes *(0.2.0)*.
+- `disk.tmpdir.path`, `disk.tmpdir.fstype` (mountinfo on Linux, longest matching mount point), `disk.tmpdir.free` (`df -Pk`, not on Windows in 0.1.0). Important in pods: emptyDir vs overlay. Free inodes *(0.2.0)*.
 - `disk.mounts` *(0.2.0)*: mount point, fs type, size, free; pseudo filesystems filtered.
 - `network.interfaces` *(0.2.0)*: name, addresses (`/sys/class/net`).
 

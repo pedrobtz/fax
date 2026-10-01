@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–3 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–4 done
 
 ---
 
@@ -121,29 +121,31 @@ Tests: per-fixture classification; "no false positives" on bare metal (physical,
 **Goal:** language-runtime facts, safe environment reporting, every output format (§5.9–5.11, §7).
 
 R and process:
-- [ ] `runtime.r.*` (version, platform, home, BLAS/LAPACK, libpaths, repos with credentials stripped, renv detection), `runtime.threads.*`, `runtime.parallelly_cores`, `runtime.pid/user`.
-- [ ] `runtime.uid/gid/privileged`: Linux `/proc/self/status`; macOS `id`; Windows `whoami /groups` lazily, `NA` if too slow.
+- [x] `runtime.r.*` (version, platform, home, BLAS/LAPACK, libpaths, repos with credentials stripped, renv detection), `runtime.threads.*`, `runtime.parallelly_cores`, `runtime.pid/user`.
+- [x] `runtime.uid/gid/privileged`: Linux `/proc/self/status`; macOS `id`; Windows `whoami /groups` lazily, `NA` if too slow.
 
 Python, without starting Python in the R session:
-- [ ] Interpreter discovery order per §5.9; the winning source recorded as `source`.
-- [ ] `pyvenv.cfg` and `conda-meta/python-*.json` first; otherwise one probe command printing JSON (`sys.version_info`, `sys.implementation.name`, `sys.prefix`, `sys.base_prefix`, `site.getsitepackages()`, `site.getusersitepackages()`), 5 s timeout.
-- [ ] `runtime.python.reticulate` only if reticulate is loaded and already initialized; never call `py_config()` or anything that initializes Python.
+- [x] Interpreter discovery order per §5.9; the winning source recorded as `source`.
+- [x] `pyvenv.cfg` and `conda-meta/python-*.json` first; otherwise one probe command printing JSON (`sys.version_info`, `sys.implementation.name`, `sys.prefix`, `sys.base_prefix`, `site.getsitepackages()`, `site.getusersitepackages()`), 5 s timeout.
+- [x] `runtime.python.reticulate` only if reticulate is loaded and already initialized; never call `py_config()` or anything that initializes Python.
 
 Environment:
-- [ ] `env.vars` with the §5.10 pattern and modes; URL userinfo stripping; `env.proxies`.
-- [ ] Redaction test table: `AZURE_STORAGE_CONNECTION_STRING`, `AZURE_CLIENT_SECRET`, `IDENTITY_HEADER`, `MSI_SECRET`, `GITHUB_PAT`, `AWS_SECRET_ACCESS_KEY`, `DATABASE_URL` with password, `*_SAS`; and must-not-redact: `PATH`, `R_HOME`, `PWD`.
-- [ ] `disk.tmpdir`: path, fs type, free space.
+- [x] `env.vars` with the §5.10 pattern and modes; URL userinfo stripping; `env.proxies`.
+- [x] Redaction test table: `AZURE_STORAGE_CONNECTION_STRING`, `AZURE_CLIENT_SECRET`, `IDENTITY_HEADER`, `MSI_SECRET`, `GITHUB_PAT`, `AWS_SECRET_ACCESS_KEY`, `DATABASE_URL` with password, `*_SAS`; and must-not-redact: `PATH`, `R_HOME`, `PWD`.
+- [x] `disk.tmpdir`: path, fs type, free space.
 
 Outputs:
-- [ ] `print.fax()`: substrate line (bare metal / VM / container / pod, cloud, Azure platform), host-vs-effective table for CPU and memory, R and Python versions; human-readable bytes; no `cli` dependency; package counts only if already resolved.
-- [ ] `facts_json()` via jsonlite (clear error if missing); `Inf` → `"Inf"`; `metadata = FALSE` default.
-- [ ] `format()` / `str()` that don't force resolution.
+- [x] `print.fax()`: substrate line (bare metal / VM / container / pod, cloud, Azure platform), host-vs-effective table for CPU and memory, R and Python versions; human-readable bytes; no `cli` dependency; package counts only if already resolved.
+- [x] `facts_json()` via jsonlite (clear error if missing); `Inf` → `"Inf"`; `metadata = FALSE` default.
+- [x] `format()` / `str()` that don't force resolution.
 
 Fixtures (add): venv tree with `pyvenv.cfg`, conda prefix with `conda-meta/`, recorded Python probe output.
 
 Tests: `print()` snapshots per fixture; JSON round-trip (`Inf`, `NA`, named vectors, lists, `df`); redaction table; reticulate never initialized (skip if not installed).
 
 **Done when:** `print(facts())` on the `k8s-v2-limits` fixture shows pod limits next to node values on one screen, and `runtime.python.*` is right for the venv, conda and system fixtures.
+
+**Result:** live in a `--cpus=1.5 --memory=512m` container the summary reads `cpu host 4 | effective 1.5 (2 threads)`, `memory host 5.8G | limit 512M | available 433M`, 0 errors. The default snapshot grew to ~41 ms (runtime, env and disk add `df` and other calls): still under 50 ms, revisit in Stage 8. `disk.tmpdir` became three facts (`path`, `fstype`, `free`). Code is formatted with air (`air.toml`, line width 100).
 
 ---
 

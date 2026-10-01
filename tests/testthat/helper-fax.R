@@ -79,6 +79,8 @@ local_fixture_copy <- function(name, env = parent.frame()) {
 fixture_report <- function(name) {
   local_fixture(name)
   df <- facts_df(facts(refresh = TRUE))
+  # runtime, env and disk describe the R session, not the fixture.
+  df <- df[!fact_namespace(df$fact) %in% c("runtime", "env", "disk"), ]
   as_text <- \(v) paste(if (is.character(v)) v else format(v), collapse = " ")
   value <- vapply(df$value, as_text, character(1))
   # Values read from the live system (not the fixture) differ between machines.
@@ -97,4 +99,24 @@ local_usage_reset <- function(env = parent.frame()) {
   }
   reset()
   withr::defer(reset(), envir = env)
+}
+
+# No Python-related environment variables, and a fresh probe memo.
+local_python_env <- function(..., env = parent.frame()) {
+  vars <- list(RETICULATE_PYTHON = NA, VIRTUAL_ENV = NA, CONDA_PREFIX = NA)
+  overrides <- list(...)
+  vars[names(overrides)] <- overrides
+  withr::local_envvar(.new = vars, .local_envir = env)
+  .fax$python_probe <- list()
+  withr::defer(.fax$python_probe <- list(), envir = env)
+}
+
+# Create files (path = lines) below `dir`.
+write_files <- function(dir, files) {
+  for (path in names(files)) {
+    full <- file.path(dir, path)
+    dir.create(dirname(full), recursive = TRUE, showWarnings = FALSE)
+    writeLines(files[[path]], full)
+  }
+  dir
 }

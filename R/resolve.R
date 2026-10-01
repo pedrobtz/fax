@@ -118,7 +118,9 @@ run_candidates <- function(name, candidates, state) {
       next
     }
     ok <- tryCatch(confine_ok(r, state), error = function(cnd) {
-      if (state$strict) stop(cnd)
+      if (state$strict) {
+        stop(cnd)
+      }
       cnd
     })
     if (inherits(ok, "error")) {
@@ -221,7 +223,9 @@ new_ctx <- function(state) {
     note = note,
     read = function(path, n = -1L) {
       lines <- read_lines(path, state$root, n)
-      if (!is.null(lines)) note(path)
+      if (!is.null(lines)) {
+        note(path)
+      }
       lines
     },
     read_kv = function(path, sep = ":") {
@@ -235,7 +239,9 @@ new_ctx <- function(state) {
     exists = function(path) file_exists(path, state$root),
     list_dir = function(path) {
       files <- list_dir(path, state$root)
-      if (!is.null(files)) note(path)
+      if (!is.null(files)) {
+        note(path)
+      }
       files
     },
     env = function(name) {

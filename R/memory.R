@@ -28,15 +28,17 @@ register_memory_facts <- function() {
   register(resolver("memory.host.total", confine = linux, \(ctx) meminfo_bytes(ctx, "MemTotal")))
 
   register(resolver("memory.host.available", confine = linux, cache = FALSE, function(ctx) {
-    meminfo_bytes(ctx, "MemAvailable") %||% {
-      # Kernels before 3.14 have no MemAvailable; approximate it.
-      parts <- c(
-        meminfo_bytes(ctx, "MemFree"),
-        meminfo_bytes(ctx, "Buffers"),
-        meminfo_bytes(ctx, "Cached")
-      )
-      if (length(parts) == 3) sum(parts) else NULL
+    available <- meminfo_bytes(ctx, "MemAvailable")
+    if (!is.null(available)) {
+      return(available)
     }
+    # Kernels before 3.14 have no MemAvailable; approximate it.
+    parts <- c(
+      meminfo_bytes(ctx, "MemFree"),
+      meminfo_bytes(ctx, "Buffers"),
+      meminfo_bytes(ctx, "Cached")
+    )
+    if (length(parts) == 3) sum(parts) else NULL
   }))
 
   register(resolver("memory.swap.total", confine = linux, \(ctx) meminfo_bytes(ctx, "SwapTotal")))

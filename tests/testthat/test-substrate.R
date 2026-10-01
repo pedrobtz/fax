@@ -1,13 +1,32 @@
 substrate <- data.frame(
   fixture = c(
-    "linux-baremetal", "linux-vm-host", "azure-vm", "aws-ec2", "gcp-vm", "wsl2",
-    "docker-v2-unlimited", "docker-v1-cpus1.5-mem512m", "k8s-v2-limits",
-    "aks-pod-downward-api", "lxcfs", "hybrid"
+    "linux-baremetal",
+    "linux-vm-host",
+    "azure-vm",
+    "aws-ec2",
+    "gcp-vm",
+    "wsl2",
+    "docker-v2-unlimited",
+    "docker-v1-cpus1.5-mem512m",
+    "k8s-v2-limits",
+    "aks-pod-downward-api",
+    "lxcfs",
+    "hybrid"
   ),
   type = c("physical", rep("vm", 11)),
   hypervisor = c(
-    NA, "apple", "hyperv", "aws-nitro", "kvm", "unknown", "apple", "unknown", "unknown",
-    "hyperv", "unknown", "unknown"
+    NA,
+    "apple",
+    "hyperv",
+    "aws-nitro",
+    "kvm",
+    "unknown",
+    "apple",
+    "unknown",
+    "unknown",
+    "hyperv",
+    "unknown",
+    "unknown"
   ),
   container = c(rep(FALSE, 6), TRUE, TRUE, TRUE, TRUE, TRUE, FALSE),
   runtime = c(rep(NA, 6), "podman", "docker", "containerd", "containerd", "lxc", NA),
