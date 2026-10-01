@@ -123,7 +123,9 @@ test_that("print() shows the Azure platform and, with cloud = TRUE, the VM", {
 
 test_that("the HTTP transport fails fast and restores no_proxy", {
   skip_on_cran()
-  withr::local_envvar(no_proxy = "example.com", NO_PROXY = NA)
+  # Clear upper case first: on Windows NO_PROXY and no_proxy are one variable.
+  withr::local_envvar(NO_PROXY = NA)
+  withr::local_envvar(no_proxy = "example.com")
   start <- proc.time()[["elapsed"]]
   cnd <- tryCatch(http_transport("http://127.0.0.1:9/", character(), 1), fax_unavailable = identity)
   expect_s3_class(cnd, "fax_unavailable")
