@@ -59,18 +59,14 @@ test_that("env.vars uses the redaction options", {
 })
 
 test_that("proxies lose their credentials", {
+  # Set lower case after clearing upper case: on Windows they are one variable.
+  withr::local_envvar(HTTP_PROXY = NA, HTTPS_PROXY = NA, NO_PROXY = NA)
   withr::local_envvar(
     http_proxy = "http://user:pw@proxy:3128",
     https_proxy = NA,
-    no_proxy = "localhost",
-    HTTP_PROXY = NA,
-    HTTPS_PROXY = NA,
-    NO_PROXY = NA
+    no_proxy = "localhost"
   )
-  expect_equal(
-    fact("env.proxies"),
-    c(http_proxy = "http://<redacted>@proxy:3128", no_proxy = "localhost")
-  )
+  expect_equal(unname(fact("env.proxies")), c("http://<redacted>@proxy:3128", "localhost"))
   withr::local_envvar(http_proxy = NA, no_proxy = NA)
   df <- facts_df(facts("env"))
   expect_equal(df$status[df$fact == "env.proxies"], "not_applicable")

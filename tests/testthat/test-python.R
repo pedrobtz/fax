@@ -23,7 +23,9 @@ test_that("a venv is described from pyvenv.cfg without running Python", {
     )
   )
   local_python_env(VIRTUAL_ENV = venv)
-  withr::local_options(fax.cmd_mock = function(cmd, args) stop("Python must not run"))
+  withr::local_options(fax.os = "linux", fax.cmd_mock = function(cmd, args) {
+    stop("Python must not run")
+  })
   f <- facts(refresh = TRUE)
   expect_equal(f[["runtime.python.env_type"]], "venv")
   expect_equal(f[["runtime.python.version"]], "3.12.4")
@@ -45,6 +47,7 @@ test_that("uv environments are recognised", {
     )
   )
   local_python_env(VIRTUAL_ENV = venv)
+  withr::local_options(fax.os = "linux")
   expect_equal(fact("runtime.python.env_type"), "uv")
   expect_equal(fact("runtime.python.version"), "3.12.6")
 })
@@ -59,6 +62,7 @@ test_that("conda prefixes are described from conda-meta", {
     )
   )
   local_python_env(CONDA_PREFIX = conda)
+  withr::local_options(fax.os = "linux")
   f <- facts(refresh = TRUE)
   expect_equal(f[["runtime.python.env_type"]], "conda")
   expect_equal(f[["runtime.python.version"]], "3.11.9")
@@ -103,6 +107,7 @@ test_that("RETICULATE_PYTHON wins over other variables", {
     RETICULATE_PYTHON = file.path(venv, "bin", "python"),
     CONDA_PREFIX = "/opt/conda"
   )
+  withr::local_options(fax.os = "linux")
   expect_equal(fact("runtime.python.path"), file.path(venv, "bin", "python"))
   expect_equal(fact("runtime.python.version"), "3.10.14")
 })
@@ -119,4 +124,23 @@ test_that("reticulate is only reported when it already started Python", {
   skip_if("reticulate" %in% loadedNamespaces())
   df <- facts_df(facts(refresh = TRUE), "runtime")
   expect_equal(df$message[df$fact == "runtime.python.reticulate"], "reticulate is not loaded.")
+})
+
+test_that("Windows venvs use Scripts and Lib", {
+  venv <- write_files(
+    withr::local_tempdir(),
+    list(
+      "pyvenv.cfg" = "version = 3.12.7",
+      "Scripts/python.exe" = "",
+      "Lib/site-packages/x" = ""
+    )
+  )
+  local_python_env(VIRTUAL_ENV = venv)
+  withr::local_options(fax.os = "windows")
+  f <- facts(refresh = TRUE)
+  expect_equal(f[["runtime.python.path"]], file.path(venv, "Scripts/python.exe"))
+  expect_equal(f[["runtime.python.site_packages"]], file.path(venv, "Lib", "site-packages"))
+  local_python_env(RETICULATE_PYTHON = file.path(venv, "Scripts", "python.exe"))
+  expect_equal(fact("runtime.python.env_path"), venv)
+  expect_equal(fact("runtime.python.version"), "3.12.7")
 })

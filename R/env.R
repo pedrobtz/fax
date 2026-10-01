@@ -34,7 +34,8 @@ register_env_facts <- function() {
 
   register(resolver("env.proxies", cache = FALSE, function(ctx) {
     values <- vapply(proxy_vars, \(name) ctx$env(name) %||% NA_character_, character(1))
-    values <- values[!is.na(values)]
+    # Windows variable names are case-insensitive: http_proxy is HTTP_PROXY.
+    values <- values[!is.na(values) & !duplicated(tolower(names(values)))]
     if (!length(values)) {
       not_applicable("No proxy is configured.")
     }

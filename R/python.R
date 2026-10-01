@@ -22,10 +22,13 @@ python_interpreter <- function(ctx) {
     }
     reticulate <- ctx$env("RETICULATE_PYTHON")
     if (!is.null(reticulate)) {
-      prefix <- dirname(dirname(reticulate))
-      if (windows && !ctx$exists(file.path(dirname(reticulate), "pyvenv.cfg"))) {
-        prefix <- dirname(reticulate)
+      # An environment root holds pyvenv.cfg or conda-meta, one level up from
+      # bin/ or Scripts/, or right next to python.exe for conda on Windows.
+      is_env <- \(dir) {
+        ctx$exists(file.path(dir, "pyvenv.cfg")) || ctx$exists(file.path(dir, "conda-meta"))
       }
+      prefix <- Find(is_env, c(dirname(dirname(reticulate)), dirname(reticulate))) %||%
+        NA_character_
       return(list(path = reticulate, prefix = prefix, how = "RETICULATE_PYTHON"))
     }
     venv <- ctx$env("VIRTUAL_ENV")
