@@ -141,6 +141,7 @@ test_that("Windows venvs use Scripts and Lib", {
   expect_equal(f[["runtime.python.path"]], file.path(venv, "Scripts/python.exe"))
   expect_equal(f[["runtime.python.site_packages"]], file.path(venv, "Lib", "site-packages"))
   local_python_env(RETICULATE_PYTHON = file.path(venv, "Scripts", "python.exe"))
-  expect_equal(fact("runtime.python.env_path"), venv)
+  same_path <- \(x) normalizePath(x, winslash = "/", mustWork = FALSE)
+  expect_equal(same_path(fact("runtime.python.env_path")), same_path(venv))
   expect_equal(fact("runtime.python.version"), "3.12.7")
 })
