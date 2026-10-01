@@ -57,6 +57,9 @@
 <li>The opt-in <code>packages</code> namespace lists installed system packages (dpkg, rpm, apk, pacman, Homebrew, Windows), R packages and Python packages, read from package databases rather than by running <code>pip</code> or package managers where possible.</li>
 <li>
 <code><a href="../reference/facts.html">facts()</a></code> stays quiet: warnings raised while resolving facts are muffled, and <code>os.timezone</code> avoids the slow <code><a href="https://rdrr.io/r/base/timezones.html" class="external-link">Sys.timezone()</a></code> lookup when the time zone can be read from <code>TZ</code> or <code>/etc/localtime</code>.</li>
+<li>cgroup v2 pressure stall information (<code>memory.cgroup.pressure</code>, <code>cpu.cgroup.pressure</code>) and OOM kill counts (<code>memory.cgroup.oom_kills</code>); <code>usage(extra = "pressure")</code> adds them to a usage sample, and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> notes OOM kills and a <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> on tmpfs in containers.</li>
+<li>
+<code>runtime.r.connections</code> reports free R connection slots (each parallel worker needs one) and <code>runtime.rlimit.nofile</code> the open-files limit.</li>
 <li>
 <code><a href="../reference/usage.html">usage()</a></code> and <code><a href="../reference/usage.html">usage_line()</a></code> report current process and container CPU and memory use cheaply enough to call on every log line.</li>
 </ul></div>

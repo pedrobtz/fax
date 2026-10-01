@@ -87,7 +87,7 @@ summary:</p>
 <span><span class="co">#&gt; runs in  no container</span></span>
 <span><span class="co">#&gt; runs on  vm (hyperv), cloud azure</span></span>
 <span><span class="co">#&gt; cpu      host 4 | effective 4</span></span>
-<span><span class="co">#&gt; memory   host 15.6G | available 14.1G</span></span>
+<span><span class="co">#&gt; memory   host 15.6G | available 14G</span></span>
 <span><span class="co">#&gt; runtime  R 4.6.1 | Python 3.12.3 (system)</span></span>
 <span><span class="co">#&gt; Use facts_df() for every fact with its status and source.</span></span></code></pre></div>
 <p>Facts are grouped in namespaces such as <code>os</code>,
@@ -108,7 +108,7 @@ summary:</p>
 <span><span class="co">#&gt; $sockets</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="va">f</span><span class="op">[[</span><span class="st">"memory.effective.limit"</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 16766414848</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 16765378560</span></span></code></pre></div>
 <p>Nothing is read until you ask for it, and each fact is read once per
 session. <code>facts(refresh = TRUE)</code> reads again.
 <code><a href="../reference/fact.html">fact()</a></code> gets one value directly:</p>
@@ -125,17 +125,18 @@ with an error. <code><a href="../reference/facts_df.html">facts_df()</a></code> 
 came from:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/facts_df.html">facts_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/facts.html">facts</a></span><span class="op">(</span><span class="st">"cpu"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">fact</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cpu.model"</span>, <span class="st">"cpu.affinity"</span>, <span class="st">"cpu.cgroup.quota"</span>, <span class="st">"cpu.effective"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fact"</span>, <span class="st">"status"</span>, <span class="st">"source"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">rows</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">fact</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cpu.model"</span>, <span class="st">"cpu.affinity"</span>, <span class="st">"cpu.cgroup.quota"</span>, <span class="st">"cpu.effective"</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">[</span><span class="va">rows</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fact"</span>, <span class="st">"status"</span>, <span class="st">"source"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                fact status</span></span>
 <span><span class="co">#&gt; 16        cpu.model     ok</span></span>
 <span><span class="co">#&gt; 23     cpu.affinity     ok</span></span>
 <span><span class="co">#&gt; 25 cpu.cgroup.quota     ok</span></span>
-<span><span class="co">#&gt; 28    cpu.effective     ok</span></span>
+<span><span class="co">#&gt; 29    cpu.effective     ok</span></span>
 <span><span class="co">#&gt;                                                                                                                                            source</span></span>
 <span><span class="co">#&gt; 16                                                                                                                                  /proc/cpuinfo</span></span>
 <span><span class="co">#&gt; 23                                                                                                                              /proc/self/status</span></span>
 <span><span class="co">#&gt; 25 /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/system.slice/hosted-compute-agent.service/cpu.max; /sys/fs/cgroup/system.slice/cpu.max</span></span>
-<span><span class="co">#&gt; 28                                                                                                                                           &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 29                                                                                                                                           &lt;NA&gt;</span></span></code></pre></div>
 <p><code>status</code> is <code>"ok"</code>,
 <code>"not_applicable"</code> (e.g. cgroup facts on macOS),
 <code>"unavailable"</code> (the data is missing) or
@@ -159,7 +160,7 @@ threads busy).</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/effective_cores.html">effective_cores</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 4</span></span>
 <span><span class="fu"><a href="../reference/effective_cores.html">effective_memory</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 16766414848</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 16765378560</span></span></code></pre></div>
 <p><code><a href="../reference/effective_cores.html">effective_memory()</a></code> is the smaller of host memory and the
 cgroup memory limit. <code>effective_memory("available")</code> is what
 can still be allocated, counting reclaimable page cache as free.</p>
@@ -232,7 +233,7 @@ package):</p>
 <span><span class="co">#&gt;     "mountpoint": "/sys/fs/cgroup",</span></span>
 <span><span class="co">#&gt;     "namespaced": false,</span></span>
 <span><span class="co">#&gt;     "pids": {</span></span>
-<span><span class="co">#&gt;       "max": 19151</span></span>
+<span><span class="co">#&gt;       "max": 19152</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>

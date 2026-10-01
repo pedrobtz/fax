@@ -24,7 +24,7 @@ f
 #> runs in  no container
 #> runs on  vm (hyperv), cloud azure
 #> cpu      host 4 | effective 4
-#> memory   host 15.6G | available 14.1G
+#> memory   host 15.6G | available 14G
 #> runtime  R 4.6.1 | Python 3.12.3 (system)
 #> Use facts_df() for every fact with its status and source.
 ```
@@ -48,7 +48,7 @@ f[["cpu.host"]]
 #> $sockets
 #> [1] 1
 f[["memory.effective.limit"]]
-#> [1] 16766414848
+#> [1] 16765378560
 ```
 
 Nothing is read until you ask for it, and each fact is read once per
@@ -75,17 +75,18 @@ says why, and where each value came from:
 ``` r
 
 df <- facts_df(facts("cpu"))
-head(df[df$fact %in% c("cpu.model", "cpu.affinity", "cpu.cgroup.quota", "cpu.effective"), c("fact", "status", "source")])
+rows <- df$fact %in% c("cpu.model", "cpu.affinity", "cpu.cgroup.quota", "cpu.effective")
+df[rows, c("fact", "status", "source")]
 #>                fact status
 #> 16        cpu.model     ok
 #> 23     cpu.affinity     ok
 #> 25 cpu.cgroup.quota     ok
-#> 28    cpu.effective     ok
+#> 29    cpu.effective     ok
 #>                                                                                                                                            source
 #> 16                                                                                                                                  /proc/cpuinfo
 #> 23                                                                                                                              /proc/self/status
 #> 25 /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/system.slice/hosted-compute-agent.service/cpu.max; /sys/fs/cgroup/system.slice/cpu.max
-#> 28                                                                                                                                           <NA>
+#> 29                                                                                                                                           <NA>
 ```
 
 `status` is `"ok"`, `"not_applicable"` (e.g. cgroup facts on macOS),
@@ -111,7 +112,7 @@ takes the smallest of:
 effective_cores()
 #> [1] 4
 effective_memory()
-#> [1] 16766414848
+#> [1] 16765378560
 ```
 
 [`effective_memory()`](https://pedrobtz.github.io/fax/reference/effective_cores.md)
@@ -200,7 +201,7 @@ facts_json(namespaces = "cgroup", pretty = TRUE)
 #>     "mountpoint": "/sys/fs/cgroup",
 #>     "namespaced": false,
 #>     "pids": {
-#>       "max": 19151
+#>       "max": 19152
 #>     }
 #>   }
 #> }

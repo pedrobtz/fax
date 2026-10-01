@@ -50,6 +50,15 @@
   `os.timezone` avoids the slow
   [`Sys.timezone()`](https://rdrr.io/r/base/timezones.html) lookup when
   the time zone can be read from `TZ` or `/etc/localtime`.
+- cgroup v2 pressure stall information (`memory.cgroup.pressure`,
+  `cpu.cgroup.pressure`) and OOM kill counts
+  (`memory.cgroup.oom_kills`); `usage(extra = "pressure")` adds them to
+  a usage sample, and [`print()`](https://rdrr.io/r/base/print.html)
+  notes OOM kills and a
+  [`tempdir()`](https://rdrr.io/r/base/tempfile.html) on tmpfs in
+  containers.
+- `runtime.r.connections` reports free R connection slots (each parallel
+  worker needs one) and `runtime.rlimit.nofile` the open-files limit.
 - [`usage()`](https://pedrobtz.github.io/fax/reference/usage.md) and
   [`usage_line()`](https://pedrobtz.github.io/fax/reference/usage.md)
   report current process and container CPU and memory use cheaply enough

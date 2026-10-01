@@ -19,7 +19,11 @@ usage_line(...)
 - extra:
 
   Additional, slightly more expensive fields: `"host"` adds
-  `mem_host_available` and `"working_set"` adds `mem_working_set`.
+  `mem_host_available`, `"working_set"` adds `mem_working_set`, and
+  `"pressure"` adds `mem_pressure` and `cpu_pressure` (percentage of the
+  last 10 seconds in which tasks stalled waiting for memory or CPU) and
+  `oom_kills` (processes killed in the container for running out of
+  memory).
 
 - max_age:
 
@@ -77,7 +81,7 @@ fields are always `NA`.
 
 ``` r
 usage()
-#> cpu=0.7/4 mem=2.6G/15.6G(16%) rss=162.3M
+#> cpu=0.7/4 mem=2.6G/15.6G(17%) rss=206.7M
 message("step done ", usage_line())
-#> step done cpu=0.6/4 thr=0% mem=2.6G/15.6G(16%) rss=162.3M
+#> step done cpu=1.2/4 thr=0% mem=2.6G/15.6G(17%) rss=206.7M
 ```

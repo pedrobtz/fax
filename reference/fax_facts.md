@@ -51,6 +51,7 @@ fact is announced in NEWS and kept working for at least one release.
 | `cpu.cgroup.quota` | cores | Linux | cgroup CPU quota in cores, the smallest over parent cgroups (`Inf` if unlimited). |
 | `cpu.cgroup.cpuset` | int | Linux | CPUs in the cgroup's cpuset. |
 | `cpu.cgroup.weight` | dbl | Linux | cgroup CPU weight on the v2 scale (v1 shares converted). |
+| `cpu.cgroup.pressure` | named dbl | Linux | cgroup v2 CPU pressure: percentage of the last 10 seconds in which some or all tasks waited for CPU. |
 | `cpu.effective` | int | all | CPU cores to size thread pools with: the smallest limit, a fractional quota rounded up. |
 | `cpu.effective_exact` | cores | all | The smallest CPU limit, keeping a fractional quota. |
 
@@ -68,6 +69,8 @@ fact is announced in NEWS and kept working for at least one release.
 | `memory.cgroup.usage` | bytes | Linux | Memory used by the cgroup, including page cache. |
 | `memory.cgroup.swap_limit` | bytes | Linux | cgroup swap limit. |
 | `memory.cgroup.working_set` | bytes | Linux | cgroup memory in use, not counting inactive page cache. |
+| `memory.cgroup.pressure` | named dbl | Linux | cgroup v2 memory pressure: percentage of the last 10 seconds in which some or all tasks stalled on memory. |
+| `memory.cgroup.oom_kills` | dbl | Linux | Processes killed in this cgroup for running out of memory. |
 | `memory.rlimit.as` | bytes | Linux | Address-space limit of the process (`ulimit -v`). |
 | `memory.rlimit.data` | bytes | Linux | Data-segment limit of the process (`ulimit -d`). |
 | `memory.effective.limit` | bytes | all | Memory the process may use: the smaller of host memory and the cgroup limit. |
@@ -161,6 +164,8 @@ fact is announced in NEWS and kept working for at least one release.
 | `runtime.threads.env` | named chr | all | Thread-count environment variables that are set (`OMP_NUM_THREADS`, ...). |
 | `runtime.threads.options` | named dbl | all | `mc.cores` and `Ncpus` options. |
 | `runtime.parallelly_cores` | int | all | [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html), when parallelly is installed. |
+| `runtime.r.connections` | named int | all | R connection slots: max, used and free. Each parallel worker needs one. |
+| `runtime.rlimit.nofile` | dbl | Linux, macOS | Open-files limit of the process (`ulimit -n`). |
 | `runtime.pid` | int | all | Process id. |
 | `runtime.user` | chr | all | User name. |
 | `runtime.uid` | int | Linux, macOS | Effective user id. |
