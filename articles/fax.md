@@ -48,7 +48,7 @@ f[["cpu.host"]]
 #> $sockets
 #> [1] 1
 f[["memory.effective.limit"]]
-#> [1] 16765374464
+#> [1] 16766414848
 ```
 
 Nothing is read until you ask for it, and each fact is read once per
@@ -111,7 +111,7 @@ takes the smallest of:
 effective_cores()
 #> [1] 4
 effective_memory()
-#> [1] 16765374464
+#> [1] 16766414848
 ```
 
 [`effective_memory()`](https://pedrobtz.github.io/fax/reference/effective_cores.md)
@@ -200,7 +200,7 @@ facts_json(namespaces = "cgroup", pretty = TRUE)
 #>     "mountpoint": "/sys/fs/cgroup",
 #>     "namespaced": false,
 #>     "pids": {
-#>       "max": 19155
+#>       "max": 19151
 #>     }
 #>   }
 #> }

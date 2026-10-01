@@ -18,7 +18,14 @@ containers, Kubernetes pods and Azure, on Linux, macOS and Windows:
 
 ## Installation
 
-Install the development version from
+Install fax from CRAN:
+
+``` r
+
+install.packages("fax")
+```
+
+Or the development version from
 [GitHub](https://github.com/pedrobtz/fax):
 
 ``` r
@@ -38,7 +45,7 @@ facts()
 #> runs in  no container
 #> runs on  bare metal
 #> cpu      host 6 | effective 6
-#> memory   host 8G | available 2.5G
+#> memory   host 8G | available 2.3G
 #> runtime  R 4.5.2 | Python 3.13.2 (system)
 #> Use facts_df() for every fact with its status and source.
 ```

@@ -1,6 +1,6 @@
 # Changelog
 
-## fax (development version)
+## fax 0.1.0
 
 - Initial CRAN submission.
 - [`effective_cores()`](https://pedrobtz.github.io/fax/reference/effective_cores.md)

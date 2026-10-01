@@ -38,7 +38,7 @@ Kubernetes kubelet does.
 Both are resource-based: they ignore settings such as `mc.cores` or
 `MC_CORES`. Use
 [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
-if you want those honoured.
+if you want those honored.
 
 ## See also
 
@@ -52,5 +52,5 @@ individual limits behind these values, e.g. `facts()$cpu` and
 effective_cores()
 #> [1] 4
 effective_memory()
-#> [1] 16765374464
+#> [1] 16766414848
 ```

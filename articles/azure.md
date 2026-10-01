@@ -1,6 +1,6 @@
 # Azure
 
-fax recognises Azure without network access, and with `cloud = TRUE`
+fax recognizes Azure without network access, and with `cloud = TRUE`
 reads the instance metadata service (IMDS) for details such as region
 and VM size.
 
@@ -13,7 +13,7 @@ or when one of the Azure services below sets its environment variables.
 
 `cloud.azure.platform` then names the service:
 
-| Platform         | Recognised by                                |
+| Platform         | Recognized by                                |
 |:-----------------|:---------------------------------------------|
 | `functions`      | `FUNCTIONS_WORKER_RUNTIME`                   |
 | `app-service`    | `WEBSITE_SITE_NAME`                          |
