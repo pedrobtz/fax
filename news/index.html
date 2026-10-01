@@ -36,7 +36,11 @@
 <h2 class="pkg-version" data-toc-text="development version" id="fax-development-version">fax (development version)<a class="anchor" aria-label="anchor" href="#fax-development-version"></a></h2>
 <ul><li>Initial CRAN submission.</li>
 <li>
-<code><a href="../reference/facts.html">facts()</a></code>, <code><a href="../reference/fact.html">fact()</a></code> and <code><a href="../reference/facts_df.html">facts_df()</a></code> provide a lazy, cached snapshot of facts with per-fact status and source. Resolver errors never escape unless <code>strict = TRUE</code>.</li>
+<code><a href="../reference/effective_cores.html">effective_cores()</a></code> and <code><a href="../reference/effective_cores.html">effective_memory()</a></code> return the CPU cores and memory the process can actually use, taking cgroup v1/v2 limits, cpusets and CPU affinity into account.</li>
+<li>
+<code><a href="../reference/facts.html">facts()</a></code>, <code><a href="../reference/fact.html">fact()</a></code> and <code><a href="../reference/facts_df.html">facts_df()</a></code> provide a lazy, cached snapshot of facts with per-fact status and source. Resolver errors never escape unless <code>strict = TRUE</code>. Linux <code>cgroup</code>, <code>cpu</code> and <code>memory</code> facts are available.</li>
+<li>
+<code><a href="../reference/usage.html">usage()</a></code> and <code><a href="../reference/usage.html">usage_line()</a></code> report current process and container CPU and memory use cheaply enough to call on every log line.</li>
 </ul></div>
   </main></div>
 

@@ -46,6 +46,5 @@ lazy snapshot of many facts.
 
 ``` r
 try(fact("cpu.effective"))
-#> Error in startsWith(known_facts(), paste0(name, ".")) : 
-#>   non-character object(s)
+#> [1] 4
 ```
