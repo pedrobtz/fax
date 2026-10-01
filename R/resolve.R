@@ -1,0 +1,233 @@
+# Resolution state for one facts() call. `memo` holds facts resolved during
+# this call (so `refresh = TRUE` still resolves each fact once); the session
+# cache in `.fax$cache` is shared across calls.
+new_state <- function(cloud = FALSE, refresh = FALSE, strict = FALSE) {
+  state <- new.env(parent = emptyenv())
+  state$root <- fax_root()
+  state$os <- fax_os()
+  state$cloud <- isTRUE(cloud)
+  state$refresh <- isTRUE(refresh)
+  state$strict <- isTRUE(strict)
+  state$memo <- new.env(parent = emptyenv())
+  state$stack <- character()
+  state
+}
+
+fax_os <- function() {
+  getOption("fax.os") %||% tolower(Sys.info()[["sysname"]])
+}
+
+fact_record <- function(
+  name,
+  value = NA,
+  status = "ok",
+  source = NA_character_,
+  resolver = NA_character_,
+  elapsed = NA_real_,
+  message = NA_character_,
+  cache = TRUE
+) {
+  list(
+    name = name,
+    value = value,
+    status = status,
+    source = source,
+    resolver = resolver,
+    elapsed = elapsed,
+    message = message,
+    cache = cache
+  )
+}
+
+resolve_fact <- function(name, state) {
+  memo <- state$memo[[name]]
+  if (!is.null(memo)) {
+    return(memo)
+  }
+  if (is_skipped(name)) {
+    rec <- fact_record(name, status = "not_applicable", message = "Skipped by `fax.skip`.")
+    return(remember(state, name, rec))
+  }
+  key <- paste(state$root, state$os, state$cloud, name, sep = "\r")
+  cached <- .fax$cache[[key]]
+  if (!state$refresh && !is.null(cached)) {
+    return(remember(state, name, cached))
+  }
+  if (name %in% state$stack) {
+    fax_abort(
+      "Dependency cycle: %s.",
+      paste(c(state$stack, name), collapse = " -> "),
+      class = "fax_cycle"
+    )
+  }
+  candidates <- .fax$resolvers[[name]]
+  if (is.null(candidates)) {
+    fax_abort("Unknown fact `%s`.", name, class = "fax_unknown_fact")
+  }
+
+  state$stack <- c(state$stack, name)
+  on.exit(state$stack <- state$stack[-length(state$stack)], add = TRUE)
+  rec <- run_candidates(name, candidates, state)
+  # Errors may be transient (and must re-raise under strict), so never cache them.
+  if (rec$cache && rec$status != "error") {
+    .fax$cache[[key]] <- rec
+  }
+  remember(state, name, rec)
+}
+
+remember <- function(state, name, rec) {
+  state$memo[[name]] <- rec
+  rec
+}
+
+is_skipped <- function(name) {
+  skip <- getOption("fax.skip")
+  length(skip) > 0 && any(name == skip | startsWith(name, paste0(skip, ".")))
+}
+
+run_candidates <- function(name, candidates, state) {
+  first <- NULL
+  gated <- FALSE
+  for (r in candidates) {
+    if (r$network && !state$cloud) {
+      gated <- TRUE
+      next
+    }
+    ok <- tryCatch(confine_ok(r, state), error = function(cnd) {
+      if (state$strict) stop(cnd)
+      cnd
+    })
+    if (inherits(ok, "error")) {
+      return(fact_record(name, status = "error", resolver = r$id, message = conditionMessage(ok)))
+    }
+    if (!ok) {
+      next
+    }
+    rec <- run_resolver(r, state)
+    if (rec$status != "unavailable") {
+      return(rec)
+    }
+    first <- first %||% rec
+  }
+  if (!is.null(first)) {
+    return(first)
+  }
+  message <- if (gated) {
+    "Needs network access: use `cloud = TRUE`."
+  } else {
+    "No resolver applies on this system."
+  }
+  fact_record(name, status = "not_applicable", message = message)
+}
+
+confine_ok <- function(r, state) {
+  for (key in names(r$confine)) {
+    accept <- r$confine[[key]]
+    value <- if (key == "os") state$os else resolve_fact(key, state)$value
+    ok <- if (is.function(accept)) accept(value) else any(value %in% accept)
+    if (!isTRUE(ok)) {
+      return(FALSE)
+    }
+  }
+  TRUE
+}
+
+run_resolver <- function(r, state) {
+  ctx <- new_ctx(state)
+  start <- proc.time()[["elapsed"]]
+  status <- "ok"
+  message <- NA_character_
+  value <- tryCatch(
+    r$resolve(ctx),
+    fax_unavailable = function(cnd) {
+      status <<- "unavailable"
+      message <<- conditionMessage(cnd)
+      NULL
+    },
+    fax_not_applicable = function(cnd) {
+      status <<- "not_applicable"
+      message <<- conditionMessage(cnd)
+      NULL
+    },
+    error = function(cnd) {
+      if (state$strict) {
+        if (inherits(cnd, "fax_resolve_error")) {
+          stop(cnd)
+        }
+        fax_abort(
+          "Failed to resolve fact `%s`: %s",
+          r$name,
+          conditionMessage(cnd),
+          class = "fax_resolve_error"
+        )
+      }
+      status <<- "error"
+      message <<- conditionMessage(cnd)
+      NULL
+    }
+  )
+  if (status == "ok" && is.null(value)) {
+    status <- "unavailable"
+    message <- "No data found."
+  }
+  fact_record(
+    r$name,
+    value = if (status == "ok") value else NA,
+    status = status,
+    source = ctx$sources(),
+    resolver = r$id,
+    elapsed = proc.time()[["elapsed"]] - start,
+    message = message,
+    cache = r$cache
+  )
+}
+
+# The interface resolvers use for all I/O. Reads, commands, HTTP requests and
+# environment variables are recorded as the fact's `source`.
+new_ctx <- function(state) {
+  used <- character()
+  note <- function(source) {
+    used <<- c(used, source)
+    invisible()
+  }
+  list(
+    root = state$root,
+    os = state$os,
+    note = note,
+    read = function(path, n = -1L) {
+      note(path)
+      read_lines(path, state$root, n)
+    },
+    read_kv = function(path, sep = ":") {
+      note(path)
+      lines <- read_lines(path, state$root)
+      if (is.null(lines)) NULL else parse_kv(lines, sep)
+    },
+    exists = function(path) file_exists(path, state$root),
+    list_dir = function(path) {
+      note(path)
+      list_dir(path, state$root)
+    },
+    env = function(name) {
+      value <- Sys.getenv(name, unset = NA)
+      if (is.na(value)) {
+        return(NULL)
+      }
+      note(paste0("env:", name))
+      value
+    },
+    cmd = function(cmd, args = character(), timeout = 5) {
+      note(paste(c(cmd, args), collapse = " "))
+      run_cmd(cmd, args, timeout)
+    },
+    http = function(url, headers = character(), timeout = 1) {
+      note(url)
+      http_get(url, headers, timeout)
+    },
+    fact = function(name) resolve_fact(name, state)$value,
+    fact_record = function(name) resolve_fact(name, state),
+    sources = function() {
+      if (length(used)) paste(unique(used), collapse = "; ") else NA_character_
+    }
+  )
+}
