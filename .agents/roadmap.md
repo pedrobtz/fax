@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–6 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–7 done
 
 ---
 
@@ -192,20 +192,22 @@ Tests: platform detection per env set; IMDS parsing; timeout and connection-refu
 **Goal:** pass `R CMD check` on every CRAN platform with useful host-level facts.
 
 macOS:
-- [ ] `sw_vers`; one batched `sysctl` call (`machdep.cpu.brand_string`, `hw.logicalcpu`, `hw.physicalcpu`, `hw.memsize`, `kern.boottime`, `vm.loadavg`, `kern.hv_vmm_present`); `vm_stat` for available memory; `id` for uid.
+- [x] `sw_vers`; one batched `sysctl` call (`machdep.cpu.brand_string`, `hw.logicalcpu`, `hw.physicalcpu`, `hw.memsize`, `kern.boottime`, `vm.loadavg`, `kern.hv_vmm_present`); `vm_stat` for available memory; `id` for uid.
 
 Windows:
-- [ ] `os.*` from `Sys.info()` / `osVersion`; `NUMBER_OF_PROCESSORS`, `PROCESSOR_IDENTIFIER`.
-- [ ] `memory.host.*` from `ps::ps_system_memory()` when installed, else one lazy PowerShell `Get-CimInstance` call with timeout; `unavailable` on failure.
-- [ ] Python discovery adds the `py` launcher and `%LOCALAPPDATA%\Programs\Python`; site-packages under `Lib\site-packages`.
+- [x] `os.*` from `Sys.info()` / `osVersion`; `NUMBER_OF_PROCESSORS`, `PROCESSOR_IDENTIFIER`.
+- [x] `memory.host.*` from `ps::ps_system_memory()` when installed, else one lazy PowerShell `Get-CimInstance` call with timeout; `unavailable` on failure.
+- [x] Python discovery adds the `py` launcher and `%LOCALAPPDATA%\Programs\Python`; site-packages under `Lib\site-packages`.
 
 Both:
-- [ ] Linux-only facts report `not_applicable`, never `error`.
-- [ ] `usage()`: process CPU from `proc.time()`; `mem_rss` from `ps::ps_memory_info()` when installed, else `NA`; container fields `NA`. No commands per call.
+- [x] Linux-only facts report `not_applicable`, never `error`.
+- [x] `usage()`: process CPU from `proc.time()`; `mem_rss` from `ps::ps_memory_info()` when installed, else `NA`; container fields `NA`. No commands per call.
 
 Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OSes; live tests assert invariants only.
 
 **Done when:** the CI matrix (macOS, Windows, Ubuntu release/devel/oldrel) is green and every command parser has mocked tests.
+
+**Result:** macOS uses one batched `sysctl` (status ignored: unknown keys such as `hw.optional.arm64` on Intel make it exit 1 but the rest is printed), `sw_vers` and `vm_stat`; Intel flags are mapped to Linux names so `isa_level` works (`x86-64-v3` on an i5-8500B). Windows reads the CPU and BIOS registry keys (virtualization and Azure via `C:/WindowsAzure`), `NUMBER_OF_PROCESSORS`, memory and boot time from `ps` (PowerShell CIM fallback), and finds Python via the py launcher or `%LOCALAPPDATA%`, skipping the Store alias. `disk.tmpdir.fstype` uses `ps` off Linux. Live on this Mac: macOS 15.7.9, bare metal, no errors. CI asserts native resolvers on every OS.
 
 ---
 

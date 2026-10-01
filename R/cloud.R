@@ -8,8 +8,8 @@ register_cloud_facts <- function() {
     if (!is.null(azure_platform_from_env(ctx))) {
       return("azure")
     }
-    if (ctx$os != "linux") {
-      not_applicable("Cloud detection from DMI needs Linux.")
+    if (!ctx$os %in% c("linux", "windows")) {
+      not_applicable("Cloud detection needs DMI (Linux) or the BIOS registry (Windows).")
     }
     values <- dmi(ctx)
     if (!is.null(values)) {
@@ -18,8 +18,10 @@ register_cloud_facts <- function() {
         return("azure")
       }
       hyperv <- any(text == "Microsoft Corporation") && any(text == "Virtual Machine")
-      if (hyperv && ctx$exists("/var/lib/waagent")) {
-        ctx$note("/var/lib/waagent")
+      # The Azure guest agent: /var/lib/waagent on Linux, C:/WindowsAzure on Windows.
+      agent <- if (ctx$os == "windows") "C:/WindowsAzure" else "/var/lib/waagent"
+      if (hyperv && ctx$exists(agent)) {
+        ctx$note(agent)
         return("azure")
       }
       if (any(grepl("Amazon EC2", text, fixed = TRUE))) {

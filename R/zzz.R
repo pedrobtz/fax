@@ -13,6 +13,8 @@ register_builtins <- function() {
   register_virtualization_facts()
   register_container_facts()
   register_k8s_facts()
+  register_macos_facts()
+  register_windows_facts()
   register_cloud_facts()
   register_azure_facts()
   register_runtime_facts()

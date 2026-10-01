@@ -168,3 +168,15 @@ local_azure_env <- function(..., env = parent.frame()) {
   vars[names(set)] <- set
   withr::local_envvar(.new = vars, .local_envir = env)
 }
+
+# Answer commands from recorded outputs in tests/testthat/fixtures/cmd.
+local_cmd_outputs <- function(..., env = parent.frame()) {
+  outputs <- list(...)
+  withr::local_options(
+    fax.cmd_mock = function(cmd, args) {
+      file <- outputs[[basename(cmd)]]
+      if (is.null(file)) NULL else readLines(test_path("fixtures", "cmd", file))
+    },
+    .local_envir = env
+  )
+}
