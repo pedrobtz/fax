@@ -1,4 +1,4 @@
-# print() summarises substrate and resources
+# print() summarizes substrate and resources
 
     Code
       print(facts(refresh = TRUE))

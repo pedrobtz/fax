@@ -13,7 +13,7 @@
 #' does.
 #'
 #' Both are resource-based: they ignore settings such as `mc.cores` or
-#' `MC_CORES`. Use `parallelly::availableCores()` if you want those honoured.
+#' `MC_CORES`. Use `parallelly::availableCores()` if you want those honored.
 #'
 #' @param what `"limit"` for the memory limit, `"available"` for the memory
 #'   that can still be allocated.

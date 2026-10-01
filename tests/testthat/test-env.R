@@ -36,7 +36,7 @@ test_that("secret-looking variables are redacted", {
   expect_equal(out[["DATABASE_URL"]], "postgres://<redacted>@db:5432/app")
 })
 
-test_that("redaction modes are honoured", {
+test_that("redaction modes are honored", {
   vars <- c(API_TOKEN = "x", HOME = "/home/u", URL = "https://u:p@h")
   expect_equal(redact_env(vars, "allowlist", "HOME"), c(HOME = "/home/u"))
   expect_equal(

@@ -40,7 +40,7 @@ test_that("every fact is documented in fact_docs", {
   expect_true(all(nzchar(fact_docs$description)))
 })
 
-test_that("fact_platforms() summarises resolver confinement", {
+test_that("fact_platforms() summarizes resolver confinement", {
   expect_equal(fact_platforms("os.family"), "all")
   expect_equal(fact_platforms("cgroup.version"), "Linux")
   expect_equal(fact_platforms("cpu.load"), "Linux, macOS")

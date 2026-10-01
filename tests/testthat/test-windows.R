@@ -51,7 +51,7 @@ test_that("Windows facts come from the registry, environment and ps", {
   expect_equal(df$status[df$fact == "cpu.load"], "not_applicable")
 })
 
-test_that("Azure Windows VMs are recognised by the guest agent directory", {
+test_that("Azure Windows VMs are recognized by the guest agent directory", {
   local_windows(registry)
   local_mocked_bindings(file_exists = function(path, root) path == "C:/WindowsAzure")
   expect_equal(fact("cloud.provider"), "azure")

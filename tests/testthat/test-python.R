@@ -38,7 +38,7 @@ test_that("a venv is described from pyvenv.cfg without running Python", {
   )
 })
 
-test_that("uv environments are recognised", {
+test_that("uv environments are recognized", {
   venv <- write_files(
     withr::local_tempdir(),
     list(

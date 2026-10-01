@@ -29,7 +29,7 @@ test_that("Intel macOS facts come from sysctl, sw_vers and vm_stat", {
   expect_equal(unique(df$status[startsWith(df$fact, "cgroup.")]), "not_applicable")
 })
 
-test_that("Apple silicon macOS VMs are recognised", {
+test_that("Apple silicon macOS VMs are recognized", {
   withr::local_options(fax.os = "darwin")
   local_cmd_outputs(sysctl = "macos-arm-sysctl.txt", sw_vers = "macos-sw_vers.txt")
   f <- facts(refresh = TRUE)
