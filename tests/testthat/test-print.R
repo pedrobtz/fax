@@ -1,4 +1,4 @@
-test_that("print() summarises substrate and resources", {
+test_that("print() summarizes substrate and resources", {
   withr::local_options(fax.skip = "runtime")
   withr::local_envvar(container = NA)
   local_azure_env()

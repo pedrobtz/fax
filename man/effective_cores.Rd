@@ -32,7 +32,7 @@ now, counting reclaimable page cache as free, as the Kubernetes kubelet
 does.
 
 Both are resource-based: they ignore settings such as \code{mc.cores} or
-\code{MC_CORES}. Use \code{parallelly::availableCores()} if you want those honoured.
+\code{MC_CORES}. Use \code{parallelly::availableCores()} if you want those honored.
 }
 \examples{
 effective_cores()

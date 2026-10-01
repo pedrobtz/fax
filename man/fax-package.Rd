@@ -6,7 +6,7 @@
 \alias{fax-package}
 \title{fax: Facts About the Host, Container and Runtime}
 \description{
-Reports facts about the operating system, hardware, virtualization, containers, 'Kubernetes' pods, 'Azure', and the 'R' and 'Python' runtimes. Reports the CPU and memory the current process can actually use under 'cgroup' limits and CPU affinity, side by side with host values, so thread pools and memory budgets can be sized correctly inside containers. Also lists installed system, 'R' and 'Python' packages, and provides a cheap CPU and memory usage probe for log messages. Pure 'R', no network access unless explicitly requested.
+Reports facts about the operating system, hardware, virtualization, containers, 'Kubernetes' pods, 'Azure', and the 'R' and 'Python' runtimes on 'Linux', 'macOS' and 'Windows'. Reports the CPU cores and memory the current process can actually use under 'Linux' control group ('cgroup') limits and CPU affinity, side by side with host values, so thread pools and memory budgets can be sized correctly inside containers. Also lists installed system, 'R' and 'Python' packages, and provides a cheap CPU and memory usage probe for log messages. Makes no network requests unless cloud instance metadata is explicitly requested.
 }
 \seealso{
 Useful links:

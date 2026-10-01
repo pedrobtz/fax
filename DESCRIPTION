@@ -1,16 +1,17 @@
 Package: fax
 Title: Facts About the Host, Container and Runtime
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R:
     person("pedrobtz", , , "pedrobtz@gmail.com", role = c("aut", "cre"))
 Description: Reports facts about the operating system, hardware,
     virtualization, containers, 'Kubernetes' pods, 'Azure', and the 'R' and
-    'Python' runtimes. Reports the CPU and memory the current process can
-    actually use under 'cgroup' limits and CPU affinity, side by side with
-    host values, so thread pools and memory budgets can be sized correctly
-    inside containers. Also lists installed system, 'R' and 'Python'
-    packages, and provides a cheap CPU and memory usage probe for log
-    messages. Pure 'R', no network access unless explicitly requested.
+    'Python' runtimes on 'Linux', 'macOS' and 'Windows'. Reports the CPU
+    cores and memory the current process can actually use under 'Linux'
+    control group ('cgroup') limits and CPU affinity, side by side with host
+    values, so thread pools and memory budgets can be sized correctly inside
+    containers. Also lists installed system, 'R' and 'Python' packages, and
+    provides a cheap CPU and memory usage probe for log messages. Makes no
+    network requests unless cloud instance metadata is explicitly requested.
 License: MIT + file LICENSE
 URL: https://pedrobtz.github.io/fax/, https://github.com/pedrobtz/fax
 BugReports: https://github.com/pedrobtz/fax/issues
@@ -31,5 +32,6 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.0

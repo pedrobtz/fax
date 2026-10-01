@@ -2,7 +2,7 @@
 azure_asset_tag <- "7783-7084-3265-9085-8269-3286-77"
 
 register_cloud_facts <- function() {
-  # Read on every call: Azure services that hide DMI are recognised from their
+  # Read on every call: Azure services that hide DMI are recognized from their
   # environment variables.
   register(resolver("cloud.provider", cache = FALSE, function(ctx) {
     if (!is.null(azure_platform_from_env(ctx))) {

@@ -6,7 +6,7 @@ title: "Azure"
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 ```
 
-fax recognises Azure without network access, and with `cloud = TRUE` reads the
+fax recognizes Azure without network access, and with `cloud = TRUE` reads the
 instance metadata service (IMDS) for details such as region and VM size.
 
 ## Offline: which service am I on?
@@ -18,7 +18,7 @@ Azure services below sets its environment variables.
 
 `cloud.azure.platform` then names the service:
 
-| Platform | Recognised by |
+| Platform | Recognized by |
 |:--|:--|
 | `functions` | `FUNCTIONS_WORKER_RUNTIME` |
 | `app-service` | `WEBSITE_SITE_NAME` |

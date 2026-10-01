@@ -1,4 +1,4 @@
-# fax (development version)
+# fax 0.1.0
 
 * Initial CRAN submission.
 * `effective_cores()` and `effective_memory()` return the CPU cores and memory
