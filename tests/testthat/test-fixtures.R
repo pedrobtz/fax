@@ -111,8 +111,8 @@ test_that("LXCFS is detected", {
   expect_false(fact("memory.lxcfs"))
 })
 
-test_that("Linux facts are not applicable on other systems", {
-  local_fixture("docker-v2-unlimited", os = "windows")
+test_that("Linux facts are not applicable on an unknown system", {
+  local_fixture("docker-v2-unlimited", os = "plan9")
   df <- facts_df(facts(refresh = TRUE))
   linux_only <- c("cgroup.version", "cpu.cgroup.quota", "memory.cgroup.limit", "memory.lxcfs")
   expect_equal(unique(df$status[df$fact %in% linux_only]), "not_applicable")
