@@ -2,16 +2,19 @@
 
 ## Authors
 
-- **First Last**. Author, maintainer.
+- **pedrobtz**. Author, maintainer.
 
 ## Citation
 
-Last F (2026). *fax: What the Package Does (One Line, Title Case)*. R
+Source:
+[`DESCRIPTION`](https://github.com/pedrobtz/fax/blob/main/DESCRIPTION)
+
+pedrobtz (2026). *fax: Facts About the Host, Container and Runtime*. R
 package version 0.0.0.9000, <https://pedrobtz.github.io/fax/>.
 
     @Manual{,
-      title = {fax: What the Package Does (One Line, Title Case)},
-      author = {First Last},
+      title = {fax: Facts About the Host, Container and Runtime},
+      author = {{pedrobtz}},
       year = {2026},
       note = {R package version 0.0.0.9000},
       url = {https://pedrobtz.github.io/fax/},
