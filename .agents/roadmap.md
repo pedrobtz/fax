@@ -266,7 +266,8 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 - [ ] `R CMD check --as-cran` clean locally; `devtools::check_win_devel()`, `check_win_release()`, `check_mac_release()`; `rhub::rhub_check()` on linux, macos-arm64, windows.
 - [x] Confirm CRAN-safety (§10): no network, no Python, fixture-only scenario assertions, inventory tests on fixtures only.
 - [x] `cran-comments.md`: new release; test environments; network access only on explicit `cloud = TRUE`, 1 s timeout, never in checks.
-- [x] `Version: 0.1.0`, final `NEWS.md`; - [ ] `devtools::submit_cran()`; confirm maintainer email.
+- [x] `Version: 0.1.0`, final `NEWS.md`.
+- [ ] `devtools::submit_cran()`; confirm maintainer email.
 - [ ] After acceptance: tag `v0.1.0`, GitHub release, bump to `0.1.0.9000`, open the 0.2.0 milestone from the deferred column.
 
 **Done when:** fax 0.1.0 is on CRAN.
