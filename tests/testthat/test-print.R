@@ -1,6 +1,7 @@
 test_that("print() summarises substrate and resources", {
   withr::local_options(fax.skip = "runtime")
-  withr::local_envvar(KUBERNETES_SERVICE_HOST = NA, container = NA)
+  withr::local_envvar(container = NA)
+  local_azure_env()
   for (name in c(
     "k8s-v2-limits",
     "aks-pod-downward-api",

@@ -220,6 +220,7 @@ new_ctx <- function(state) {
   list(
     root = state$root,
     os = state$os,
+    refresh = state$refresh,
     note = note,
     read = function(path, n = -1L) {
       lines <- read_lines(path, state$root, n)

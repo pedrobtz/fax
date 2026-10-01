@@ -243,8 +243,8 @@ Offline facts (default namespace, no network):
 | fact | notes |
 |---|---|
 | `cloud.provider` | `azure` · `aws` · `gcp` · `NA`, from DMI: Azure chassis asset tag `7783-7084-3265-9085-8269-3286-77` or `Microsoft Corporation` / `Virtual Machine` + `/var/lib/waagent`; `Amazon EC2`; `Google Compute Engine`. Azure PaaS env vars also imply `azure` |
-| `cloud.azure.platform` | `vm` · `vmss` · `aks` · `app-service` · `functions` · `container-apps` · `batch` · `azureml` · `databricks`, from platform env vars (`WEBSITE_SITE_NAME`, `FUNCTIONS_WORKER_RUNTIME`, `CONTAINER_APP_NAME`, `AZ_BATCH_NODE_ID`, `AZUREML_*`, `DATABRICKS_RUNTIME_VERSION`, …; verify names against Azure docs during implementation) and `k8s.*` |
-| `cloud.azure.service.*` | non-secret identifiers from those env vars (App Service site name and instance ID, Container App name and revision, Batch pool and node ID, …) |
+| `cloud.azure.platform` | `vm` · `aks` · `app-service` · `functions` · `container-apps` · `batch` · `azureml` · `databricks` (scale sets show in `cloud.azure.vmss_name`), from platform env vars (`WEBSITE_SITE_NAME`, `FUNCTIONS_WORKER_RUNTIME`, `CONTAINER_APP_NAME`, `AZ_BATCH_NODE_ID`, `AZUREML_*`, `DATABRICKS_RUNTIME_VERSION`, …; verify names against Azure docs during implementation) and `k8s.*` |
+| `cloud.azure.service` | named chr of non-secret identifiers from those env vars (App Service site and instance ID, Container App name/revision/replica, Batch pool/node/job/task, Azure ML run/experiment, Databricks runtime) |
 
 IMDS facts (`network = TRUE`; need `cloud = TRUE` and `cloud.provider == "azure"`):
 
@@ -436,6 +436,8 @@ fax::main()                               # CLI: fax [namespace...] --json
 | 12 | Fact names | Frozen as written in §5. |
 | 13 | Usage for logging | Separate fast path `usage()` / `usage_line()` outside the fact engine (§4.6); pure R on Linux, `ps` (Suggests) for RSS elsewhere. |
 
-Still open (resolved during implementation, do not block the plan):
-- **IMDS HTTP client:** base R `url(method = "libcurl", headers = )` with proxy bypass, unless a spike shows the 1 s timeout isn't reliable → `curl` in Suggests (roadmap Stage 6).
-- **Azure PaaS env var names:** verify each against current Azure docs (roadmap Stage 6).
+| 14 | IMDS HTTP client | Base R `url(method = "libcurl", headers = )` with `options(timeout = 1)` and the metadata host added to `no_proxy`. Spike (2026-10-01): headers are sent; a non-responding address fails after 1.07 s; no `curl` dependency. JSON parsing uses jsonlite (Suggests); without it IMDS facts are `unavailable`. |
+| 15 | IMDS caching | One request per session, including failures (a blocked IMDS costs its timeout once); `refresh = TRUE` asks again. |
+
+Still open:
+- **Azure PaaS env var names:** the names used (`WEBSITE_SITE_NAME`, `FUNCTIONS_WORKER_RUNTIME`, `CONTAINER_APP_NAME`, `AZ_BATCH_NODE_ID`, `AZUREML_RUN_ID`, `DATABRICKS_RUNTIME_VERSION`) follow Azure's documentation as known at design time; confirm on real services before release (Stage 8).

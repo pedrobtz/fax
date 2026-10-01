@@ -30,3 +30,22 @@ test_that("GitHub-hosted Linux runners are Azure VMs", {
   expect_equal(fact("cloud.provider"), "azure")
   expect_false(fact("container.detected"))
 })
+
+test_that("IMDS on GitHub-hosted Linux runners answers quickly or is reported blocked", {
+  skip_on_cran()
+  skip_if_not(identical(Sys.getenv("GITHUB_ACTIONS"), "true"), "not on GitHub Actions")
+  skip_if_not(identical(Sys.getenv("RUNNER_ENVIRONMENT"), "github-hosted"), "not a hosted runner")
+  skip_if_not(identical(Sys.info()[["sysname"]], "Linux"), "not Linux")
+  skip_if_not_installed("jsonlite")
+  withr::local_options(fax.root = NULL, fax.os = NULL)
+  start <- proc.time()[["elapsed"]]
+  f <- facts(cloud = TRUE, refresh = TRUE)
+  df <- facts_df(f, "cloud")
+  expect_lt(proc.time()[["elapsed"]] - start, 3)
+  region <- df[df$fact == "cloud.region", ]
+  if (region$status != "ok") {
+    skip(paste("IMDS not reachable on this runner:", region$message))
+  }
+  expect_type(region$value[[1]], "character")
+  expect_match(f[["cloud.instance.type"]], "^Standard_")
+})

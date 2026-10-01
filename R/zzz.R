@@ -14,6 +14,7 @@ register_builtins <- function() {
   register_container_facts()
   register_k8s_facts()
   register_cloud_facts()
+  register_azure_facts()
   register_runtime_facts()
   register_python_facts()
   register_env_facts()

@@ -69,6 +69,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: docker-v2-unlimited
 
@@ -141,6 +159,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: docker-v2-cpus2-mem1g
 
@@ -213,6 +249,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: docker-v2-cpus1.5-mem512m
 
@@ -285,6 +339,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: docker-v2-cgroupns-host
 
@@ -357,6 +429,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: cpuset-pinned
 
@@ -429,6 +519,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: docker-v1-cpus1.5-mem512m
 
@@ -501,6 +609,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] NA
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: hybrid
 
@@ -573,6 +699,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] NA
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: k8s-v2-limits
 
@@ -645,6 +789,24 @@
       k8s.resources.limits =          2 1073741824 [ok] NA
       k8s.resources.requests = NA [unavailable] NA
       cloud.provider = NA [not_applicable] NA
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: lxcfs
 
@@ -717,6 +879,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] NA
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: linux-baremetal
 
@@ -789,6 +969,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: azure-vm
 
@@ -861,6 +1059,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = azure [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = vm [ok] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: aws-ec2
 
@@ -933,6 +1149,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = aws [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: gcp-vm
 
@@ -1005,6 +1239,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = gcp [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: wsl2
 
@@ -1077,6 +1329,24 @@
       k8s.resources.limits = NA [not_applicable] NA
       k8s.resources.requests = NA [not_applicable] NA
       cloud.provider = NA [not_applicable] NA
+      cloud.azure.platform = NA [not_applicable] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 
 # report: aks-pod-downward-api
 
@@ -1149,4 +1419,22 @@
       k8s.resources.limits =          1.5 4294967296.0 [ok] NA
       k8s.resources.requests = NA [unavailable] NA
       cloud.provider = azure [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      cloud.azure.platform = aks [ok] NA
+      cloud.azure.service = NA [not_applicable] NA
+      cloud.region = NA [not_applicable] NA
+      cloud.zone = NA [not_applicable] NA
+      cloud.instance.type = NA [not_applicable] NA
+      cloud.instance.id = NA [not_applicable] NA
+      cloud.azure.vm_name = NA [not_applicable] NA
+      cloud.azure.resource_group = NA [not_applicable] NA
+      cloud.azure.subscription_id = NA [not_applicable] NA
+      cloud.azure.vmss_name = NA [not_applicable] NA
+      cloud.azure.priority = NA [not_applicable] NA
+      cloud.azure.eviction_policy = NA [not_applicable] NA
+      cloud.azure.os_type = NA [not_applicable] NA
+      cloud.azure.environment = NA [not_applicable] NA
+      cloud.azure.image = NA [not_applicable] NA
+      cloud.azure.tags = NA [not_applicable] NA
+      cloud.azure.network.private_ip = NA [not_applicable] NA
+      cloud.azure.network.public_ip = NA [not_applicable] NA
 

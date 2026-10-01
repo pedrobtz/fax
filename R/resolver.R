@@ -67,6 +67,7 @@ not_applicable <- function(message) {
 .fax$opt_in <- "packages"
 .fax$cache <- new.env(parent = emptyenv())
 .fax$python_probe <- list()
+.fax$imds <- list()
 
 namespace_order <- c(
   "os",
@@ -110,6 +111,7 @@ registry_reset <- function() {
 cache_clear <- function() {
   .fax$cache <- new.env(parent = emptyenv())
   .fax$python_probe <- list()
+  .fax$imds <- list()
 }
 
 fact_namespace <- function(name) sub("\\..*$", "", name)

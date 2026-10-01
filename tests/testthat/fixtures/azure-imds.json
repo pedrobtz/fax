@@ -1,0 +1,40 @@
+{
+  "compute": {
+    "azEnvironment": "AzurePublicCloud",
+    "evictionPolicy": "Delete",
+    "location": "westeurope",
+    "name": "vm-analytics-01",
+    "osType": "Linux",
+    "priority": "Spot",
+    "resourceGroupName": "rg-analytics",
+    "storageProfile": {
+      "imageReference": {
+        "id": "",
+        "offer": "ubuntu-24_04-lts",
+        "publisher": "canonical",
+        "sku": "server",
+        "version": "latest"
+      }
+    },
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "tagsList": [
+      { "name": "team", "value": "data" },
+      { "name": "deploy-token", "value": "abc123" }
+    ],
+    "vmId": "11111111-2222-3333-4444-555555555555",
+    "vmScaleSetName": "",
+    "vmSize": "Standard_D4s_v5",
+    "zone": "2"
+  },
+  "network": {
+    "interface": [
+      {
+        "ipv4": {
+          "ipAddress": [{ "privateIpAddress": "10.0.0.4", "publicIpAddress": "" }],
+          "subnet": [{ "address": "10.0.0.0", "prefix": "24" }]
+        },
+        "macAddress": "000D3A000000"
+      }
+    ]
+  }
+}

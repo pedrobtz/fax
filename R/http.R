@@ -22,6 +22,39 @@ http_get <- function(url, headers = character(), timeout = 1) {
   http_transport(url, headers, timeout)
 }
 
+# Base R libcurl: sends headers, and options(timeout) bounds connect and read
+# (1.07 s against a non-responding address in the Stage 6 spike). The metadata
+# address is added to no_proxy so a configured proxy is never used for it.
 http_transport <- function(url, headers, timeout) {
-  unavailable("HTTP transport is not implemented yet.")
+  old_timeout <- options(timeout = max(1, ceiling(timeout)))
+  on.exit(options(old_timeout), add = TRUE)
+  host <- sub("^https?://([^/:]+).*$", "\\1", url)
+  old_env <- Sys.getenv(c("no_proxy", "NO_PROXY"), unset = NA)
+  no_proxy <- paste(c(stats::na.omit(old_env[1]), host), collapse = ",")
+  Sys.setenv(no_proxy = no_proxy, NO_PROXY = no_proxy)
+  on.exit(restore_env(old_env), add = TRUE)
+
+  reason <- NULL
+  con <- url(url, method = "libcurl", headers = headers)
+  on.exit(close(con), add = TRUE)
+  body <- withCallingHandlers(
+    tryCatch(readLines(con, warn = FALSE), error = function(e) {
+      reason <<- reason %||% conditionMessage(e)
+      NULL
+    }),
+    warning = function(w) {
+      reason <<- conditionMessage(w)
+      invokeRestart("muffleWarning")
+    }
+  )
+  if (is.null(body)) {
+    unavailable(paste("Request failed:", reason %||% "no response"))
+  }
+  list(status = 200L, body = paste(body, collapse = "\n"))
+}
+
+restore_env <- function(old) {
+  for (name in names(old)) {
+    if (is.na(old[[name]])) Sys.unsetenv(name) else do.call(Sys.setenv, as.list(old[name]))
+  }
 }
