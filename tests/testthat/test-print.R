@@ -25,3 +25,13 @@ test_that("print() shows R and Python when available", {
     fixed = TRUE
   )
 })
+
+test_that("print() warns about OOM kills and a tmpfs tempdir() in containers", {
+  withr::local_options(fax.skip = "runtime")
+  local_azure_env()
+  local_fixture("aks-pod-downward-api")
+  local_mocked_bindings(mount_for = function(mounts, path) data.frame(fstype = "tmpfs"))
+  out <- format(facts(refresh = TRUE))
+  expect_match(out, "tempdir\\(\\) is on tmpfs", all = FALSE)
+  expect_match(out, "2 process\\(es\\) in this container were killed", all = FALSE)
+})

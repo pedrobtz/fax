@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–9 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–9 and 11 done; Stage 10 waiting on the maintainer
 
 ---
 
@@ -275,6 +275,35 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 **Progress (2026-10-01):** cran-extrachecks done (Description expands 'cgroup', README has the CRAN install line, `Language: en-US`, US spellings, `inst/WORDLIST`), `urlchecker` clean, spelling clean, `R CMD check --as-cran` 0 errors / 0 warnings, version 0.1.0, `cran-comments.md` written, R-hub v2 workflow added. **Waiting on the maintainer:** a real name (and optional ORCID) in `Authors@R` with the `cph` role; whether to run win-builder / mac-builder (they email results to the maintainer address); and the CRAN submission itself.
 
 ---
+
+## Stage 11 — Pre-release extras
+
+**Goal:** three small additions found by comparing with other tools (2026-10-01), shipped in 0.1.0.
+
+- [x] Pressure and OOM kills: `memory.cgroup.pressure`, `cpu.cgroup.pressure` (cgroup v2 PSI, `some`/`full` avg10 %), `memory.cgroup.oom_kills` (v2 `memory.events`, v1 `memory.oom_control`); `usage(extra = "pressure")` adds `mem_pressure`, `cpu_pressure`, `oom_kills`; `print()` notes OOM kills.
+- [x] tmpfs warning: `print()` notes when `tempdir()` is on tmpfs inside a container (files count against the memory limit).
+- [x] Connection and file limits: `runtime.r.connections` (max / used / free R connection slots; each parallel worker needs one) and `runtime.rlimit.nofile`.
+- [x] `data-raw/pack-fixtures.R` only re-packs fixtures whose content changed.
+
+---
+
+## After 0.1.0 — ideas from other tools
+
+Recorded 2026-10-01 from a comparison with automaxprocs/automemlimit, the JVM/.NET container support, parallelly, lscpu/hwloc, nvidia-smi, systemd-detect-virt, ci-info and sessioninfo.
+
+**0.2.0**
+- `apply_limits()`: set `OMP_NUM_THREADS`, `options(mc.cores)`, data.table threads from `effective_cores()`, and R's vector heap limit (`mem.maxVSize()`) just below the container memory limit, so R fails with a catchable "vector memory exhausted" error instead of an OOM kill (the R analogue of automaxprocs/automemlimit).
+- `hpc` namespace: Slurm, PBS, SGE and LSF allocations (`SLURM_CPUS_PER_TASK`, `PBS_NUM_PPN`, `LSB_DJOB_NUMPROC`, job ids).
+- `platform` namespace: CI (GitHub Actions, GitLab, …), Posit Workbench/Connect, RStudio, Positron, VS Code, Codespaces, SageMaker — all from environment variables.
+- Effective privileges: decode `CapEff` from `/proc/self/status`, read-only root filesystem, seccomp mode.
+- BLAS identification (OpenBLAS, MKL, Accelerate, reference) from the library path; current BLAS/OpenMP threads via `RhpcBLASctl` when installed.
+
+**Later**
+- `gpu` namespace: count and models (`nvidia-smi`), `CUDA_VISIBLE_DEVICES`, `nvidia.com/gpu` resources.
+- NUMA nodes and CPU caches from `/sys/devices/system/node` and `cpu*/cache`.
+- Hybrid CPUs: performance vs efficiency cores (`hw.perflevel*` on Apple silicon, Intel hybrid).
+- More substrates: chroot, OpenVZ, proot, gVisor, Firecracker, a reliable LXC system-container signal.
+- CI runner coverage: Linux and Windows arm64, Intel macOS, oldrel on macOS/Windows, an arm64 container job.
 
 ## Stage dependencies
 

@@ -40,3 +40,33 @@ test_that("effective_memory() falls back to host total when unlimited", {
   expect_equal(effective_memory(), fact("memory.host.total"))
   expect_snapshot(effective_memory("nope"), error = TRUE)
 })
+
+test_that("pressure stall information is parsed", {
+  expect_equal(
+    parse_pressure(c(
+      "some avg10=23.40 avg60=10.20 avg300=4.00 total=8800000",
+      "full avg10=11.10 avg60=5.00 avg300=2.00 total=4100000"
+    )),
+    c(some = 23.4, full = 11.1)
+  )
+  expect_null(parse_pressure(NULL))
+  expect_null(parse_pressure("garbage"))
+})
+
+test_that("memory pressure and OOM kills come from cgroup v2 files", {
+  local_fixture("aks-pod-downward-api")
+  f <- facts(refresh = TRUE)
+  expect_equal(f[["memory.cgroup.pressure"]], c(some = 23.4, full = 11.1))
+  expect_equal(f[["cpu.cgroup.pressure"]], c(some = 1, full = 0))
+  expect_equal(f[["memory.cgroup.oom_kills"]], 2)
+  local_fixture("k8s-v2-limits")
+  expect_equal(fact("cpu.cgroup.pressure"), c(some = 12.5, full = 0))
+  expect_equal(fact("memory.cgroup.oom_kills"), 0)
+})
+
+test_that("cgroup v1 reports OOM kills but no pressure", {
+  local_fixture("docker-v1-cpus1.5-mem512m")
+  expect_equal(fact("memory.cgroup.oom_kills"), 0)
+  df <- facts_df(facts("memory", refresh = TRUE))
+  expect_equal(df$status[df$fact == "memory.cgroup.pressure"], "not_applicable")
+})

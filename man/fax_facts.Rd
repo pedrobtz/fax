@@ -51,6 +51,7 @@ fact is announced in NEWS and kept working for at least one release.
    \code{cpu.cgroup.quota} \tab cores \tab Linux \tab cgroup CPU quota in cores, the smallest over parent cgroups (\code{Inf} if unlimited). \cr
    \code{cpu.cgroup.cpuset} \tab int \tab Linux \tab CPUs in the cgroup's cpuset. \cr
    \code{cpu.cgroup.weight} \tab dbl \tab Linux \tab cgroup CPU weight on the v2 scale (v1 shares converted). \cr
+   \code{cpu.cgroup.pressure} \tab named dbl \tab Linux \tab cgroup v2 CPU pressure: percentage of the last 10 seconds in which some or all tasks waited for CPU. \cr
    \code{cpu.effective} \tab int \tab all \tab CPU cores to size thread pools with: the smallest limit, a fractional quota rounded up. \cr
    \code{cpu.effective_exact} \tab cores \tab all \tab The smallest CPU limit, keeping a fractional quota. \cr
 }
@@ -68,6 +69,8 @@ fact is announced in NEWS and kept working for at least one release.
    \code{memory.cgroup.usage} \tab bytes \tab Linux \tab Memory used by the cgroup, including page cache. \cr
    \code{memory.cgroup.swap_limit} \tab bytes \tab Linux \tab cgroup swap limit. \cr
    \code{memory.cgroup.working_set} \tab bytes \tab Linux \tab cgroup memory in use, not counting inactive page cache. \cr
+   \code{memory.cgroup.pressure} \tab named dbl \tab Linux \tab cgroup v2 memory pressure: percentage of the last 10 seconds in which some or all tasks stalled on memory. \cr
+   \code{memory.cgroup.oom_kills} \tab dbl \tab Linux \tab Processes killed in this cgroup for running out of memory. \cr
    \code{memory.rlimit.as} \tab bytes \tab Linux \tab Address-space limit of the process (\code{ulimit -v}). \cr
    \code{memory.rlimit.data} \tab bytes \tab Linux \tab Data-segment limit of the process (\code{ulimit -d}). \cr
    \code{memory.effective.limit} \tab bytes \tab all \tab Memory the process may use: the smaller of host memory and the cgroup limit. \cr
@@ -161,6 +164,8 @@ fact is announced in NEWS and kept working for at least one release.
    \code{runtime.threads.env} \tab named chr \tab all \tab Thread-count environment variables that are set (\code{OMP_NUM_THREADS}, ...). \cr
    \code{runtime.threads.options} \tab named dbl \tab all \tab \code{mc.cores} and \code{Ncpus} options. \cr
    \code{runtime.parallelly_cores} \tab int \tab all \tab \code{parallelly::availableCores()}, when parallelly is installed. \cr
+   \code{runtime.r.connections} \tab named int \tab all \tab R connection slots: max, used and free. Each parallel worker needs one. \cr
+   \code{runtime.rlimit.nofile} \tab dbl \tab Linux, macOS \tab Open-files limit of the process (\code{ulimit -n}). \cr
    \code{runtime.pid} \tab int \tab all \tab Process id. \cr
    \code{runtime.user} \tab chr \tab all \tab User name. \cr
    \code{runtime.uid} \tab int \tab Linux, macOS \tab Effective user id. \cr

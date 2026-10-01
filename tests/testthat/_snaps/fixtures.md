@@ -30,6 +30,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/cpu.max; /sys/fs/cgroup/user.slice/cpu.max
       cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/cpuset.cpus.effective
       cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/cpu.weight
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -41,6 +42,8 @@
       memory.cgroup.usage = 3022848 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.current
       memory.cgroup.swap_limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/memory.swap.max; /sys/fs/cgroup/user.slice/memory.swap.max
       memory.cgroup.working_set = 2985984 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -120,6 +123,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -131,6 +135,8 @@
       memory.cgroup.usage = 1290240 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
       memory.cgroup.swap_limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
       memory.cgroup.working_set = 1138688 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -210,6 +216,7 @@
       cpu.cgroup.quota = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 2 [ok] NA
       cpu.effective_exact = 2 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -221,6 +228,8 @@
       memory.cgroup.usage = 1314816 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
       memory.cgroup.swap_limit = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
       memory.cgroup.working_set = 1163264 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 1073741824 [ok] NA
@@ -300,6 +309,7 @@
       cpu.cgroup.quota = 1.5 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 2 [ok] NA
       cpu.effective_exact = 1.5 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -311,6 +321,8 @@
       memory.cgroup.usage = 1449984 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
       memory.cgroup.swap_limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
       memory.cgroup.working_set = 1298432 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 536870912 [ok] NA
@@ -390,6 +402,7 @@
       cpu.cgroup.quota = 1 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/cpu.max; /sys/fs/cgroup/user.slice/user-501.slice/cpu.max; /sys/fs/cgroup/user.slice/cpu.max
       cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/cpuset.cpus.effective
       cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/cpu.weight
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 1 [ok] NA
       cpu.effective_exact = 1 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -401,6 +414,8 @@
       memory.cgroup.usage = 1564672 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.current
       memory.cgroup.swap_limit = 268435456 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/memory.swap.max; /sys/fs/cgroup/user.slice/user-501.slice/memory.swap.max; /sys/fs/cgroup/user.slice/memory.swap.max
       memory.cgroup.working_set = 1413120 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 268435456 [ok] NA
@@ -480,6 +495,7 @@
       cpu.cgroup.quota = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
       cpu.cgroup.cpuset = 1 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset.cpus.effective
       cpu.cgroup.weight = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.weight
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 1 [ok] NA
       cpu.effective_exact = 1 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -491,6 +507,8 @@
       memory.cgroup.usage = 1019904 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
       memory.cgroup.swap_limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.swap.max
       memory.cgroup.working_set = 864256 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -570,6 +588,7 @@
       cpu.cgroup.quota = 1.5 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/cpu.cfs_quota_us; /sys/fs/cgroup/cpu,cpuacct/cpu.cfs_period_us
       cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset/cpuset.effective_cpus
       cpu.cgroup.weight = 40 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/cpu.shares
+      cpu.cgroup.pressure = NA [not_applicable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 2 [ok] NA
       cpu.effective_exact = 1.5 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -581,6 +600,8 @@
       memory.cgroup.usage = 209715200 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.usage_in_bytes
       memory.cgroup.swap_limit = 536870912 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.memsw.limit_in_bytes
       memory.cgroup.working_set = 167772160 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.stat
+      memory.cgroup.pressure = NA [not_applicable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/memory.oom_control
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 536870912 [ok] NA
@@ -660,6 +681,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/user.slice/user-1000.slice/session-2.scope/cpu.cfs_quota_us; /sys/fs/cgroup/cpu,cpuacct/user.slice/user-1000.slice/session-2.scope/cpu.cfs_period_us
       cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset/cpuset.cpus
       cpu.cgroup.weight = 40 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu,cpuacct/user.slice/user-1000.slice/session-2.scope/cpu.shares
+      cpu.cgroup.pressure = NA [not_applicable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -671,6 +693,8 @@
       memory.cgroup.usage = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/user.slice/user-1000.slice/session-2.scope/memory.usage_in_bytes
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = 805306368 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory/user.slice/user-1000.slice/session-2.scope/memory.stat
+      memory.cgroup.pressure = NA [not_applicable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -750,6 +774,7 @@
       cpu.cgroup.quota = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpu.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cpu.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/cpu.max; /sys/fs/cgroup/kubepods.slice/cpu.max
       cpu.cgroup.cpuset = 8 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpuset.cpus.effective
       cpu.cgroup.weight = 79 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpu.weight
+      cpu.cgroup.pressure = 12.5  0.0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/cpu.pressure
       cpu.effective = 2 [ok] NA
       cpu.effective_exact = 2 [ok] NA
       memory.host.total = 34359738368 [ok] /proc/meminfo
@@ -761,6 +786,8 @@
       memory.cgroup.usage = 314572800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.current
       memory.cgroup.swap_limit = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.swap.max
       memory.cgroup.working_set = 209715200 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.stat
+      memory.cgroup.pressure = 0 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.pressure
+      memory.cgroup.oom_kills = 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 1073741824 [ok] NA
@@ -840,6 +867,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 536870912 [ok] /proc/meminfo
@@ -851,6 +879,8 @@
       memory.cgroup.usage = 134217728 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = 117440512 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 536870912 [ok] NA
@@ -930,6 +960,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -941,6 +972,8 @@
       memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -1020,6 +1053,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -1031,6 +1065,8 @@
       memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -1110,6 +1146,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -1121,6 +1158,8 @@
       memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -1200,6 +1239,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -1211,6 +1251,8 @@
       memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -1290,6 +1332,7 @@
       cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
       cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       cpu.effective = 4 [ok] NA
       cpu.effective_exact = 4 [ok] NA
       memory.host.total = 6202609664 [ok] /proc/meminfo
@@ -1301,6 +1344,8 @@
       memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.pressure = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.oom_kills = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 6202609664 [ok] NA
@@ -1380,6 +1425,7 @@
       cpu.cgroup.quota = 1.5 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
       cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset.cpus.effective
       cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.pressure = 1 0 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.pressure
       cpu.effective = 2 [ok] NA
       cpu.effective_exact = 1.5 [ok] NA
       memory.host.total = 17179869184 [ok] /proc/meminfo
@@ -1391,6 +1437,8 @@
       memory.cgroup.usage = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
       memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
       memory.cgroup.working_set = 939524096 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.cgroup.pressure = 23.4 11.1 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.pressure
+      memory.cgroup.oom_kills = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.events
       memory.rlimit.as = Inf [ok] /proc/self/limits
       memory.rlimit.data = Inf [ok] /proc/self/limits
       memory.effective.limit = 4294967296 [ok] NA

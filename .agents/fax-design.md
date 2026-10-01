@@ -416,7 +416,8 @@ fax::main()                               # CLI: fax [namespace...] --json
 |---|---|
 | **0.1.0** (first CRAN) | Everything in §5 not marked otherwise: engine, Linux resources and substrate, `usage()` fast probe, Azure (offline + IMDS), R/Python runtime, env, `disk.tmpdir`, package inventories, macOS/Windows basics, list/df/JSON/print. Plan: [roadmap.md](roadmap.md) |
 | **0.2.0** | Custom & external facts, `facts_duckdb()`, CLI, `capture_fixture()` export, AWS/GCP IMDS, Azure scheduled events, `disk.mounts`, `network.interfaces`, `dmi.*`, tmpdir inodes, FIPS/SELinux |
-| **later** | Cross-session fact cache with TTL; `ps`-based process facts; optional Rust core (sysinfo + cgroup parsing) shared with a DuckDB extension and a standalone CLI |
+| **0.2.0 (added)** | `apply_limits()` incl. R vector heap limit from the container memory limit; `hpc` and `platform` namespaces; effective privileges (capabilities); BLAS identification (see roadmap "After 0.1.0") |
+| **later** | GPUs, NUMA and caches, hybrid CPU core types, more substrates (chroot, gVisor, …); cross-session fact cache with TTL; `ps`-based process facts; optional Rust core (sysinfo + cgroup parsing) shared with a DuckDB extension and a standalone CLI |
 
 ## 12. Decisions
 

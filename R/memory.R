@@ -121,6 +121,22 @@ register_memory_facts <- function() {
     if (is.na(inactive)) NULL else max(0, usage - inactive[[1]])
   }))
 
+  register(resolver("memory.cgroup.pressure", confine = linux, cache = FALSE, function(ctx) {
+    cgroup_pressure(ctx, "memory", "memory.pressure")
+  }))
+
+  # OOM kills in this cgroup since it was created: v2 memory.events, v1
+  # memory.oom_control (kernel 4.13+).
+  register(resolver("memory.cgroup.oom_kills", confine = linux, cache = FALSE, function(ctx) {
+    loc <- memory_location(ctx)
+    if (is.null(loc)) {
+      return(NULL)
+    }
+    file <- if (loc$version == 2L) "memory.events" else "memory.oom_control"
+    stat <- cgroup_stat(ctx, loc$dir, file)
+    if (is.null(stat) || is.na(stat["oom_kill"])) NULL else stat[["oom_kill"]]
+  }))
+
   register(resolver("memory.rlimit.as", confine = linux, \(ctx) rlimit(ctx, "Max address space")))
 
   register(resolver("memory.rlimit.data", confine = linux, \(ctx) rlimit(ctx, "Max data size")))

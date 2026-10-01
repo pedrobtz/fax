@@ -178,6 +178,30 @@ cgroup_stat <- function(ctx, dir, file) {
 
 first <- function(x) if (length(x)) x[[1]] else NULL
 
+# Pressure stall information: "some avg10=1.25 avg60=... total=..." lines ->
+# c(some = 1.25, full = ...), the percentage of the last 10 seconds in which
+# some (or all) tasks were stalled waiting for the resource.
+parse_pressure <- function(lines) {
+  if (is.null(lines)) {
+    return(NULL)
+  }
+  kind <- sub(" .*$", "", lines)
+  avg10 <- suppressWarnings(as.numeric(sub("^.*avg10=([0-9.]+).*$", "\\1", lines)))
+  keep <- kind %in% c("some", "full") & !is.na(avg10)
+  if (!any(keep)) {
+    return(NULL)
+  }
+  stats::setNames(avg10[keep], kind[keep])
+}
+
+cgroup_pressure <- function(ctx, controller, file) {
+  loc <- cgroup_controller(cgroup_layout(ctx), controller)
+  if (is.null(loc) || loc$version != 2L) {
+    not_applicable("Pressure stall information needs cgroup v2.")
+  }
+  parse_pressure(ctx$read(paste0(loc$dir, "/", file)))
+}
+
 # cgroup v1 reports "no limit" as a huge page-rounded number.
 v1_limit <- function(x) {
   x <- parse_limit(x)

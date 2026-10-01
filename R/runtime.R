@@ -99,6 +99,36 @@ register_runtime_facts <- function() {
     as.integer(parallelly::availableCores())
   }))
 
+  # R has a fixed number of connection slots (128 unless R >= 4.4 was started
+  # with --max-connections); each parallel worker needs one.
+  register(resolver("runtime.r.connections", cache = FALSE, function(ctx) {
+    r_note(ctx, "showConnections()")
+    arg <- grep("^--max-connections=", commandArgs(), value = TRUE)
+    max <- if (length(arg)) as.integer(sub("^.*=", "", arg[1])) else 128L
+    used <- nrow(showConnections(all = TRUE))
+    c(max = max, used = used, free = max - used)
+  }))
+
+  register(resolver("runtime.rlimit.nofile", confine = list(os = "linux"), function(ctx) {
+    rlimit(ctx, "Max open files")
+  }))
+  register(resolver(
+    "runtime.rlimit.nofile",
+    confine = list(os = \(os) !os %in% c("linux", "windows")),
+    id = "runtime.rlimit.nofile/ulimit",
+    function(ctx) {
+      out <- ctx$cmd("sh", c("-c", shQuote("ulimit -n")))
+      value <- if (!is.null(out) && out$status == 0L) trimws(out$stdout[1])
+      if (is.null(value)) {
+        NULL
+      } else if (identical(value, "unlimited")) {
+        Inf
+      } else {
+        parse_limit(value)
+      }
+    }
+  ))
+
   register(resolver("runtime.pid", cache = FALSE, function(ctx) {
     r_note(ctx, "Sys.getpid()")
     Sys.getpid()

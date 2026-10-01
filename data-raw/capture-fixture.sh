@@ -53,7 +53,7 @@ done
 # cgroup v2: the process's own cgroup and every ancestor up to the mount.
 cg_files="cgroup.controllers cpu.max cpu.weight cpu.stat cpuset.cpus.effective
   memory.max memory.high memory.current memory.swap.max memory.stat
-  memory.events pids.max"
+  memory.events memory.pressure cpu.pressure pids.max"
 path=$(sed -n 's/^0:://p' /proc/self/cgroup)
 mnt=$(awk '/ - cgroup2 / { print $5; exit }' /proc/self/mountinfo)
 root=$(awk '/ - cgroup2 / { print $4; exit }' /proc/self/mountinfo)

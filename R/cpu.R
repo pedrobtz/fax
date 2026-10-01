@@ -219,6 +219,10 @@ register_cpu_facts <- function() {
     round(1 + ((parse_limit(shares) - 2) * 9999) / 262142)
   }))
 
+  register(resolver("cpu.cgroup.pressure", confine = linux, cache = FALSE, function(ctx) {
+    cgroup_pressure(ctx, "cpu", "cpu.pressure")
+  }))
+
   register(resolver("cpu.effective", function(ctx) {
     limits <- cpu_limits(ctx)
     if (is.null(limits)) {
