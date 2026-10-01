@@ -1,5 +1,7 @@
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
+`%|NA|%` <- function(x, y) if (!length(x) || is.na(x[1])) y else x # nolint: object_name_linter.
+
 fax_abort <- function(message, ..., class = NULL) {
   if (...length()) {
     message <- sprintf(message, ...)

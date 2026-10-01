@@ -46,3 +46,52 @@ counting_resolver <- function(name, value = 1, ...) {
   r$calls <- function() calls
   r
 }
+
+# Fixture trees ship as tarballs (see data-raw/pack-fixtures.R) and are
+# extracted once per session.
+fixture_names <- function() {
+  sub("\\.tar\\.gz$", "", list.files(test_path("fixtures"), "\\.tar\\.gz$"))
+}
+
+fixture_root <- function(name) {
+  dir <- file.path(tempdir(), "fax-fixtures", name)
+  if (!dir.exists(dir)) {
+    utils::untar(test_path("fixtures", paste0(name, ".tar.gz")), exdir = dir, tar = "internal")
+  }
+  dir
+}
+
+# Point fax at a fixture, pretending to be Linux.
+local_fixture <- function(name, os = "linux", env = parent.frame()) {
+  withr::local_options(fax.root = fixture_root(name), fax.os = os, .local_envir = env)
+}
+
+# A writable copy of a fixture, for tests that change files between calls.
+local_fixture_copy <- function(name, env = parent.frame()) {
+  dir <- withr::local_tempdir(.local_envir = env)
+  files <- list.files(fixture_root(name), full.names = TRUE, all.files = TRUE, no.. = TRUE)
+  file.copy(files, dir, recursive = TRUE)
+  withr::local_options(fax.root = dir, fax.os = "linux", .local_envir = env)
+  dir
+}
+
+# One line per fact, for snapshots: name = value [status] source
+fixture_report <- function(name) {
+  local_fixture(name)
+  df <- facts_df(facts(refresh = TRUE))
+  as_text <- \(v) paste(if (is.character(v)) v else format(v), collapse = " ")
+  value <- vapply(df$value, as_text, character(1))
+  value <- ifelse(nchar(value) > 60, paste0(substr(value, 1, 57), "..."), value)
+  paste0(df$fact, " = ", value, " [", df$status, "] ", df$source)
+}
+
+local_usage_reset <- function(env = parent.frame()) {
+  reset <- function() {
+    .usage$pid <- NULL
+    .usage$setup <- NULL
+    .usage$prev <- NULL
+    .usage$last <- NULL
+  }
+  reset()
+  withr::defer(reset(), envir = env)
+}
