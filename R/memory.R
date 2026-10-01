@@ -12,6 +12,9 @@ meminfo_bytes <- function(ctx, key) {
 # Soft limit of a "Max ..." row in /proc/self/limits; "unlimited" -> Inf.
 rlimit <- function(ctx, label) {
   lines <- ctx$read("/proc/self/limits")
+  if (is.null(lines)) {
+    return(NULL)
+  }
   line <- lines[startsWith(lines, label)]
   if (!length(line)) {
     return(NULL)

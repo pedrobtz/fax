@@ -262,3 +262,12 @@ test_that("facts that depend on uncached facts are not cached", {
   fact("toy.stable")
   expect_named(as.list(.fax$cache), paste("/", fax_os(), FALSE, "toy.stable", sep = "\r"))
 })
+
+test_that("warnings inside resolvers are muffled", {
+  local_registry(resolver("toy.a", function(ctx) {
+    warning("noisy")
+    1
+  }))
+  expect_no_warning(df <- facts_df())
+  expect_equal(df$value, list(1))
+})

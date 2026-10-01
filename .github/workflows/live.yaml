@@ -1,0 +1,127 @@
+# Checks fax against real containers, a Kubernetes pod and Python
+# environments. The scripts live in tools/live/.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+name: live.yaml
+
+permissions: read-all
+
+jobs:
+  containers:
+    runs-on: ubuntu-latest
+    name: container (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: debian limits
+            image: rocker/r-ver:4.5
+            setup: Rscript -e 'install.packages("parallelly")'
+            args: --cpus=1.5 --memory=512m
+            env: -e EXPECT_CORES=2 -e EXPECT_MEMORY=536870912 -e EXPECT_MANAGER=dpkg
+          - name: debian cpuset
+            image: rocker/r-ver:4.5
+            setup: Rscript -e 'install.packages("parallelly")'
+            args: --cpuset-cpus=0
+            env: -e EXPECT_CORES=1
+          - name: debian throttled
+            image: rocker/r-ver:4.5
+            setup: "true"
+            args: --cpus=0.5
+            env: -e EXPECT_CORES=1 -e EXPECT_THROTTLE=1
+          - name: alpine
+            image: alpine:3.20
+            setup: apk add --no-cache R
+            args: --cpus=1.5 --memory=512m
+            env: -e EXPECT_CORES=2 -e EXPECT_MEMORY=536870912 -e EXPECT_MANAGER=apk
+          - name: fedora
+            image: fedora:40
+            setup: dnf install -y -q R-core && dnf clean all
+            args: --cpus=1.5 --memory=512m
+            env: -e EXPECT_CORES=2 -e EXPECT_MEMORY=536870912 -e EXPECT_MANAGER=rpm
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Build fax
+        run: |
+          R CMD build --no-build-vignettes --no-manual .
+          mv fax_*.tar.gz fax.tar.gz
+
+      - name: Build image
+        run: |
+          printf 'FROM %s\nRUN %s\nCOPY fax.tar.gz /tmp/\nRUN R CMD INSTALL /tmp/fax.tar.gz\nCOPY tools /tools\n' \
+            "${{ matrix.image }}" "${{ matrix.setup }}" | docker build -t fax-live -f - .
+
+      - name: Check inside the container
+        run: docker run --rm ${{ matrix.args }} ${{ matrix.env }} fax-live Rscript /tools/live/check.R
+
+  kind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - name: Build fax
+        run: |
+          R CMD build --no-build-vignettes --no-manual .
+          mv fax_*.tar.gz fax.tar.gz
+
+      - name: Build image
+        run: |
+          printf 'FROM rocker/r-ver:4.5\nCOPY fax.tar.gz /tmp/\nRUN R CMD INSTALL /tmp/fax.tar.gz\nCOPY tools /tools\n' |
+            docker build -t fax-live:latest -f - .
+
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: fax
+
+      - name: Run the pod
+        run: |
+          kind load docker-image fax-live:latest --name fax
+          kubectl apply -f tools/live/pod.yaml
+          kubectl wait --for=jsonpath='{.status.phase}'=Succeeded pod/fax-live --timeout=300s || true
+          kubectl logs pod/fax-live
+          test "$(kubectl get pod fax-live -o jsonpath='{.status.phase}')" = Succeeded
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - name: Install fax
+        run: R CMD INSTALL .
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: venv
+        run: |
+          python -m venv /tmp/venv
+          /tmp/venv/bin/pip install --quiet requests typing_extensions
+          VIRTUAL_ENV=/tmp/venv EXPECT_ENV_TYPE=venv Rscript tools/live/python.R
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: "3.11"
+          activate-environment: fax
+          auto-activate-base: false
+
+      - name: conda
+        run: |
+          conda install --quiet --yes numpy
+          EXPECT_ENV_TYPE=conda Rscript tools/live/python.R

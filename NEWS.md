@@ -34,5 +34,8 @@
   rpm, apk, pacman, Homebrew, Windows), R packages and Python packages, read
   from package databases rather than by running `pip` or package managers
   where possible.
+* `facts()` stays quiet: warnings raised while resolving facts are muffled,
+  and `os.timezone` avoids the slow `Sys.timezone()` lookup when the time zone
+  can be read from `TZ` or `/etc/localtime`.
 * `usage()` and `usage_line()` report current process and container CPU and
   memory use cheaply enough to call on every log line.

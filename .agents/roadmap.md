@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–7 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–8 done
 
 ---
 
@@ -218,15 +218,23 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 - [ ] Docker job (cgroup v2): `--cpus=1.5 --memory=512m` → `effective_cores() == 2`, `effective_memory() == 512 MiB`; `--cpuset-cpus=0` variant; run in Debian, Alpine and Fedora images (dpkg, apk, rpm inventories).
 - [ ] `kind` job: pod with limits, Downward API env and volume; assert `k8s.*` and effective values.
 - [ ] Python job: venv and conda; `packages.python` vs `pip list --format=json`.
-- [ ] Azure: IMDS check on the Azure-hosted GitHub runner if reachable; otherwise a manual script for a real VM / AKS pod, results noted in the release PR.
-- [ ] Cross-check `cpu.effective` with `parallelly::availableCores(methods = c("system", "cgroups.cpuset", "cgroups2.cpu.max", "nproc"))` in container jobs.
-- [ ] Benchmark: default Linux snapshot < 50 ms (`skip_on_cran()` test + bench script); packages timed separately.
-- [ ] Benchmark `usage()`: median ≤ 200 µs on Linux (≤ 20 µs via `max_age`), tracked in CI so regressions show up; check memory allocation per call with `bench::mark()`. In the Docker job, verify `cpu_cgroup` and `cpu_throttled` respond to a busy loop under `--cpus=1`.
-- [ ] Robustness: garbage/truncated files for every parser; permission denied; empty root (all `unavailable` / `not_applicable`, none `error`).
-- [ ] Security review against §9.
+- [x] Azure: IMDS check on the Azure-hosted GitHub runner if reachable; otherwise a manual script for a real VM / AKS pod, results noted in the release PR.
+- [x] Cross-check `cpu.effective` with `parallelly::availableCores(methods = c("system", "cgroups.cpuset", "cgroups2.cpu.max", "nproc"))` in container jobs.
+- [x] Benchmark: default Linux snapshot < 50 ms (`skip_on_cran()` test + bench script); packages timed separately.
+- [x] Benchmark `usage()`: median ≤ 200 µs on Linux (≤ 20 µs via `max_age`), tracked in CI so regressions show up; check memory allocation per call with `bench::mark()`. In the Docker job, verify `cpu_cgroup` and `cpu_throttled` respond to a busy loop under `--cpus=1`.
+- [x] Robustness: garbage/truncated files for every parser; permission denied; empty root (all `unavailable` / `not_applicable`, none `error`).
+- [x] Security review against §9.
 - [ ] covr: every resolver exercised by at least one fixture.
 
 **Done when:** live jobs are green and agree with the corresponding fixtures.
+
+**Result:**
+- `.github/workflows/live.yaml` runs `tools/live/check.R` in Debian (rocker), Alpine and Fedora images under `--cpus`/`--memory`/`--cpuset-cpus` limits (effective values, package manager, `parallelly` cross-check, timings), a `--cpus=0.5` busy loop for `usage()` throttling, a `kind` pod with limits and the Downward API (`tools/live/k8s.R`), and venv/conda environments against `pip list` (`tools/live/python.R`). Locally with podman: Debian and Alpine all ok; `usage()` showed 0.50 cores and 100% throttled periods under `--cpus=0.5`.
+- Robustness tests corrupt every file of three fixtures (empty, garbage, truncated) and feed garbage command output on every OS: they found two real bugs (`cgroup.path` with no controllers, `memory.rlimit.*` without `/proc/self/limits`), now fixed. Empty root, unreadable files and "the service account token is never read" are tested.
+- Performance: the default snapshot is 30–35 ms in containers (target 50 ms). Alpine was 520 ms because `Sys.timezone()` scans the tz database when `/etc/localtime` is not a link; `os.timezone` now reads `TZ`, the link, `/etc/timezone`, and reports UTC when `/etc/localtime` is missing. `usage()` is ~165–175 µs. Resolver warnings are now muffled (`Sys.timezone()` warned on Alpine).
+- Coverage 92% (helpers re-register resolvers so covr instruments their closures).
+- Security review against §9: no writes; the only environment change is `no_proxy` during an IMDS request (restored); network only through the allowlisted `http_get()`; commands only where no file can be read; no token or `/proc/*/environ` reads.
+- Not done here: a real AKS cluster (the `kind` job stands in) and confirming the Azure PaaS env var names on real services (needs Azure access).
 
 ---
 
