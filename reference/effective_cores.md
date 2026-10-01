@@ -52,5 +52,5 @@ individual limits behind these values, e.g. `facts()$cpu` and
 effective_cores()
 #> [1] 4
 effective_memory()
-#> [1] 16766410752
+#> [1] 16765378560
 ```

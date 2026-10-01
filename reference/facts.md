@@ -78,5 +78,5 @@ f <- facts()
 names(f)
 #>  [1] "os"             "cpu"            "memory"         "cgroup"        
 #>  [5] "virtualization" "container"      "k8s"            "cloud"         
-#>  [9] "runtime"        "env"            "disk"          
+#>  [9] "runtime"        "env"            "disk"           "packages"      
 ```

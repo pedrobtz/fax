@@ -45,6 +45,7 @@
 <li>Runtime facts describe R (version, BLAS/LAPACK, library paths, repositories with credentials removed, renv, thread settings), the process (pid, user, uid, privileges) and Python (interpreter, version, venv/uv/conda/system, site-packages) without starting Python inside R.</li>
 <li>
 <code>env.vars</code> reports environment variables with secrets redacted by default (<code>fax.redact</code>, <code>fax.redact_allowlist</code>); <code>env.proxies</code> and <code>disk.tmpdir.*</code> describe proxies and the temporary directory.</li>
+<li>The opt-in <code>packages</code> namespace lists installed system packages (dpkg, rpm, apk, pacman, Homebrew, Windows), R packages and Python packages, read from package databases rather than by running <code>pip</code> or package managers where possible.</li>
 <li>
 <code><a href="../reference/usage.html">usage()</a></code> and <code><a href="../reference/usage.html">usage_line()</a></code> report current process and container CPU and memory use cheaply enough to call on every log line.</li>
 </ul></div>
