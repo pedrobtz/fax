@@ -30,6 +30,13 @@
 - `env.vars` reports environment variables with secrets redacted by
   default (`fax.redact`, `fax.redact_allowlist`); `env.proxies` and
   `disk.tmpdir.*` describe proxies and the temporary directory.
+- Azure: `cloud.azure.platform` tells a VM, AKS, App Service, Functions,
+  Container Apps, Batch, Azure ML and Databricks apart without network
+  access. With `facts(cloud = TRUE)` the instance metadata service adds
+  region, zone, VM size and id, resource group, subscription, spot
+  settings, image, tags (redacted) and IP addresses. Requests go only to
+  the instance metadata endpoint, time out after 1 second and are made
+  at most once per session.
 - The opt-in `packages` namespace lists installed system packages (dpkg,
   rpm, apk, pacman, Homebrew, Windows), R packages and Python packages,
   read from package databases rather than by running `pip` or package
