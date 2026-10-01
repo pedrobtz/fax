@@ -1,0 +1,5 @@
+800 750 0:300 / / rw,relatime - overlay overlay rw,lowerdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/41/fs,upperdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/42/fs,workdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/42/work
+805 800 0:26 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup2 rw,nsdelegate,memory_recursiveprot
+810 800 8:1 /var/lib/kubelet/pods/5d2c7a8e-1f3b-4c6d-9e0a-7b8c9d0e1f2a/volumes/kubernetes.io~downward-api/podinfo /etc/podinfo ro,relatime - ext4 /dev/sda1 rw
+811 800 8:1 /var/lib/kubelet/pods/5d2c7a8e-1f3b-4c6d-9e0a-7b8c9d0e1f2a/etc-hosts /etc/hosts rw,relatime - ext4 /dev/sda1 rw
+812 800 0:310 / /var/run/secrets/kubernetes.io/serviceaccount ro,relatime - tmpfs tmpfs rw,size=1024k

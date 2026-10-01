@@ -81,6 +81,9 @@ fixture_report <- function(name) {
   df <- facts_df(facts(refresh = TRUE))
   as_text <- \(v) paste(if (is.character(v)) v else format(v), collapse = " ")
   value <- vapply(df$value, as_text, character(1))
+  # Values read from the live system (not the fixture) differ between machines.
+  live <- grepl("^(Sys\\.|parallel::)", df$source)
+  value[live] <- "<live>"
   value <- ifelse(nchar(value) > 60, paste0(substr(value, 1, 57), "..."), value)
   paste0(df$fact, " = ", value, " [", df$status, "] ", df$source)
 }

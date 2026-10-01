@@ -10,7 +10,8 @@
 #     docker.io/library/alpine sh /capture/capture-fixture.sh /out
 #
 # Only plain-text files are copied; nothing secret is read (no service account
-# tokens, no environment). cgroup v2 only: v1 fixtures are written by hand.
+# token, no environment, no /proc/1/environ). cgroup v2 only: v1 fixtures are
+# written by hand.
 set -u
 out=${1:?usage: capture-fixture.sh OUT_DIR}
 
@@ -25,7 +26,9 @@ copy() {
 copy /proc/self/cgroup /proc/self/mountinfo /proc/self/status \
   /proc/self/limits /proc/self/statm /proc/meminfo /proc/cpuinfo \
   /proc/loadavg /proc/uptime /proc/1/comm /proc/1/cgroup \
-  /proc/sys/kernel/osrelease /etc/os-release /usr/lib/os-release \
+  /proc/sys/kernel/osrelease /proc/sys/kernel/version \
+  /proc/sys/kernel/hostname /etc/os-release /usr/lib/os-release \
+  /var/run/secrets/kubernetes.io/serviceaccount/namespace \
   /sys/devices/system/cpu/online /sys/devices/system/cpu/possible \
   /sys/class/dmi/id/sys_vendor /sys/class/dmi/id/product_name \
   /sys/class/dmi/id/board_vendor /sys/class/dmi/id/chassis_asset_tag \

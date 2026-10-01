@@ -2,7 +2,7 @@
 
 Companion to [fax-design.md](fax-design.md), which is the source of truth for fact names, formulas and decisions. Section references (§) point there.
 
-Status: **final** — 2026-10-01 · Progress: Stages 0–2 done
+Status: **final** — 2026-10-01 · Progress: Stages 0–3 done
 
 ---
 
@@ -100,17 +100,19 @@ Tests: per-fixture expectations on effective values; `expect_snapshot()` of `fac
 
 **Goal:** answer *"where am I running?"* on Linux (§5.1, §5.5–5.7, offline part of §5.8).
 
-- [ ] `os.*` from `Sys.info()` and os-release; boot time and uptime; timezone, locale.
-- [ ] `virtualization.type/hypervisor` from DMI, cpuinfo `hypervisor` flag, `/sys/hypervisor/type`; `virtualization.wsl`.
-- [ ] `container.detected/runtime/id/pid1` from the §5.6 signals; document which signal wins.
-- [ ] `k8s.*`: detection, namespace (never the token), Downward API env mapping with defaults (`fax.k8s.env`), labels/annotations volume (`fax.k8s.podinfo`), limits derived from cgroup when not mapped.
-- [ ] `cloud.provider` from DMI (Azure asset tag / Microsoft + waagent, Amazon EC2, Google Compute Engine).
+- [x] `os.*` from `Sys.info()` and os-release; boot time and uptime; timezone, locale.
+- [x] `virtualization.type/hypervisor` from DMI, cpuinfo `hypervisor` flag, `/sys/hypervisor/type`; `virtualization.wsl`.
+- [x] `container.detected/runtime/id/pid1` from the §5.6 signals; document which signal wins.
+- [x] `k8s.*`: detection, namespace (never the token), Downward API env mapping with defaults (`fax.k8s.env`), labels/annotations volume (`fax.k8s.podinfo`), limits derived from cgroup when not mapped.
+- [x] `cloud.provider` from DMI (Azure asset tag / Microsoft + waagent, Amazon EC2, Google Compute Engine).
 
-Fixtures (add): `azure-vm`, `aws-ec2`, `gcp-vm`, `wsl2`, `podman-rootless`, `aks-pod-downward-api`.
+Fixtures (add, synthetic): `linux-baremetal`, `azure-vm`, `aws-ec2`, `gcp-vm`, `wsl2`, `aks-pod-downward-api`. Rootless podman is covered by the captured `docker-v2-*` fixtures.
 
 Tests: per-fixture classification; "no false positives" on bare metal (physical, no container, no k8s, no cloud).
 
-**Done when:** each fixture is classified correctly and the GitHub Ubuntu runner reports `vm` / `azure`.
+**Done when:** each fixture is classified correctly and the GitHub Ubuntu runner reports `vm` / `azure` (asserted by `test-live.R` on hosted runners).
+
+**Result:** live in a podman container: Ubuntu 24.04, `vm`/`apple`, container `podman` with its 64-hex id, PID 1 `R`. Also added: uncached-ness propagates through dependencies, so env-dependent facts stay fresh.
 
 ---
 

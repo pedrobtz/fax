@@ -3,6 +3,21 @@
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Fedora Linux [ok] /etc/os-release
+      os.id = fedora [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 40 [ok] /etc/os-release
+      os.release.major = 40 [ok] /etc/os-release
+      os.release.minor = NA [unavailable] /etc/os-release
+      os.kernel.release = 6.11.3-200.fc40.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = <live> [ok] Sys.info()
+      os.hostname = <live> [ok] Sys.info()
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
+      os.uptime = 260630.9 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -36,12 +51,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = 15295 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/session-24.scope/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/pids.max; /sys/fs/cgroup/user.slice/pids.max
+      virtualization.hypervisor = apple [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = systemd [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 
 # report: docker-v2-unlimited
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Alpine Linux [ok] /etc/os-release
+      os.id = alpine [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 3.20.10 [ok] /etc/os-release
+      os.release.major = 3 [ok] /etc/os-release
+      os.release.minor = 20 [ok] /etc/os-release
+      os.kernel.release = 6.11.3-200.fc40.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = <live> [ok] Sys.info()
+      os.hostname = <live> [ok] Sys.info()
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
+      os.uptime = 260607.9 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -75,12 +123,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+      virtualization.hypervisor = apple [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.runtime = podman [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.id = c6aad2307554f871f8731160494b2a267a9e02dfa8d89eb9b5e6faeb2... [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 
 # report: docker-v2-cpus2-mem1g
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Alpine Linux [ok] /etc/os-release
+      os.id = alpine [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 3.20.10 [ok] /etc/os-release
+      os.release.major = 3 [ok] /etc/os-release
+      os.release.minor = 20 [ok] /etc/os-release
+      os.kernel.release = 6.11.3-200.fc40.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = <live> [ok] Sys.info()
+      os.hostname = <live> [ok] Sys.info()
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
+      os.uptime = 260608.8 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -114,12 +195,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+      virtualization.hypervisor = apple [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.runtime = podman [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.id = 7b5250b5749fbb8503a5b06ffcf3817b3c4cfd95df8fd76a61d7b422e... [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 
 # report: docker-v2-cpus1.5-mem512m
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Alpine Linux [ok] /etc/os-release
+      os.id = alpine [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 3.20.10 [ok] /etc/os-release
+      os.release.major = 3 [ok] /etc/os-release
+      os.release.minor = 20 [ok] /etc/os-release
+      os.kernel.release = 6.11.3-200.fc40.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = <live> [ok] Sys.info()
+      os.hostname = <live> [ok] Sys.info()
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
+      os.uptime = 260609.6 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -153,12 +267,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+      virtualization.hypervisor = apple [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.runtime = podman [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.id = e3c84bc3d002121d1fd13d30883b64dcf0bc31483f063116c4829b7ea... [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 
 # report: docker-v2-cgroupns-host
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Alpine Linux [ok] /etc/os-release
+      os.id = alpine [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 3.20.10 [ok] /etc/os-release
+      os.release.major = 3 [ok] /etc/os-release
+      os.release.minor = 20 [ok] /etc/os-release
+      os.kernel.release = 6.11.3-200.fc40.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = <live> [ok] Sys.info()
+      os.hostname = <live> [ok] Sys.info()
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
+      os.uptime = 260610.6 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -192,12 +339,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = 6952 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/container/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/libpod-089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18d30b41b.scope/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/user.slice/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/user@501.service/pids.max; /sys/fs/cgroup/user.slice/user-501.slice/pids.max; /sys/fs/cgroup/user.slice/pids.max
+      virtualization.hypervisor = apple [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.runtime = podman [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.id = 089c12a9e57765334ea794b622843001fc102b42841b3fe30e8061b18... [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 
 # report: cpuset-pinned
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Alpine Linux [ok] /etc/os-release
+      os.id = alpine [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 3.20.10 [ok] /etc/os-release
+      os.release.major = 3 [ok] /etc/os-release
+      os.release.minor = 20 [ok] /etc/os-release
+      os.kernel.release = 6.11.3-200.fc40.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = <live> [ok] Sys.info()
+      os.hostname = <live> [ok] Sys.info()
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-28 05:11:09 [ok] /proc/stat
+      os.uptime = 260629.7 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -231,12 +411,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = 100 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+      virtualization.hypervisor = apple [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.runtime = podman [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      container.id = 12df96b8b696595c18f781b0e6f5a27fb832e8d6891d96fa7cde24d59... [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm; /run/.containerenv
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 
 # report: docker-v1-cpus1.5-mem512m
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 22.04 [ok] /etc/os-release
+      os.release.major = 22 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 5.15.0-122-generic [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #132-Ubuntu SMP Thu Aug 29 13:45:52 UTC 2024 [ok] /proc/sys/kernel/version
+      os.hostname = fixture [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 3600.25 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -266,16 +479,49 @@
       memory.effective.available = 369098752 [ok] NA
       memory.lxcfs = FALSE [ok] /proc/self/mountinfo
       cgroup.version = 1 [ok] /proc/self/cgroup; /proc/self/mountinfo
-      cgroup.path = /docker/3f1b2c4d5e6f [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /docker/3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5... [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids/pids.max
+      virtualization.hypervisor = unknown [ok] NA
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = docker [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.id = 3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9... [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] NA
 
 # report: hybrid
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 22.04 [ok] /etc/os-release
+      os.release.major = 22 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 5.15.0-122-generic [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #132-Ubuntu SMP Thu Aug 29 13:45:52 UTC 2024 [ok] /proc/sys/kernel/version
+      os.hostname = fixture [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 3600.25 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -309,12 +555,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids/user.slice/user-1000.slice/session-2.scope/pids.max
+      virtualization.hypervisor = unknown [ok] NA
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = systemd [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] NA
 
 # report: k8s-v2-limits
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 22.04 [ok] /etc/os-release
+      os.release.major = 22 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 5.15.0-122-generic [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #132-Ubuntu SMP Thu Aug 29 13:45:52 UTC 2024 [ok] /proc/sys/kernel/version
+      os.hostname = web-6b8f9-2xkqz [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 3600.25 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -348,12 +627,45 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = 1024 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/cri-containerd-9a8b7c.scope/pids.max; /sys/fs/cgroup/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod7c1f.slice/pids.max
+      virtualization.hypervisor = unknown [ok] NA
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = containerd [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.id = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      k8s.detected = TRUE [ok] NA
+      k8s.namespace = default [ok] /var/run/secrets/kubernetes.io/serviceaccount/namespace
+      k8s.pod.name = web-6b8f9-2xkqz [ok] NA
+      k8s.node.name = NA [unavailable] NA
+      k8s.pod.ip = NA [unavailable] NA
+      k8s.pod.uid = NA [unavailable] /proc/self/mountinfo
+      k8s.pod.labels = NA [unavailable] NA
+      k8s.pod.annotations = NA [unavailable] NA
+      k8s.resources.limits =          2 1073741824 [ok] NA
+      k8s.resources.requests = NA [unavailable] NA
+      cloud.provider = NA [not_applicable] NA
 
 # report: lxcfs
 
     Code
       cat(fixture_report(name), sep = "\n")
     Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 22.04 [ok] /etc/os-release
+      os.release.major = 22 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 5.15.0-122-generic [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #132-Ubuntu SMP Thu Aug 29 13:45:52 UTC 2024 [ok] /proc/sys/kernel/version
+      os.hostname = fixture [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 3600.25 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
       cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
       cpu.vendor = Intel [ok] /proc/cpuinfo
       cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
@@ -387,4 +699,454 @@
       cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
       cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+      virtualization.hypervisor = unknown [ok] NA
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = sh [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = lxc [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.id = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] NA
+
+# report: linux-baremetal
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 24.04 [ok] /etc/os-release
+      os.release.major = 24 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 6.8.0-45-generic [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #1 SMP PREEMPT_DYNAMIC Mon Sep 30 12:00:00 UTC 2026 [ok] /proc/sys/kernel/version
+      os.hostname = build-07 [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 86400.5 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.max
+      memory.cgroup.high = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5604143104 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-1000.slice/session-3.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      virtualization.hypervisor = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = physical [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = systemd [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+
+# report: azure-vm
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 24.04 [ok] /etc/os-release
+      os.release.major = 24 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 6.8.0-1015-azure [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #1 SMP PREEMPT_DYNAMIC Mon Sep 30 12:00:00 UTC 2026 [ok] /proc/sys/kernel/version
+      os.hostname = vm-analytics-01 [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 86400.5 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.max
+      memory.cgroup.high = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5604143104 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-1000.slice/session-3.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      virtualization.hypervisor = hyperv [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = systemd [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = azure [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+
+# report: aws-ec2
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      os.family = linux [ok] NA
+      os.name = Amazon Linux [ok] /etc/os-release
+      os.id = amzn [ok] /etc/os-release
+      os.id_like = fedora [ok] /etc/os-release
+      os.release.full = 2023 [ok] /etc/os-release
+      os.release.major = 2023 [ok] /etc/os-release
+      os.release.minor = NA [unavailable] /etc/os-release
+      os.kernel.release = 6.1.109-118.189.amzn2023.x86_64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #1 SMP PREEMPT_DYNAMIC Mon Sep 30 12:00:00 UTC 2026 [ok] /proc/sys/kernel/version
+      os.hostname = ip-10-0-1-23.ec2.internal [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 86400.5 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.max
+      memory.cgroup.high = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5604143104 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-1000.slice/session-3.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      virtualization.hypervisor = aws-nitro [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = systemd [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = aws [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+
+# report: gcp-vm
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      os.family = linux [ok] NA
+      os.name = Debian GNU/Linux [ok] /etc/os-release
+      os.id = debian [ok] /etc/os-release
+      os.id_like = NA [unavailable] /etc/os-release
+      os.release.full = 12 [ok] /etc/os-release
+      os.release.major = 12 [ok] /etc/os-release
+      os.release.minor = NA [unavailable] /etc/os-release
+      os.kernel.release = 6.1.0-25-cloud-amd64 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #1 SMP PREEMPT_DYNAMIC Mon Sep 30 12:00:00 UTC 2026 [ok] /proc/sys/kernel/version
+      os.hostname = instance-1 [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 86400.5 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.max
+      memory.cgroup.high = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5604143104 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-1000.slice/session-3.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      virtualization.hypervisor = kvm [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = systemd [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = gcp [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/board_vendor; /sys/class/dmi/id/bios_vendor; /sys/class/dmi/id/chassis_asset_tag
+
+# report: wsl2
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 24.04 [ok] /etc/os-release
+      os.release.major = 24 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 5.15.153.1-microsoft-standard-WSL2 [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #1 SMP PREEMPT_DYNAMIC Mon Sep 30 12:00:00 UTC 2026 [ok] /proc/sys/kernel/version
+      os.hostname = DESKTOP-7Q2K [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 86400.5 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/cpu.max
+      cpu.cgroup.cpuset = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 4 [ok] NA
+      cpu.effective_exact = 4 [ok] NA
+      memory.host.total = 6202609664 [ok] /proc/meminfo
+      memory.host.available = 5604143104 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.max
+      memory.cgroup.high = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.usage = 52428800 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/user.slice/user-1000.slice/session-3.scope/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 6202609664 [ok] NA
+      memory.effective.available = 5604143104 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = /user.slice/user-1000.slice/session-3.scope [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      virtualization.hypervisor = unknown [ok] NA
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = 2 [ok] NA
+      container.pid1 = init [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = FALSE [ok] /proc/self/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = NA [not_applicable] NA
+      container.id = NA [not_applicable] NA
+      k8s.detected = FALSE [ok] NA
+      k8s.namespace = NA [not_applicable] NA
+      k8s.pod.name = NA [not_applicable] NA
+      k8s.node.name = NA [not_applicable] NA
+      k8s.pod.ip = NA [not_applicable] NA
+      k8s.pod.uid = NA [not_applicable] NA
+      k8s.pod.labels = NA [not_applicable] NA
+      k8s.pod.annotations = NA [not_applicable] NA
+      k8s.resources.limits = NA [not_applicable] NA
+      k8s.resources.requests = NA [not_applicable] NA
+      cloud.provider = NA [not_applicable] NA
+
+# report: aks-pod-downward-api
+
+    Code
+      cat(fixture_report(name), sep = "\n")
+    Output
+      os.family = linux [ok] NA
+      os.name = Ubuntu [ok] /etc/os-release
+      os.id = ubuntu [ok] /etc/os-release
+      os.id_like = debian [ok] /etc/os-release
+      os.release.full = 24.04 [ok] /etc/os-release
+      os.release.major = 24 [ok] /etc/os-release
+      os.release.minor = 04 [ok] /etc/os-release
+      os.kernel.release = 5.15.0-1073-azure [ok] /proc/sys/kernel/osrelease
+      os.kernel.version = #132-Ubuntu SMP Thu Aug 29 13:45:52 UTC 2024 [ok] /proc/sys/kernel/version
+      os.hostname = spark-driver-7d9f-xk2lp [ok] /proc/sys/kernel/hostname
+      os.arch = <live> [ok] Sys.info()
+      os.boot_time = 2026-09-21 14:13:20 [ok] /proc/stat
+      os.uptime = 3600.25 [ok] /proc/uptime
+      os.timezone = <live> [ok] Sys.timezone()
+      os.locale = <live> [ok] Sys.getlocale()
+      cpu.model = Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz [ok] /proc/cpuinfo
+      cpu.vendor = Intel [ok] /proc/cpuinfo
+      cpu.flags = fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca ... [ok] /proc/cpuinfo
+      cpu.isa_level = x86-64-v3 [ok] /proc/cpuinfo
+      cpu.host.logical = 4 [ok] /sys/devices/system/cpu/online
+      cpu.host.physical = 2 [ok] /proc/cpuinfo
+      cpu.host.sockets = 1 [ok] /proc/cpuinfo
+      cpu.affinity = 4 [ok] /proc/self/status
+      cpu.load = 1.50 0.75 0.25 [ok] /proc/loadavg
+      cpu.cgroup.quota = 1.5 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpu.max
+      cpu.cgroup.cpuset = 4 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/cpuset.cpus.effective
+      cpu.cgroup.weight = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      cpu.effective = 2 [ok] NA
+      cpu.effective_exact = 1.5 [ok] NA
+      memory.host.total = 17179869184 [ok] /proc/meminfo
+      memory.host.available = 12884901888 [ok] /proc/meminfo
+      memory.swap.total = 0 [ok] /proc/meminfo
+      memory.swap.free = 0 [ok] /proc/meminfo
+      memory.cgroup.limit = 4294967296 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.max
+      memory.cgroup.high = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.high
+      memory.cgroup.usage = 1073741824 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.current
+      memory.cgroup.swap_limit = NA [unavailable] /proc/self/cgroup; /proc/self/mountinfo
+      memory.cgroup.working_set = 939524096 [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/memory.stat
+      memory.rlimit.as = Inf [ok] /proc/self/limits
+      memory.rlimit.data = Inf [ok] /proc/self/limits
+      memory.effective.limit = 4294967296 [ok] NA
+      memory.effective.available = 3355443200 [ok] NA
+      memory.lxcfs = FALSE [ok] /proc/self/mountinfo
+      cgroup.version = 2 [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.path = / [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.mountpoint = /sys/fs/cgroup [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.namespaced = TRUE [ok] /proc/self/cgroup; /proc/self/mountinfo
+      cgroup.pids.max = Inf [ok] /proc/self/cgroup; /proc/self/mountinfo; /sys/fs/cgroup/pids.max
+      virtualization.hypervisor = hyperv [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
+      virtualization.type = vm [ok] NA
+      virtualization.wsl = NA [not_applicable] NA
+      container.pid1 = tini [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.detected = TRUE [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.runtime = containerd [ok] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm
+      container.id = NA [unavailable] /proc/self/cgroup; /proc/1/cgroup; /proc/self/mountinfo; /proc/1/comm
+      k8s.detected = TRUE [ok] NA
+      k8s.namespace = analytics [ok] /var/run/secrets/kubernetes.io/serviceaccount/namespace
+      k8s.pod.name = spark-driver-7d9f-xk2lp [ok] NA
+      k8s.node.name = NA [unavailable] NA
+      k8s.pod.ip = NA [unavailable] NA
+      k8s.pod.uid = 5d2c7a8e-1f3b-4c6d-9e0a-7b8c9d0e1f2a [ok] /proc/self/mountinfo
+      k8s.pod.labels = spark-driver 7d9f [ok] /etc/podinfo/labels
+      k8s.pod.annotations = api data [ok] /etc/podinfo/annotations
+      k8s.resources.limits =          1.5 4294967296.0 [ok] NA
+      k8s.resources.requests = NA [unavailable] NA
+      cloud.provider = azure [ok] /sys/class/dmi/id/sys_vendor; /sys/class/dmi/id/product_name; /sys/class/dmi/id/chassis_asset_tag
 

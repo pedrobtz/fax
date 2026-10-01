@@ -10,6 +10,7 @@ new_state <- function(cloud = FALSE, refresh = FALSE, strict = FALSE) {
   state$strict <- isTRUE(strict)
   state$memo <- new.env(parent = emptyenv())
   state$shared <- new.env(parent = emptyenv())
+  state$volatile <- new.env(parent = emptyenv())
   state$stack <- character()
   state
 }
@@ -43,11 +44,16 @@ fact_record <- function(
 resolve_fact <- function(name, state) {
   memo <- state$memo[[name]]
   if (!is.null(memo)) {
-    return(memo)
+    return(volatile_to_parent(state, memo))
   }
   if (is_skipped(name)) {
-    rec <- fact_record(name, status = "not_applicable", message = "Skipped by `fax.skip`.")
-    return(remember(state, name, rec))
+    rec <- fact_record(
+      name,
+      status = "not_applicable",
+      message = "Skipped by `fax.skip`.",
+      cache = FALSE
+    )
+    return(volatile_to_parent(state, remember(state, name, rec)))
   }
   key <- paste(state$root, state$os, state$cloud, name, sep = "\r")
   cached <- .fax$cache[[key]]
@@ -66,18 +72,35 @@ resolve_fact <- function(name, state) {
     fax_abort("Unknown fact `%s`.", name, class = "fax_unknown_fact")
   }
 
+  depth <- length(state$stack)
   state$stack <- c(state$stack, name)
-  on.exit(state$stack <- state$stack[-length(state$stack)], add = TRUE)
-  rec <- run_candidates(name, candidates, state)
+  rec <- tryCatch(
+    run_candidates(name, candidates, state),
+    finally = state$stack <- state$stack[seq_len(depth)]
+  )
+  # A fact computed from an uncached fact (e.g. one read from an environment
+  # variable) must not be cached either.
+  if (isTRUE(state$volatile[[name]])) {
+    rec$cache <- FALSE
+  }
   # Errors may be transient (and must re-raise under strict), so never cache them.
   if (rec$cache && rec$status != "error") {
     .fax$cache[[key]] <- rec
   }
-  remember(state, name, rec)
+  volatile_to_parent(state, remember(state, name, rec))
 }
 
 remember <- function(state, name, rec) {
   state$memo[[name]] <- rec
+  rec
+}
+
+# Mark the fact currently being resolved as volatile when it used `rec`.
+volatile_to_parent <- function(state, rec) {
+  depth <- length(state$stack)
+  if (!rec$cache && depth) {
+    state$volatile[[state$stack[depth]]] <- TRUE
+  }
   rec
 }
 
@@ -118,7 +141,8 @@ run_candidates <- function(name, candidates, state) {
   } else {
     "No resolver applies on this system."
   }
-  fact_record(name, status = "not_applicable", message = message)
+  cache <- all(vapply(candidates, `[[`, logical(1), "cache"))
+  fact_record(name, status = "not_applicable", message = message, cache = cache)
 }
 
 confine_ok <- function(r, state) {

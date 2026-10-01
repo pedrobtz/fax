@@ -116,7 +116,7 @@ Errors never propagate from `facts()`; they become `status = "error"` with a mes
 
 ### 4.5 Snapshot object
 
-`facts()` returns an environment-backed object of class `fax`. Namespaces resolve lazily on `$`/`[[` access and are cached for the session; `facts(c("cpu", "memory"))` resolves the listed namespaces eagerly. `as.list()` forces the default namespaces only. `refresh = TRUE` bypasses the cache; the cache is keyed by fact, root, OS and `cloud`, so changing `fax.root` gives fresh values. Records with `status = "error"` are never cached (errors may be transient, and `strict = TRUE` must be able to re-raise them).
+`facts()` returns an environment-backed object of class `fax`. Namespaces resolve lazily on `$`/`[[` access and are cached for the session; `facts(c("cpu", "memory"))` resolves the listed namespaces eagerly. `as.list()` forces the default namespaces only. `refresh = TRUE` bypasses the cache; the cache is keyed by fact, root, OS and `cloud`, so changing `fax.root` gives fresh values. Records with `status = "error"` are never cached (errors may be transient, and `strict = TRUE` must be able to re-raise them). Resolvers that read environment variables or options are declared `cache = FALSE`, and any fact that consults an uncached fact (through `ctx$fact()` or `confine`) is not cached either. Values that come from the live R session rather than the root (`Sys.info()`, `Sys.timezone()`) record that as their `source`.
 
 ### 4.6 Fast usage probe
 
@@ -214,7 +214,7 @@ Types: `chr`, `int`, `dbl`, `lgl`, `bytes` (double, since R integers are 32-bit)
 |---|---|
 | `virtualization.type` | `physical` · `vm` · `unknown` |
 | `virtualization.hypervisor` | `hyperv` · `kvm` · `qemu` · `vmware` · `xen` · `virtualbox` · `aws-nitro` · `apple` · … |
-| `virtualization.wsl` | `NA` / `1` / `2` (`/proc/sys/kernel/osrelease` contains `microsoft` / `WSL2`) |
+| `virtualization.wsl` | `1` / `2` (`/proc/sys/kernel/osrelease` contains `microsoft`; `WSL2` / `microsoft-standard` → 2); `not_applicable` outside WSL |
 | sources | Linux: DMI `/sys/class/dmi/id/{sys_vendor,product_name,board_vendor}`, cpuinfo `hypervisor` flag, `/sys/hypervisor/type` (no `systemd-detect-virt`). macOS: `sysctl kern.hv_vmm_present` |
 
 ### 5.6 `container`
@@ -232,7 +232,7 @@ Types: `chr`, `int`, `dbl`, `lgl`, `bytes` (double, since R integers are 32-bit)
 | `k8s.detected` | `KUBERNETES_SERVICE_HOST` set **or** service-account dir exists |
 | `k8s.namespace` | `/var/run/secrets/kubernetes.io/serviceaccount/namespace` (never read the token) |
 | `k8s.pod.name` | Downward API env if mapped, else hostname |
-| `k8s.node.name`, `k8s.pod.ip`, `k8s.pod.uid` | Downward API env; mapping configurable via `options(fax.k8s.env = c(node.name = "NODE_NAME", pod.ip = "POD_IP", pod.uid = "POD_UID", pod.name = "POD_NAME"))` (these are the defaults) |
+| `k8s.node.name`, `k8s.pod.ip`, `k8s.pod.uid` (uid also from `/var/lib/kubelet/pods/<uid>/` mount roots) | Downward API env; mapping configurable via `options(fax.k8s.env = c(node.name = "NODE_NAME", pod.ip = "POD_IP", pod.uid = "POD_UID", pod.name = "POD_NAME"))` (these are the defaults) |
 | `k8s.pod.labels`, `k8s.pod.annotations` | Downward API volume files, path `options(fax.k8s.podinfo = "/etc/podinfo")` |
 | `k8s.resources.requests/limits` | Downward API `resourceFieldRef` env if mapped; otherwise limits derived from cgroup |
 
