@@ -3,3 +3,8 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^\.agents$
+^README\.Rmd$
+^\.lintr$
+^data-raw$
+^cran-comments\.md$

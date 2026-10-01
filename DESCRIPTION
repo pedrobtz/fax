@@ -1,14 +1,28 @@
 Package: fax
-Title: What the Package Does (One Line, Title Case)
+Title: Facts About the Host, Container and Runtime
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R:
+    person("pedrobtz", , , "pedrobtz@gmail.com", role = c("aut", "cre"))
+Description: Reports facts about the operating system, hardware,
+    virtualization, containers, 'Kubernetes' pods, 'Azure', and the 'R' and
+    'Python' runtimes. Reports the CPU and memory the current process can
+    actually use under 'cgroup' limits and CPU affinity, side by side with
+    host values, so thread pools and memory budgets can be sized correctly
+    inside containers. Also lists installed system, 'R' and 'Python'
+    packages, and provides a cheap CPU and memory usage probe for log
+    messages. Pure 'R', no network access unless explicitly requested.
 License: MIT + file LICENSE
+URL: https://pedrobtz.github.io/fax/, https://github.com/pedrobtz/fax
+BugReports: https://github.com/pedrobtz/fax/issues
+Depends:
+    R (>= 4.1.0)
+Suggests:
+    jsonlite,
+    parallelly,
+    ps,
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 8.1.0
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-URL: https://pedrobtz.github.io/fax/
+Config/roxygen2/version: 8.1.0

@@ -2,3 +2,9 @@ url: https://pedrobtz.github.io/fax/
 template:
   bootstrap: 5
 
+reference:
+- title: Facts
+  contents:
+  - facts
+  - fact
+  - facts_df
