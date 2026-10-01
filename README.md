@@ -6,31 +6,87 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/pedrobtz/fax/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pedrobtz/fax/actions/workflows/R-CMD-check.yaml)
+[![live](https://github.com/pedrobtz/fax/actions/workflows/live.yaml/badge.svg)](https://github.com/pedrobtz/fax/actions/workflows/live.yaml)
 <!-- badges: end -->
 
-fax reports facts about where R is running and what it can actually use.
+fax reports facts about where R is running and what it may actually use.
 
 Inside a container, `parallel::detectCores()` returns the node’s 64
-cores while the pod is limited to 4, and `/proc/meminfo` shows the
-node’s RAM while the cgroup memory limit is 8 GiB. That leads to
-oversubscribed thread pools, OOM kills and misleading diagnostics. fax
-answers three questions on bare metal, VMs, containers, Kubernetes pods
-and Azure:
+cores while the pod may use 4, and `/proc/meminfo` shows the node’s
+memory while the container is limited to 8 GiB. Thread pools sized on
+those numbers oversubscribe the CPU, and memory budgets end in OOM
+kills. fax answers three questions on bare metal, VMs, containers,
+Kubernetes pods and Azure, on Linux, macOS and Windows:
 
 1.  **Where am I running?** OS, hardware, virtualization, container,
-    Kubernetes, cloud, R and Python runtimes.
-2.  **What can I actually use?** Effective CPU and memory, side by side
-    with host values.
+    Kubernetes, cloud, R and Python.
+2.  **What can I actually use?** Effective CPU cores and memory, next to
+    the host’s.
 3.  **What is installed?** System, R and Python packages.
-
-fax is under development and not yet usable.
 
 ## Installation
 
-You can install the development version of fax from
-[GitHub](https://github.com/pedrobtz/fax) with:
+Install the development version from
+[GitHub](https://github.com/pedrobtz/fax):
 
 ``` r
 # install.packages("pak")
 pak::pak("pedrobtz/fax")
 ```
+
+## Example
+
+``` r
+library(fax)
+facts()
+#> <fax facts>
+#> os       macOS 15.7.9
+#> runs in  no container
+#> runs on  bare metal
+#> cpu      host 6 | effective 6
+#> memory   host 8G | available 2.5G
+#> runtime  R 4.5.2 | Python 3.13.2 (system)
+#> Use facts_df() for every fact with its status and source.
+```
+
+In a Kubernetes pod limited to 2 CPUs and 1 GiB on an 8-CPU, 32 GiB
+node:
+
+    #> <fax facts>
+    #> os       Ubuntu 22.04
+    #> runs in  Kubernetes pod default/web-6b8f9-2xkqz, containerd container
+    #> runs on  vm (unknown)
+    #> cpu      host 8 | effective 2
+    #> memory   host 32G | limit 1G | available 824M
+
+Size worker pools with what the process may use:
+
+``` r
+future::plan(future::multisession, workers = effective_cores())
+data.table::setDTthreads(effective_cores())
+```
+
+Add CPU and memory use to log lines, cheaply (about 170 µs on Linux):
+
+``` r
+message("batch done ", usage_line())
+#> batch done cpu=1.8/4 thr=3% mem=2.1G/8G(26%) rss=1.2G
+```
+
+Every fact records its status and source, and fax never fails: what it
+cannot determine is `NA`.
+
+``` r
+head(facts_df()[, c("fact", "status", "source")])
+#>               fact         status  source
+#> 1        os.family             ok    <NA>
+#> 2          os.name             ok sw_vers
+#> 3            os.id             ok    <NA>
+#> 4       os.id_like not_applicable    <NA>
+#> 5  os.release.full             ok sw_vers
+#> 6 os.release.major             ok sw_vers
+```
+
+fax makes no network requests unless you ask for cloud metadata with
+`facts(cloud = TRUE)`, never reads credentials, and redacts secrets in
+environment variables.

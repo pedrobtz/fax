@@ -53,7 +53,8 @@ facts <- function(
 #' @seealso [facts()] for a lazy snapshot of many facts.
 #' @export
 #' @examples
-#' try(fact("cpu.effective"))
+#' fact("cpu.effective")
+#' fact("os.family")
 fact <- function(
   name,
   cloud = getOption("fax.cloud", FALSE),

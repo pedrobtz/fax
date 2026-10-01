@@ -9,7 +9,17 @@ reference:
   - fact
   - facts_df
   - facts_json
+  - fax_facts
 - title: Resources
   contents:
   - effective_cores
   - usage
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - fax
+  - articles/azure
+  - articles/logging
+  - articles/inventory
