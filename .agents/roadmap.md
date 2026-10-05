@@ -215,16 +215,16 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 
 **Goal:** prove fixtures match reality; fast and safe.
 
-- [ ] Docker job (cgroup v2): `--cpus=1.5 --memory=512m` → `effective_cores() == 2`, `effective_memory() == 512 MiB`; `--cpuset-cpus=0` variant; run in Debian, Alpine and Fedora images (dpkg, apk, rpm inventories).
-- [ ] `kind` job: pod with limits, Downward API env and volume; assert `k8s.*` and effective values.
-- [ ] Python job: venv and conda; `packages.python` vs `pip list --format=json`.
+- [x] Docker job (cgroup v2): `--cpus=1.5 --memory=512m` → `effective_cores() == 2`, `effective_memory() == 512 MiB`; `--cpuset-cpus=0` variant; run in Debian, Alpine and Fedora images (dpkg, apk, rpm inventories).
+- [x] `kind` job: pod with limits, Downward API env and volume; assert `k8s.*` and effective values.
+- [x] Python job: venv and conda; `packages.python` vs `pip list --format=json`.
 - [x] Azure: IMDS check on the Azure-hosted GitHub runner if reachable; otherwise a manual script for a real VM / AKS pod, results noted in the release PR.
 - [x] Cross-check `cpu.effective` with `parallelly::availableCores(methods = c("system", "cgroups.cpuset", "cgroups2.cpu.max", "nproc"))` in container jobs.
 - [x] Benchmark: default Linux snapshot < 50 ms (`skip_on_cran()` test + bench script); packages timed separately.
 - [x] Benchmark `usage()`: median ≤ 200 µs on Linux (≤ 20 µs via `max_age`), tracked in CI so regressions show up; check memory allocation per call with `bench::mark()`. In the Docker job, verify `cpu_cgroup` and `cpu_throttled` respond to a busy loop under `--cpus=1`.
 - [x] Robustness: garbage/truncated files for every parser; permission denied; empty root (all `unavailable` / `not_applicable`, none `error`).
 - [x] Security review against §9.
-- [ ] covr: every resolver exercised by at least one fixture.
+- [x] covr: every resolver exercised by at least one fixture; `.github/workflows/coverage.yaml` calls pedrobtz/r-actions `coverage.yml` (pinned to the v1 commit).
 
 **Done when:** live jobs are green and agree with the corresponding fixtures.
 
@@ -263,7 +263,7 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 
 - [x] Run the `cran-extrachecks` skill and fix everything it flags.
 - [x] `urlchecker::url_check()`, `spelling::spell_check_package()`.
-- [ ] `R CMD check --as-cran` clean locally; `devtools::check_win_devel()`, `check_win_release()`, `check_mac_release()`; `rhub::rhub_check()` on linux, macos-arm64, windows.
+- [ ] `R CMD check --as-cran` clean locally; pedrobtz/r-actions r-cmd-check green on main.
 - [x] Confirm CRAN-safety (§10): no network, no Python, fixture-only scenario assertions, inventory tests on fixtures only.
 - [x] `cran-comments.md`: new release; test environments; network access only on explicit `cloud = TRUE`, 1 s timeout, never in checks.
 - [x] `Version: 0.1.0`, final `NEWS.md`.
@@ -272,7 +272,7 @@ Tests: recorded command outputs in `tests/testthat/fixtures/cmd/`, run on all OS
 
 **Done when:** fax 0.1.0 is on CRAN.
 
-**Progress (2026-10-01):** cran-extrachecks done (Description expands 'cgroup', README has the CRAN install line, `Language: en-US`, US spellings, `inst/WORDLIST`), `urlchecker` clean, spelling clean, `R CMD check --as-cran` 0 errors / 0 warnings, version 0.1.0, `cran-comments.md` written, R-hub v2 workflow added. **Waiting on the maintainer:** a real name (and optional ORCID) in `Authors@R` with the `cph` role; whether to run win-builder / mac-builder (they email results to the maintainer address); and the CRAN submission itself.
+**Progress (2026-10-01):** cran-extrachecks done (Description expands 'cgroup', README has the CRAN install line, `Language: en-US`, US spellings, `inst/WORDLIST`), `urlchecker` clean, spelling clean, `R CMD check --as-cran` 0 errors / 0 warnings, version 0.1.0, `cran-comments.md` written. **Waiting on the maintainer:** the CRAN submission itself.
 
 ---
 

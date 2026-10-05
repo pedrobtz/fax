@@ -46,6 +46,7 @@ resolvers
 reticulate
 sha
 sku
+tmpfs
 uid
 uv
 venv
