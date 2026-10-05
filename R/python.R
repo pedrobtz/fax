@@ -111,30 +111,34 @@ python_probe_script <- paste0(
   "print('usersite='+str(site.getusersitepackages()))"
 )
 
-# Run the interpreter once (memoized per path for the session).
+# Run the interpreter once per session, memoized per path. Failures are
+# memoized too (a broken or hung interpreter costs its timeout once) and are
+# retried only with refresh = TRUE, at most once per facts() call.
 python_probe <- function(ctx, path) {
-  cached <- .fax$python_probe[[path]]
-  if (!is.null(cached)) {
-    ctx$note(paste(path, "-c <probe>"))
-    return(cached)
-  }
-  quote <- if (.Platform$OS.type == "windows") "cmd" else "sh"
-  out <- ctx$cmd(path, c("-c", shQuote(python_probe_script, type = quote)), timeout = 5)
-  if (is.null(out) || out$status != 0L || !length(out$stdout)) {
-    return(NULL)
-  }
-  lines <- out$stdout
-  kv <- parse_kv(lines, sep = "=")
-  probe <- list(
-    version = unname(kv["version"]),
-    implementation = unname(kv["implementation"]),
-    prefix = unname(kv["prefix"]),
-    base_prefix = unname(kv["base_prefix"]),
-    site = unname(kv[names(kv) == "site"]),
-    usersite = unname(kv["usersite"])
-  )
-  .fax$python_probe[[path]] <- probe
-  probe
+  ctx$shared(paste0("python_probe:", path), function(ctx) {
+    cached <- .fax$python_probe[[path]]
+    if (!is.null(cached) && (!isTRUE(cached$failed) || !ctx$refresh)) {
+      ctx$note(paste(path, "-c <probe>"))
+      return(if (isTRUE(cached$failed)) NULL else cached)
+    }
+    quote <- if (.Platform$OS.type == "windows") "cmd" else "sh"
+    out <- ctx$cmd(path, c("-c", shQuote(python_probe_script, type = quote)), timeout = 5)
+    if (is.null(out) || out$status != 0L || !length(out$stdout)) {
+      .fax$python_probe[[path]] <- list(failed = TRUE)
+      return(NULL)
+    }
+    kv <- parse_kv(out$stdout, sep = "=")
+    probe <- list(
+      version = unname(kv["version"]),
+      implementation = unname(kv["implementation"]),
+      prefix = unname(kv["prefix"]),
+      base_prefix = unname(kv["base_prefix"]),
+      site = unname(kv[names(kv) == "site"]),
+      usersite = unname(kv["usersite"])
+    )
+    .fax$python_probe[[path]] <- probe
+    probe
+  })
 }
 
 python_env_type <- function(ctx, interp) {

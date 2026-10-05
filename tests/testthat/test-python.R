@@ -95,6 +95,29 @@ test_that("a system interpreter is probed once in a separate process", {
   expect_equal(calls, 1)
 })
 
+test_that("a failing interpreter is probed once per session until refresh", {
+  local_python_env()
+  calls <- 0
+  withr::local_options(fax.skip = NULL, fax.cmd_mock = function(cmd, args) {
+    if (cmd != "/usr/bin/python3" || args[1] != "-c") {
+      return(NULL)
+    }
+    calls <<- calls + 1
+    list(status = 1L, stdout = character())
+  })
+  local_mocked_bindings(sys_which = function(name) c(python3 = "/usr/bin/python3")[name] %|NA|% "")
+  f <- facts()
+  df <- facts_df(f, "runtime")
+  expect_equal(df$status[df$fact == "runtime.python.version"], "unavailable")
+  expect_false(any(df$status == "error"))
+  invisible(format(f))
+  fact("runtime.python.version")
+  fact("runtime.python.implementation")
+  expect_equal(calls, 1)
+  facts_df(facts(refresh = TRUE), "runtime")
+  expect_equal(calls, 2)
+})
+
 test_that("RETICULATE_PYTHON wins over other variables", {
   venv <- write_files(
     withr::local_tempdir(),
