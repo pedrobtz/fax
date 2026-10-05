@@ -28,5 +28,5 @@ A data frame with columns:
 Returns one row per fact, with the metadata recorded while resolving it.
 }
 \examples{
-facts_df(facts())
+facts_df(facts(), "cpu")
 }

@@ -98,7 +98,7 @@ test_that("a system interpreter is probed once in a separate process", {
 test_that("a failing interpreter is probed once per session until refresh", {
   local_python_env()
   calls <- 0
-  withr::local_options(fax.skip = NULL, fax.cmd_mock = function(cmd, args) {
+  withr::local_options(fax.cmd_mock = function(cmd, args) {
     if (cmd != "/usr/bin/python3" || args[1] != "-c") {
       return(NULL)
     }
@@ -145,6 +145,8 @@ test_that("no interpreter means not applicable", {
 
 test_that("reticulate is only reported when it already started Python", {
   skip_if("reticulate" %in% loadedNamespaces())
+  local_python_env()
+  local_mocked_bindings(sys_which = function(name) "")
   df <- facts_df(facts(refresh = TRUE), "runtime")
   expect_equal(df$message[df$fact == "runtime.python.reticulate"], "reticulate is not loaded.")
 })

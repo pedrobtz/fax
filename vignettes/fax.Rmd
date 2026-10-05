@@ -9,6 +9,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+# Building the vignette (e.g. in R CMD check) must never start Python.
+options(fax.skip = "runtime.python")
 ```
 
 fax reports facts about where R is running and what it may use. This article
