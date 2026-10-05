@@ -24,7 +24,9 @@ register_cloud_facts <- function() {
         ctx$note(agent)
         return("azure")
       }
-      if (any(grepl("Amazon EC2", text, fixed = TRUE))) {
+      # Nitro instances name "Amazon EC2"; Xen ones have "amazon" in the BIOS version.
+      xen_aws <- grepl("amazon", values[["bios_version"]] %|NA|% "", ignore.case = TRUE)
+      if (any(grepl("Amazon EC2", text, fixed = TRUE)) || xen_aws) {
         return("aws")
       }
       if (any(text == "Google") || any(grepl("Google Compute Engine", text, fixed = TRUE))) {

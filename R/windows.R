@@ -28,6 +28,7 @@ windows_dmi <- function(ctx) {
     product_name = registry_value(ctx, bios_key, "SystemProductName") %||% NA_character_,
     board_vendor = registry_value(ctx, bios_key, "BaseBoardManufacturer") %||% NA_character_,
     bios_vendor = registry_value(ctx, bios_key, "BIOSVendor") %||% NA_character_,
+    bios_version = NA_character_,
     chassis_asset_tag = NA_character_
   )
   if (all(is.na(values))) NULL else values
