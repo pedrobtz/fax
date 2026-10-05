@@ -149,7 +149,8 @@ register_memory_facts <- function() {
   register(resolver("memory.effective.available", cache = FALSE, function(ctx) {
     limit <- ctx$fact("memory.cgroup.limit")
     used <- ctx$fact("memory.cgroup.working_set") %|NA|% ctx$fact("memory.cgroup.usage")
-    values <- c(ctx$fact("memory.host.available"), max(0, limit - used))
+    # The limit itself caps what is available when the usage is unreadable.
+    values <- c(ctx$fact("memory.host.available"), limit, max(0, limit - used))
     if (all(is.na(values))) NULL else min(values, na.rm = TRUE)
   }))
 
