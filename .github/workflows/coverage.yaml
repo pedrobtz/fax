@@ -1,0 +1,18 @@
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - ".github/badges/coverage.svg"
+  pull_request:
+
+name: coverage
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    uses: pedrobtz/r-actions/.github/workflows/coverage.yml@70cdfd7c6d62f42828e931a7f061ce998bb0e8f5 # v1
+    permissions:
+      contents: write
