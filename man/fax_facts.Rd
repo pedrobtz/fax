@@ -41,7 +41,7 @@ fact is announced in NEWS and kept working for at least one release.
    Fact \tab Type \tab Platforms \tab Description \cr
    \code{cpu.model} \tab chr \tab all \tab CPU model name. \cr
    \code{cpu.vendor} \tab chr \tab all \tab CPU vendor, e.g. Intel, AMD, ARM, Apple. \cr
-   \code{cpu.flags} \tab chr vector \tab Linux, macOS \tab CPU feature flags, with Linux names. \cr
+   \code{cpu.flags} \tab chr vector \tab Linux, macOS \tab CPU feature flags, with Linux names (on macOS, Intel Macs only). \cr
    \code{cpu.isa_level} \tab chr \tab Linux, macOS \tab x86-64 microarchitecture level (\code{x86-64} to \code{x86-64-v4}), or \code{arm64} with \code{+sve}/\code{+sve2}. \cr
    \code{cpu.host.logical} \tab dbl \tab all \tab Logical CPUs of the host. \cr
    \code{cpu.host.physical} \tab dbl \tab all \tab Physical cores of the host. \cr
@@ -206,7 +206,7 @@ fact is announced in NEWS and kept working for at least one release.
    \code{packages.system.manager} \tab chr \tab all \tab Package manager: \code{dpkg}, \code{rpm}, \code{apk}, \code{pacman}, \code{homebrew} or \code{windows}. \cr
    \code{packages.system.count} \tab int \tab all \tab Number of installed system packages. \cr
    \code{packages.r} \tab df \tab all \tab Installed R packages: name, version, libpath, priority, built, source, remote_sha. \cr
-   \code{packages.python} \tab df \tab all \tab Installed Python packages: name, version, location, installer, source. \cr
+   \code{packages.python} \tab df \tab all \tab Installed Python packages: name, version, location, installer, source; one row per site-packages directory that holds the package, so it can list a package more than once where \verb{pip list} lists it once. \cr
 }
 }
 
