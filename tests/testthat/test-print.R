@@ -35,3 +35,12 @@ test_that("print() warns about OOM kills and a tmpfs tempdir() in containers", {
   expect_match(out, "tempdir\\(\\) is on tmpfs", all = FALSE)
   expect_match(out, "2 process\\(es\\) in this container were killed", all = FALSE)
 })
+
+test_that("print() notes OOM kill counts beyond the integer range", {
+  withr::local_options(fax.skip = "runtime")
+  local_azure_env()
+  root <- local_fixture_copy("docker-v2-cpus1.5-mem512m")
+  writeLines(c("low 0", "oom_kill 3000000000"), file.path(root, "sys/fs/cgroup/memory.events"))
+  out <- format(facts(refresh = TRUE))
+  expect_match(out, "3000000000 process(es) in this container", all = FALSE, fixed = TRUE)
+})

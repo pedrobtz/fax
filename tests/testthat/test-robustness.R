@@ -18,6 +18,17 @@ corrupt_each_file <- function(fixture, variants) {
     for (name in names(variants)) {
       writeBin(variants[[name]](original), path)
       bad <- errors_in()
+      # usage() and print() must not throw either.
+      local_usage_reset()
+      thrown <- tryCatch(
+        {
+          usage_line(extra = c("host", "working_set", "pressure"))
+          format(facts())
+          NULL
+        },
+        error = conditionMessage
+      )
+      bad <- c(bad, if (!is.null(thrown)) paste("throws:", thrown))
       if (length(bad)) {
         failures <- c(failures, sprintf("%s (%s): %s", file, name, paste(bad, collapse = ", ")))
       }
@@ -27,10 +38,24 @@ corrupt_each_file <- function(fixture, variants) {
   expect_equal(failures, character())
 }
 
+# Rewrite the text of a file; binary files (with NUL bytes) are left alone.
+edit_text <- function(x, fun) {
+  if (any(x == 0)) {
+    return(x)
+  }
+  charToRaw(fun(rawToChar(x)))
+}
+
 variants <- list(
   empty = \(x) raw(),
   garbage = \(x) charToRaw("\x01\x02 not:what = you\texpect\n-1 max -\n"),
-  truncated = \(x) x[seq_len(length(x) %/% 2)]
+  truncated = \(x) x[seq_len(length(x) %/% 2)],
+  non_utf8 = \(x) c(as.raw(c(0xff, 0xfe, 0xe9)), x, as.raw(c(0xe9, 0x0a))),
+  crlf = \(x) edit_text(x, \(s) gsub("\n", "\r\n", s, fixed = TRUE, useBytes = TRUE)),
+  no_newline = \(x) edit_text(x, \(s) sub("\n+$", "", s, useBytes = TRUE)),
+  huge = \(x) edit_text(x, \(s) gsub("[0-9]+", "99999999999999999999999999", s, useBytes = TRUE)),
+  negative = \(x) edit_text(x, \(s) gsub("([0-9]+)", "-\\1", s, useBytes = TRUE)),
+  duplicated = \(x) edit_text(x, \(s) gsub("([^\n]*\n)", "\\1\\1", s, useBytes = TRUE))
 )
 
 test_that("corrupt files in a cgroup v2 pod never cause errors", {

@@ -64,7 +64,7 @@ format.fax <- function(x, ...) {
   threads <- value("cpu.effective")
   effective <- if (!is.null(exact)) {
     if (!is.null(threads) && threads != exact) {
-      sprintf("%s (%d threads)", fmt_num(exact), threads)
+      sprintf("%s (%.0f threads)", fmt_num(exact), threads)
     } else {
       fmt_num(exact)
     }
@@ -109,10 +109,10 @@ format.fax <- function(x, ...) {
     add("note", "tempdir() is on tmpfs: its files count against the memory limit")
   }
   oom <- value("memory.cgroup.oom_kills")
-  if (!is.null(oom) && oom > 0) {
+  if (isTRUE(oom > 0)) {
     add(
       "note",
-      sprintf("%d process(es) in this container were killed for running out of memory", oom)
+      sprintf("%.0f process(es) in this container were killed for running out of memory", oom)
     )
   }
 
