@@ -59,7 +59,7 @@ register_runtime_facts <- function() {
   register(resolver("runtime.r.repos", cache = FALSE, function(ctx) {
     r_note(ctx, "getOption(\"repos\")")
     repos <- getOption("repos")
-    if (!length(repos)) NULL else strip_credentials(repos)
+    if (!length(repos)) NULL else strip_credentials(as_utf8(repos))
   }))
 
   register(resolver("runtime.r.renv", cache = FALSE, function(ctx) {
@@ -77,7 +77,7 @@ register_runtime_facts <- function() {
   register(resolver("runtime.threads.env", cache = FALSE, function(ctx) {
     names <- c(
       thread_env_vars,
-      grep("^R_PARALLELLY_AVAILABLECORES", names(Sys.getenv()), value = TRUE)
+      grep("^R_PARALLELLY_AVAILABLECORES", names(all_env()), value = TRUE)
     )
     values <- vapply(names, \(name) ctx$env(name) %||% NA_character_, character(1))
     values[!is.na(values)]
@@ -96,7 +96,13 @@ register_runtime_facts <- function() {
       not_applicable("The parallelly package is not installed.")
     }
     r_note(ctx, "parallelly::availableCores()")
-    as.integer(parallelly::availableCores())
+    # It fails, for example, when an environment variable is not valid UTF-8.
+    tryCatch(
+      as.integer(parallelly::availableCores()),
+      error = function(e) {
+        unavailable(paste("parallelly::availableCores() failed:", conditionMessage(e)))
+      }
+    )
   }))
 
   # R has a fixed number of connection slots (128 unless R >= 4.4 was started

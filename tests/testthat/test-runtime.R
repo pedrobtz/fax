@@ -25,6 +25,13 @@ test_that("repository URLs lose their credentials", {
   )
 })
 
+test_that("repository URLs that are not valid UTF-8 still resolve", {
+  withr::local_options(repos = c(CRAN = "https://cran.example.com/caf\xe9"))
+  df <- facts_df(facts("runtime", refresh = TRUE))
+  expect_equal(df$status[df$fact == "runtime.r.repos"], "ok")
+  expect_equal(fact("runtime.r.repos"), c(CRAN = "https://cran.example.com/caf<e9>"))
+})
+
 test_that("thread settings are reported", {
   withr::local_envvar(
     OMP_NUM_THREADS = "2",
