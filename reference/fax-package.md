@@ -22,8 +22,8 @@ Useful links:
 
 ## Author
 
-**Maintainer**: pedrobtz <pedrobtz@gmail.com>
+**Maintainer**: Pedro Baltazar <pedrobtz@gmail.com> \[copyright holder\]
 
 Authors:
 
-- pedrobtz <pedrobtz@gmail.com>
+- Pedro Baltazar <pedrobtz@gmail.com> \[copyright holder\]

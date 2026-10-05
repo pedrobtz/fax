@@ -11,12 +11,12 @@ once per session, and each call reads three small files on Linux (about
 library(fax)
 u <- usage()
 u
-#> cpu=1.3/4 mem=2.7G/15.6G(17%) rss=113.8M
+#> cpu=1.3/4 mem=2.7G/15.6G(17%) rss=114M
 unclass(u)
 #>          time   cpu_process    cpu_cgroup cpu_throttled     cpu_limit 
-#>  1.790852e+09  1.315646e+00            NA            NA  4.000000e+00 
+#>  1.791204e+09  1.330402e+00            NA            NA  4.000000e+00 
 #>       mem_rss    mem_cgroup     mem_limit       mem_pct 
-#>  1.192837e+08  2.915422e+09  1.676538e+10  1.738954e-01
+#>  1.195418e+08  2.904097e+09  1.676641e+10  1.732092e-01
 ```
 
 [`usage_line()`](https://pedrobtz.github.io/fax/reference/usage.md)

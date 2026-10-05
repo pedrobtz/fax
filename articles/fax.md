@@ -24,8 +24,8 @@ f
 #> runs in  no container
 #> runs on  vm (hyperv), cloud azure
 #> cpu      host 4 | effective 4
-#> memory   host 15.6G | available 14G
-#> runtime  R 4.6.1 | Python 3.12.3 (system)
+#> memory   host 15.6G | available 14.3G
+#> runtime  R 4.6.1
 #> Use facts_df() for every fact with its status and source.
 ```
 
@@ -48,7 +48,7 @@ f[["cpu.host"]]
 #> $sockets
 #> [1] 1
 f[["memory.effective.limit"]]
-#> [1] 16765378560
+#> [1] 16766414848
 ```
 
 Nothing is read until you ask for it, and each fact is read once per
@@ -112,7 +112,7 @@ takes the smallest of:
 effective_cores()
 #> [1] 4
 effective_memory()
-#> [1] 16765378560
+#> [1] 16766414848
 ```
 
 [`effective_memory()`](https://pedrobtz.github.io/fax/reference/effective_cores.md)
@@ -201,7 +201,7 @@ facts_json(namespaces = "cgroup", pretty = TRUE)
 #>     "mountpoint": "/sys/fs/cgroup",
 #>     "namespaced": false,
 #>     "pids": {
-#>       "max": 19152
+#>       "max": 19151
 #>     }
 #>   }
 #> }

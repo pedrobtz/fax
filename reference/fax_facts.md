@@ -41,7 +41,7 @@ fact is announced in NEWS and kept working for at least one release.
 | Fact | Type | Platforms | Description |
 | `cpu.model` | chr | all | CPU model name. |
 | `cpu.vendor` | chr | all | CPU vendor, e.g. Intel, AMD, ARM, Apple. |
-| `cpu.flags` | chr vector | Linux, macOS | CPU feature flags, with Linux names. |
+| `cpu.flags` | chr vector | Linux, macOS | CPU feature flags, with Linux names (on macOS, Intel Macs only). |
 | `cpu.isa_level` | chr | Linux, macOS | x86-64 microarchitecture level (`x86-64` to `x86-64-v4`), or `arm64` with `+sve`/`+sve2`. |
 | `cpu.host.logical` | dbl | all | Logical CPUs of the host. |
 | `cpu.host.physical` | dbl | all | Physical cores of the host. |
@@ -206,7 +206,7 @@ fact is announced in NEWS and kept working for at least one release.
 | `packages.system.manager` | chr | all | Package manager: `dpkg`, `rpm`, `apk`, `pacman`, `homebrew` or `windows`. |
 | `packages.system.count` | int | all | Number of installed system packages. |
 | `packages.r` | df | all | Installed R packages: name, version, libpath, priority, built, source, remote_sha. |
-| `packages.python` | df | all | Installed Python packages: name, version, location, installer, source. |
+| `packages.python` | df | all | Installed Python packages: name, version, location, installer, source; one row per site-packages directory that holds the package, so it can list a package more than once where `pip list` lists it once. |
 
 ## See also
 
