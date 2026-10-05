@@ -60,10 +60,10 @@ usage <- function(extra = NULL, max_age = 0) {
       {
         if (!is.null(setup$statm)) {
           rss_pages <- strsplit(fast_read(setup$statm), " ", fixed = TRUE)[[1]][2]
-          mem_rss <- as.numeric(rss_pages) * setup$page_size
+          mem_rss <- first_num(rss_pages) * setup$page_size
         }
         if (!is.null(setup$mem_current)) {
-          mem_cgroup <- as.numeric(fast_read(setup$mem_current))
+          mem_cgroup <- first_num(fast_read(setup$mem_current))
         }
         if (!is.null(setup$cpu_stat)) {
           stat <- parse_cpu_stat(fast_read(setup$cpu_stat))
@@ -72,7 +72,7 @@ usage <- function(extra = NULL, max_age = 0) {
           sample$cg_cpu <- if (is.null(setup$cpu_usage)) {
             stat[[1]] / 1e6
           } else {
-            as.numeric(fast_read(setup$cpu_usage)) / 1e9
+            first_num(fast_read(setup$cpu_usage)) / 1e9
           }
         }
       },
@@ -100,10 +100,12 @@ usage <- function(extra = NULL, max_age = 0) {
     }
   }
 
-  mem_pct <- if (!is.na(mem_cgroup) && is.finite(setup$mem_limit)) {
+  mem_pct <- if (!is.na(mem_cgroup) && isTRUE(is.finite(setup$mem_limit) && setup$mem_limit > 0)) {
     mem_cgroup / setup$mem_limit
-  } else {
+  } else if (isTRUE(setup$host_total > 0)) {
     mem_rss / setup$host_total
+  } else {
+    NA_real_
   }
 
   out <- c(
@@ -134,7 +136,7 @@ usage <- function(extra = NULL, max_age = 0) {
     }
     out["mem_pressure"] <- pressure("memory.cgroup.pressure")
     out["cpu_pressure"] <- pressure("cpu.cgroup.pressure")
-    out["oom_kills"] <- if (setup$linux) as.numeric(fact("memory.cgroup.oom_kills")) else NA
+    out["oom_kills"] <- if (setup$linux) first_num(fact("memory.cgroup.oom_kills")) else NA
   }
   out <- structure(out, class = "fax_usage")
   .usage$prev <- sample
@@ -151,25 +153,28 @@ format.fax_usage <- function(x, ...) {
   x <- unclass(x)
   parts <- character()
   cpu <- x[["cpu_cgroup"]] %|NA|% x[["cpu_process"]]
-  if (!is.na(cpu)) {
+  if (is.finite(cpu)) {
     limit <- x[["cpu_limit"]]
     of <- if (is.finite(limit)) paste0("/", fmt_num(limit))
     parts <- c(parts, paste0("cpu=", fmt_num(cpu), of))
   }
-  if (!is.na(x[["cpu_throttled"]])) {
-    parts <- c(parts, sprintf("thr=%d%%", round(100 * x[["cpu_throttled"]])))
+  if (is.finite(x[["cpu_throttled"]])) {
+    parts <- c(parts, sprintf("thr=%.0f%%", 100 * x[["cpu_throttled"]]))
   }
-  if (!is.na(x[["mem_cgroup"]])) {
+  if (is.finite(x[["mem_cgroup"]])) {
     mem <- paste0("mem=", fmt_bytes(x[["mem_cgroup"]]))
     if (is.finite(x[["mem_limit"]])) {
-      mem <- sprintf("%s/%s(%d%%)", mem, fmt_bytes(x[["mem_limit"]]), round(100 * x[["mem_pct"]]))
+      mem <- paste0(mem, "/", fmt_bytes(x[["mem_limit"]]))
+      if (is.finite(x[["mem_pct"]])) {
+        mem <- sprintf("%s(%.0f%%)", mem, 100 * x[["mem_pct"]])
+      }
     }
     parts <- c(parts, mem)
   }
-  if (!is.na(x[["mem_rss"]])) {
+  if (is.finite(x[["mem_rss"]])) {
     rss <- paste0("rss=", fmt_bytes(x[["mem_rss"]]))
-    if (is.na(x[["mem_cgroup"]]) && !is.na(x[["mem_pct"]])) {
-      rss <- sprintf("%s(%d%%)", rss, round(100 * x[["mem_pct"]]))
+    if (!is.finite(x[["mem_cgroup"]]) && is.finite(x[["mem_pct"]])) {
+      rss <- sprintf("%s(%.0f%%)", rss, 100 * x[["mem_pct"]])
     }
     parts <- c(parts, rss)
   }
@@ -206,12 +211,13 @@ usage_setup <- function() {
   .usage$last <- NULL
   setup <- list(
     linux = os == "linux",
-    cpu_limit = as.numeric(fact("cpu.effective_exact")),
-    mem_limit = as.numeric(fact("memory.effective.limit")),
-    host_total = as.numeric(fact("memory.host.total"))
+    cpu_limit = first_num(fact("cpu.effective_exact")),
+    mem_limit = first_num(fact("memory.effective.limit")),
+    host_total = first_num(fact("memory.host.total"))
   )
   if (setup$linux) {
-    setup <- c(setup, usage_linux_paths())
+    # A broken cgroup layout only disables the container fields.
+    setup <- c(setup, tryCatch(usage_linux_paths(), error = \(e) list()))
   } else if (requireNamespace("ps", quietly = TRUE)) {
     setup$ps <- tryCatch(ps::ps_handle(), error = \(e) NULL)
   }
@@ -290,6 +296,13 @@ parse_cpu_stat <- function(text) {
   keys <- words[c(TRUE, FALSE)]
   values <- words[c(FALSE, TRUE)]
   as.numeric(values[match(c("usage_usec", "nr_periods", "nr_throttled"), keys)])
+}
+
+# The first element as a number, NA when there is none: a value read from a
+# file may be empty or not a number.
+first_num <- function(x) {
+  x <- suppressWarnings(as.numeric(x))
+  if (length(x)) x[[1]] else NA_real_
 }
 
 fmt_num <- function(x) as.character(round(x, 1))

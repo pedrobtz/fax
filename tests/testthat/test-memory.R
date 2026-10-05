@@ -70,3 +70,10 @@ test_that("cgroup v1 reports OOM kills but no pressure", {
   df <- facts_df(facts("memory", refresh = TRUE))
   expect_equal(df$status[df$fact == "memory.cgroup.pressure"], "not_applicable")
 })
+
+test_that("available memory never exceeds the limit when usage is unreadable", {
+  root <- local_fixture_copy("docker-v2-cpus1.5-mem512m")
+  unlink(file.path(root, "sys/fs/cgroup/memory.current"))
+  expect_equal(effective_memory(), 536870912)
+  expect_lte(effective_memory("available"), effective_memory())
+})

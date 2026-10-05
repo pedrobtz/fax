@@ -107,12 +107,14 @@ local_usage_reset <- function(env = parent.frame()) {
   withr::defer(reset(), envir = env)
 }
 
-# No Python-related environment variables, and a fresh probe memo.
+# No Python-related environment variables, a fresh probe memo, and the Python
+# facts not skipped (see setup-fax.R).
 local_python_env <- function(..., env = parent.frame()) {
   vars <- list(RETICULATE_PYTHON = NA, VIRTUAL_ENV = NA, CONDA_PREFIX = NA)
   overrides <- list(...)
   vars[names(overrides)] <- overrides
   withr::local_envvar(.new = vars, .local_envir = env)
+  withr::local_options(fax.skip = NULL, .local_envir = env)
   .fax$python_probe <- list()
   withr::defer(.fax$python_probe <- list(), envir = env)
 }

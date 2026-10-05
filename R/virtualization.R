@@ -3,7 +3,14 @@ dmi <- function(ctx) {
     return(windows_dmi(ctx))
   }
   ctx$shared("dmi", function(ctx) {
-    fields <- c("sys_vendor", "product_name", "board_vendor", "bios_vendor", "chassis_asset_tag")
+    fields <- c(
+      "sys_vendor",
+      "product_name",
+      "board_vendor",
+      "bios_vendor",
+      "bios_version",
+      "chassis_asset_tag"
+    )
     values <- vapply(
       fields,
       function(field) {

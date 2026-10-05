@@ -136,3 +136,55 @@ test_that("usage() can add pressure and OOM kills", {
   expect_equal(u[["cpu_pressure"]], 1)
   expect_equal(u[["oom_kills"]], 2)
 })
+
+test_that("usage() never errors on empty, zero or huge cgroup memory files", {
+  local_usage_reset()
+  root <- local_fixture_copy("docker-v2-cpus1.5-mem512m")
+  current <- file.path(root, "sys/fs/cgroup/memory.current")
+
+  writeBin(raw(), current)
+  u <- usage()
+  expect_equal(u[["mem_cgroup"]], NA_real_)
+  expect_type(usage_line(), "character")
+
+  local_usage_reset()
+  writeLines("99999999999999999999999999", current)
+  expect_equal(usage()[["mem_cgroup"]], 1e26)
+  expect_match(usage_line(), "mem=")
+
+  local_usage_reset()
+  writeLines("1449984", current)
+  writeLines("0", file.path(root, "sys/fs/cgroup/memory.max"))
+  writeLines("0", file.path(root, "proc/meminfo"))
+  cache_clear()
+  expect_type(usage_line(), "character")
+})
+
+test_that("format() handles percentages beyond the integer range", {
+  u <- structure(
+    c(
+      time = 0,
+      cpu_process = 1,
+      cpu_cgroup = NA,
+      cpu_throttled = 1e10,
+      cpu_limit = 2,
+      mem_rss = 1024,
+      mem_cgroup = 1e26,
+      mem_limit = 1024,
+      mem_pct = 1e23
+    ),
+    class = "fax_usage"
+  )
+  expect_match(format(u), "thr=1000000000000% mem=", fixed = TRUE)
+  u[["mem_pct"]] <- Inf
+  expect_match(format(u), "mem=[^ ]+/1K rss=")
+})
+
+test_that("a broken cgroup layout only disables the container fields", {
+  local_usage_reset()
+  root <- local_fixture_copy("docker-v2-cpus1.5-mem512m")
+  local_mocked_bindings(read_cgroup_layout = function(ctx) stop("broken"))
+  u <- usage()
+  expect_s3_class(u, "fax_usage")
+  expect_equal(u[["mem_cgroup"]], NA_real_)
+})

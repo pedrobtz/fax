@@ -252,7 +252,7 @@ new_ctx <- function(state) {
         return(NULL)
       }
       note(paste0("env:", name))
-      value
+      as_utf8(value)
     },
     cmd = function(cmd, args = character(), timeout = 5) {
       note(paste(c(cmd, args), collapse = " "))

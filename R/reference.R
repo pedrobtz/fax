@@ -30,7 +30,7 @@ cgroup.namespaced | lgl | Whether the process has a private cgroup namespace.
 cgroup.pids.max | dbl | Maximum number of processes in the cgroup (`Inf` if unlimited).
 cpu.model | chr | CPU model name.
 cpu.vendor | chr | CPU vendor, e.g. Intel, AMD, ARM, Apple.
-cpu.flags | chr vector | CPU feature flags, with Linux names.
+cpu.flags | chr vector | CPU feature flags, with Linux names (on macOS, Intel Macs only).
 cpu.isa_level | chr | x86-64 microarchitecture level (`x86-64` to `x86-64-v4`), or `arm64` with `+sve`/`+sve2`.
 cpu.host.logical | dbl | Logical CPUs of the host.
 cpu.host.physical | dbl | Physical cores of the host.
@@ -130,7 +130,7 @@ packages.system.installed | df | Installed system packages: name, version and ar
 packages.system.manager | chr | Package manager: `dpkg`, `rpm`, `apk`, `pacman`, `homebrew` or `windows`.
 packages.system.count | int | Number of installed system packages.
 packages.r | df | Installed R packages: name, version, libpath, priority, built, source, remote_sha.
-packages.python | df | Installed Python packages: name, version, location, installer, source.
+packages.python | df | Installed Python packages: name, version, location, installer, source; one row per site-packages directory that holds the package, so it can list a package more than once where `pip list` lists it once.
 "
 )
 # nolint end

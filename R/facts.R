@@ -90,7 +90,7 @@ fact <- function(
 #'   * `message`: why the status is not `"ok"`.
 #' @export
 #' @examples
-#' facts_df(facts())
+#' facts_df(facts(), "cpu")
 facts_df <- function(x = facts(), namespaces = NULL) {
   check_fax(x)
   check_namespaces(namespaces)

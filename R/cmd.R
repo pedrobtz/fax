@@ -21,7 +21,7 @@ run_cmd <- function(cmd, args = character(), timeout = 5) {
   }
   list(
     status = as.integer(attr(out, "status") %||% 0L),
-    stdout = as.character(out)
+    stdout = as_utf8(as.character(out))
   )
 }
 
@@ -30,10 +30,10 @@ as_cmd_result <- function(x) {
     return(NULL)
   }
   if (is.character(x)) {
-    return(list(status = 0L, stdout = x))
+    return(list(status = 0L, stdout = as_utf8(x)))
   }
   list(
     status = as.integer(x$status %||% 0L),
-    stdout = as.character(x$stdout %||% character())
+    stdout = as_utf8(as.character(x$stdout %||% character()))
   )
 }

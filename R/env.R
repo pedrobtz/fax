@@ -18,6 +18,18 @@ redact_env <- function(vars, mode = "default", allowlist = character()) {
   vars
 }
 
+# Every environment variable as valid UTF-8. Sys.getenv() fails in a UTF-8
+# locale when a variable holds invalid bytes; it is then read in the C locale.
+all_env <- function() {
+  vars <- tryCatch(Sys.getenv(), error = function(e) {
+    old <- Sys.getlocale("LC_CTYPE")
+    on.exit(Sys.setlocale("LC_CTYPE", old), add = TRUE)
+    Sys.setlocale("LC_CTYPE", "C")
+    Sys.getenv()
+  })
+  as_utf8(stats::setNames(as.character(vars), names(vars)))
+}
+
 proxy_vars <- c("http_proxy", "https_proxy", "no_proxy", "HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY")
 
 register_env_facts <- function() {
@@ -27,8 +39,7 @@ register_env_facts <- function() {
       stop("`fax.redact` must be \"default\", \"allowlist\" or \"none\".", call. = FALSE)
     }
     r_note(ctx, "Sys.getenv()")
-    vars <- Sys.getenv()
-    vars <- stats::setNames(as.character(vars), names(vars))
+    vars <- all_env()
     redact_env(vars, mode, getOption("fax.redact_allowlist", character()))
   }))
 

@@ -172,3 +172,17 @@ test_that("the timezone comes from TZ, /etc/localtime or /etc/timezone", {
   )
   expect_equal(fact("os.timezone"), "America/Chicago")
 })
+
+test_that("Xen-based EC2 instances are recognized from the BIOS version", {
+  local_root(list(
+    "sys/class/dmi/id/sys_vendor" = "Xen",
+    "sys/class/dmi/id/product_name" = "HVM domU",
+    "sys/class/dmi/id/bios_vendor" = "Xen",
+    "sys/class/dmi/id/bios_version" = "4.2.amazon"
+  ))
+  withr::local_options(fax.os = "linux")
+  local_azure_env()
+  f <- facts(c("virtualization", "cloud"), refresh = TRUE)
+  expect_equal(f[["virtualization.hypervisor"]], "xen")
+  expect_equal(f[["cloud.provider"]], "aws")
+})

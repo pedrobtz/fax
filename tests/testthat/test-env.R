@@ -89,3 +89,15 @@ test_that("mount_for() picks the longest matching mount point", {
   expect_equal(mount_for(mounts, "/tmpbar")$fstype, "overlay")
   expect_equal(mount_for(mounts, "/tmpfoo/x")$fstype, "ext4")
 })
+
+test_that("env.vars works when a value is not valid UTF-8", {
+  withr::local_envvar(FAX_TEST_LATIN1 = "caf\xe9", FAX_TEST_PLAIN = "visible")
+  df <- facts_df(facts("env", refresh = TRUE))
+  expect_equal(df$status[df$fact == "env.vars"], "ok")
+  vars <- df$value[df$fact == "env.vars"][[1]]
+  expect_equal(vars[["FAX_TEST_LATIN1"]], "caf<e9>")
+  expect_equal(vars[["FAX_TEST_PLAIN"]], "visible")
+  df <- facts_df(facts("runtime", refresh = TRUE))
+  expect_equal(df$status[df$fact == "runtime.threads.env"], "ok")
+  expect_false(any(df$status == "error"))
+})
