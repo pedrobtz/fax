@@ -2,22 +2,30 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* New submission.
 
 ## Test environments
 
-* GitHub Actions: ubuntu-latest (R devel, release, oldrel-1), macos-latest
-  (release), windows-latest (release)
-* R-hub v2: linux (R-devel), macos-arm64 (R-devel), windows (R-devel)
+* GitHub Actions (pedrobtz/r-actions `r-cmd-check`, `R CMD check --as-cran`):
+  macos-latest, windows-latest and ubuntu-latest (R release), ubuntu-latest
+  (R oldrel-1)
+* CRAN-like R-devel containers from R-hub: clang23, ubuntu-clang and
+  ubuntu-gcc16
 * Live checks in Debian, Alpine and Fedora containers with CPU and memory
   limits, and in a 'Kubernetes' (kind) pod
 
 ## Notes for reviewers
 
 * fax reads system files such as `/proc` and `/sys` on Linux and runs a few
-  read-only system commands where no file exists (`sysctl`, `sw_vers` and
-  `vm_stat` on macOS, `df`, `id`). It never writes outside `tempdir()` and
-  never changes system state.
+  read-only system commands where no file exists, each with a timeout:
+  `sysctl`, `sw_vers`, `vm_stat`, `id -u`/`id -g` and `sh -c 'ulimit -n'`
+  on macOS; `df -Pk` on Unix; `getconf PAGESIZE` on Linux when
+  `/proc/self/auxv` cannot be read; `whoami /groups` and,
+  only when the ps package is not installed, `powershell Get-CimInstance` on
+  Windows; `py -0p` (Windows) and `python3 -c <probe>` to describe a Python
+  interpreter found on the PATH; and `rpm -qa` only for the opt-in
+  `packages` facts. It never writes outside `tempdir()` and never changes
+  system state. Examples, tests and the vignette never start Python.
 * It makes no network requests unless the user explicitly asks for cloud
   instance metadata with `facts(cloud = TRUE)` or `options(fax.cloud = TRUE)`.
   Requests then go only to the link-local instance metadata address
